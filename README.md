@@ -10,3 +10,6 @@ Template projects for base code for EGP 410 assignments.
    * steering
 
 Building instructions are left up to the student. 
+
+#Building Instructions
+The project is linked and will build in Visual Studio.
