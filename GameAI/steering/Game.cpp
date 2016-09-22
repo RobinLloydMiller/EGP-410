@@ -47,6 +47,8 @@ Game::~Game()
 
 bool Game::init()
 {
+	srand(time(NULL));
+
 	mShouldExit = false;
 
 	//create Timers
@@ -71,6 +73,7 @@ bool Game::init()
 
 	mpGraphicsBufferManager = new GraphicsBufferManager();
 	mpSpriteManager = new SpriteManager();
+	mpKinematicUnitManager = new KinematicUnitManager();
 
 	//startup a lot of allegro stuff
 
@@ -116,38 +119,38 @@ bool Game::init()
 
 	//should be somewhere else!
 	al_init_font_addon();
-	if( !al_init_ttf_addon() )
+	if (!al_init_ttf_addon())
 	{
-		printf( "ttf font addon not initted properly!\n" ); 
+		printf("ttf font addon not initted properly!\n");
 		return false;
 	}
 
 	//actually load the font
-	mpFont = al_load_ttf_font( "cour.ttf", 20, 0 );
-	if( mpFont == NULL )
+	mpFont = al_load_ttf_font("cour.ttf", 20, 0);
+	if (mpFont == NULL)
 	{
-		printf( "ttf font file not loaded properly!\n" ); 
+		printf("ttf font file not loaded properly!\n");
 		return false;
 	}
 
 	//show the mouse
-	if( !al_hide_mouse_cursor( mpGraphicsSystem->getDisplay() ) )
+	if (!al_hide_mouse_cursor(mpGraphicsSystem->getDisplay()))
 	{
-		printf( "Mouse cursor not able to be hidden!\n" ); 
+		printf("Mouse cursor not able to be hidden!\n");
 		return false;
 	}
 
-	if( !al_init_primitives_addon() )
+	if (!al_init_primitives_addon())
 	{
-		printf( "Primitives addon not added!\n" ); 
+		printf("Primitives addon not added!\n");
 		return false;
 	}
 
 	//load the sample
-	mpSample = al_load_sample( "clapping.wav" );
+	mpSample = al_load_sample("clapping.wav");
 	if (!mpSample)
 	{
-		printf( "Audio clip sample not loaded!\n" ); 
+		printf("Audio clip sample not loaded!\n");
 		return false;
 	}
 
@@ -178,33 +181,24 @@ bool Game::init()
 	}
 
 	//setup units
-	Vector2D pos( 0.0f, 0.0f );
-	Vector2D vel( 0.0f, 0.0f );
-	mpUnit = new KinematicUnit( pArrowSprite, pos, 1, vel, 0.0f, 200.0f, 10.0f );
-	
-	Vector2D pos2( 1000.0f, 500.0f );
-	Vector2D vel2( 0.0f, 0.0f );
-	mpAIUnit = new KinematicUnit( pEnemyArrow, pos2, 1, vel2, 0.0f, 180.0f, 100.0f );
-	//give steering behavior
-	mpAIUnit->dynamicArrive( mpUnit ); 
+	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(0.0f, 0.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
+	mpKinematicUnitManager->addUnit( pEnemyArrow, Vector2D(1000.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
+	//unit count from manager excludes the player so count - 1 get the unit last added because the vecotr is always added to from the back
+	//give steeing behavior
+	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicArrive(mpKinematicUnitManager->getPlayer());
 
-	Vector2D pos3( 500.0f, 500.0f );
-	mpAIUnit2 = new KinematicUnit( pEnemyArrow, pos3, 1, vel2, 0.0f, 180.0f, 100.0f );
+	mpKinematicUnitManager->addUnit( pEnemyArrow, Vector2D(500.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
 	//give steering behavior
-	mpAIUnit2->dynamicSeek( mpUnit );  
+	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicSeek(mpKinematicUnitManager->getPlayer());
 
 	return true;
 }
 
 void Game::cleanup()
 {
-	//delete units
-	delete mpUnit;
-	mpUnit = NULL;
-	delete mpAIUnit;
-	mpAIUnit = NULL;
-	delete mpAIUnit2;
-	mpAIUnit2 = NULL;
+	//delete units and player
+	delete mpKinematicUnitManager;
+	mpKinematicUnitManager = NULL;
 
 	//delete the timers
 	delete mpLoopTimer;
@@ -246,19 +240,15 @@ void Game::beginLoop()
 	
 void Game::processLoop()
 {
-	//update units
-	mpUnit->update( LOOP_TARGET_TIME/1000.0f );
-	mpAIUnit->update( LOOP_TARGET_TIME/1000.0f );
-	mpAIUnit2->update( LOOP_TARGET_TIME/1000.0f );
+	//update units and player
+	mpKinematicUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
 	
 	//draw background
 	Sprite* pBackgroundSprite = mpSpriteManager->getSprite( BACKGROUND_SPRITE_ID );
 	pBackgroundSprite->draw( *(mpGraphicsSystem->getBackBuffer()), 0, 0 );
 
-	//draw units
-	mpUnit->draw( GRAPHICS_SYSTEM->getBackBuffer() );
-	mpAIUnit->draw( GRAPHICS_SYSTEM->getBackBuffer() );
-	mpAIUnit2->draw( GRAPHICS_SYSTEM->getBackBuffer() );
+	//draw units and player
+	mpKinematicUnitManager->draw(GRAPHICS_SYSTEM->getBackBuffer());
 
 	mpMessageManager->processMessagesForThisframe();
 

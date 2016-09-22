@@ -3,6 +3,7 @@
 #include "Trackable.h"
 #include "PerformanceTracker.h"
 #include "Defines.h"
+#include "KinematicUnitManager.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
@@ -13,6 +14,7 @@ class GraphicsBuffer;
 class GraphicsBufferManager;
 class SpriteManager;
 class KinematicUnit;
+class KinematicUnitManager;
 class GameMessageManager;
 class Timer;
 
@@ -38,19 +40,19 @@ public:
 
 	inline GraphicsSystem* getGraphicsSystem() const { return mpGraphicsSystem; };
 	inline GraphicsBufferManager* getGraphicsBufferManager() const { return mpGraphicsBufferManager; };
+	inline KinematicUnitManager* getKinematicUnitManager() const { return mpKinematicUnitManager; };
 	inline SpriteManager* getSpriteManager() const { return mpSpriteManager; };
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
 
-	inline KinematicUnit* getPlayerUnit() { return mpUnit; };//should be someplace else
-	inline KinematicUnit* getAIUnit() { return mpAIUnit; };//should be someplace else
-	inline KinematicUnit* getAIUnit2() { return mpAIUnit2; };//should be someplace else
+	inline KinematicUnit* getPlayerUnit() { return mpKinematicUnitManager->getPlayer(); };//should be someplace else
 
 private:
 	GraphicsSystem* mpGraphicsSystem;
 	GraphicsBufferManager* mpGraphicsBufferManager;
+	KinematicUnitManager* mpKinematicUnitManager;
 	SpriteManager* mpSpriteManager;
 	GameMessageManager* mpMessageManager;
 	Timer* mpLoopTimer;
@@ -63,10 +65,6 @@ private:
 	IDType mBackgroundBufferID;
 	IDType mPlayerIconBufferID;
 	IDType mEnemyIconBufferID;
-
-	KinematicUnit* mpUnit;
-	KinematicUnit* mpAIUnit;
-	KinematicUnit* mpAIUnit2;
 };
 
 float genRandomBinomial();//range -1:1 from "Artificial Intelligence for Games", Millington and Funge
