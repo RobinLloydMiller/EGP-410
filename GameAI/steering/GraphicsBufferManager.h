@@ -1,8 +1,9 @@
-#pragma once
+#ifndef _GRAPHICSBUFFERMANAGER_H
+#define _GRAPHICSBUFFERMANAGER_H
 
 #include <map>
 #include <string>
-#include "Trackable.h"
+#include "DeanLib/Trackable.h"
 #include "Defines.h"
 
 using namespace std;
@@ -39,3 +40,5 @@ private:
 	map<IDDescriptor, IDType> mDescLookup;
 	static int msNextID;
 };
+
+#endif

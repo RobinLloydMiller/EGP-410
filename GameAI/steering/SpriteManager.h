@@ -1,5 +1,8 @@
-#include "Trackable.h"
-#include "Defines.h"
+#ifndef _SPRITEMANAGER_H
+#define _SPRITEMANAGER_H
+
+#include "DeanLib/Trackable.h"
+#include "DeanLib/Defines.h"
 #include <map>
 
 class Sprite;
@@ -18,3 +21,5 @@ public:
 private:
 	std::map<IDType,Sprite*> mpSprites;
 };
+
+#endif

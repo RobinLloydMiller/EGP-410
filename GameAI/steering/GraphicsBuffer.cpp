@@ -1,67 +1,63 @@
-#include <allegro5/allegro_primitives.h>
+//used with permission from Lucas Spiker
 
 #include "GraphicsBuffer.h"
-#include "GraphicsSystem.h"
-#include "Vector2D.h"
 
-GraphicsBuffer::GraphicsBuffer()
-	:mpBitmap(NULL)
+int GraphicsBuffer::getHeight()
 {
+	return mpBitmap->h;
 }
 
-GraphicsBuffer::GraphicsBuffer( const string& filename )
+int GraphicsBuffer::getWidth()
 {
-	mpBitmap = al_load_bitmap( filename.c_str() );
+	return mpBitmap->w;
 }
 
-GraphicsBuffer::GraphicsBuffer( int width, int height, const ALLEGRO_COLOR& color )
+GraphicsBuffer::GraphicsBuffer(std::string path)
 {
-	mpBitmap = al_create_bitmap( width, height );
-	clear( color );
-}
+	mpBitmap = IMG_Load(path.c_str());
 
-GraphicsBuffer::GraphicsBuffer( ALLEGRO_BITMAP* pBitmap )
-	:mpBitmap(pBitmap)
-{
-}
-
-GraphicsBuffer::GraphicsBuffer( const GraphicsBuffer& rhs )
-{
-	mpBitmap = al_clone_bitmap( rhs.mpBitmap );
-}
-
-GraphicsBuffer& GraphicsBuffer::operator=( const GraphicsBuffer& rhs )
-{
-	if( &rhs == this )//self assignment
+	if (mpBitmap == NULL)
 	{
-		return *this;
+		std::cout << IMG_GetError() << std::endl;
 	}
+}
 
-	//cleanup
-	al_destroy_bitmap( mpBitmap );
-	//clone bitmap
-	mpBitmap = al_clone_bitmap( rhs.mpBitmap );
+GraphicsBuffer::GraphicsBuffer(int width, int height, Color color = Color(0, 0, 0))
+{
+	Uint32 rmask, gmask, bmask, amask;
 
-	return *this;
+#if SDL_BYTEORDER == SDL_BIG_ENDIAN
+	rmask = 0xff000000;
+	gmask = 0x00ff0000;
+	bmask = 0x0000ff00;
+	amask = 0x000000ff;
+#else
+	rmask = 0x000000ff;
+	gmask = 0x0000ff00;
+	bmask = 0x00ff0000;
+	amask = 0xff000000;
+#endif
+
+	mpBitmap = SDL_CreateRGBSurface(SDL_SWSURFACE, width, height, 32, rmask, gmask, bmask, amask);
+
+	SDL_FillRect(mpBitmap, NULL, SDL_MapRGB(mpBitmap->format, color.getR(), color.getG(), color.getB()));
+	
+	if (mpBitmap == NULL)
+	{
+		"image is null\n";
+	}
+}
+
+GraphicsBuffer::GraphicsBuffer(SDL_Surface* map, bool displayMap = false)
+{
+	mpBitmap = map;
+	mDisplayMap = displayMap;
 }
 
 GraphicsBuffer::~GraphicsBuffer()
 {
-	al_destroy_bitmap( mpBitmap );
-	//printf( " GraphicsBuffer destroyed!\n");
-}
-
-void GraphicsBuffer::clear( const ALLEGRO_COLOR& color )
-{
-	ALLEGRO_BITMAP* pOldTarget = GraphicsSystem::switchTargetBitmap( mpBitmap );
-	al_clear_to_color( color );
-	GraphicsSystem::switchTargetBitmap( pOldTarget );
-}
-
-void GraphicsBuffer::fillRegion( const Vector2D& ul, const Vector2D& lr, const ALLEGRO_COLOR& color )
-{
-	ALLEGRO_BITMAP* pOldTarget = GraphicsSystem::switchTargetBitmap( mpBitmap );
-	al_draw_filled_rectangle( ul.getX(), ul.getY(), lr.getX(), lr.getY(), color );
-	GraphicsSystem::switchTargetBitmap( pOldTarget );
-
+	if (!mDisplayMap)
+	{
+		SDL_FreeSurface(mpBitmap);
+	}
 }

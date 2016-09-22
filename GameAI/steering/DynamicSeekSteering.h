@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DYNAMICSTEERING_H
+#define _DYNAMICSTEERING_H
 
 #include "Steering.h"
 
@@ -19,3 +20,5 @@ private:
 	KinematicUnit* mpMover;
 	bool mShouldFlee;
 };
+
+#endif

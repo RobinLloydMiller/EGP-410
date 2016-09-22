@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _STEERING_H
+#define _STEERING_H
 
 /*Steering - implementation of Steering class from "Artificial Intelligence for Games" - Millington and Funge
 	Mostly modified by adding the mApplyDirectly bool variable to indicate if this Steering should operate as an override on the Kinematic's velocities
@@ -13,9 +14,9 @@
 	2011
 */
 
-#include "Vector2D.h"
+#include "DeanLib/Vector2D.h"
 #include "Kinematic.h"
-#include "Trackable.h"
+#include "DeanLib/Trackable.h"
 
 class Steering: public Trackable
 {
@@ -40,3 +41,5 @@ protected:
 	bool mApplyDirectly;
 
 };
+
+#endif

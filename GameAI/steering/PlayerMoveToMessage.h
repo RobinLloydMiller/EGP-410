@@ -1,7 +1,8 @@
-#pragma once
+#ifndef _PLAYERMOVETOMESSAGE_H
+#define _PLAYERMOVETOMESSAGE_H
 
 #include "GameMessage.h"
-#include "Vector2D.h"
+#include "DeanLib/Vector2D.h"
 
 class Vector2D;
 
@@ -16,3 +17,5 @@ public:
 private:
 	Vector2D mPos;
 };
+
+#endif

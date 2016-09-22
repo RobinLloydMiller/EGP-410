@@ -1,8 +1,8 @@
-#pragma once
+#ifndef _KINEMATIC_H
+#define _KINEMATIC_H
 
-#include "Vector2D.h"
-#include "Trackable.h"
-#include <allegro5\allegro.h>
+#include "DeanLib/Vector2D.h"
+#include "DeanLib/Trackable.h"
 #include <cmath>
 
 /*Kinematic - c++ implementation of algorithms described in "Artificial Intelligence for Games", Millington and Funge
@@ -49,3 +49,5 @@ protected:
 	float mOrientation;//where am I facing?
 	float mRotationVel;//how fast am I turning?
 };
+
+#endif

@@ -10,28 +10,29 @@
 #define ALLEGRO_USE_CONSOLE
 
 #include <stdio.h>
-#include <allegro5/allegro.h>
-#include <allegro5/allegro_audio.h>
-#include <allegro5/allegro_acodec.h>
-#include <allegro5/allegro_image.h>
-#include <allegro5/allegro_primitives.h>
-#include <allegro5/allegro_font.h>
-#include <allegro5/allegro_ttf.h>
 
 #include <sstream>
 #include <iostream>
 #include <cstdlib>
 #include <ctime>
+
+ //crtdbg.h is a file exclusive to visual studio this prevents it from being compiled unless with visual studio
+#ifdef _MSC_VER
 #include <crtdbg.h>
+#else
+#define _ASSERT(expr) ((void)0)
+
+#define _ASSERTE(expr) ((void)0)
+#endif
 
 #include "Game.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
 #include "Sprite.h"
 #include "KinematicUnit.h"
-#include "Timer.h"
-#include "PerformanceTracker.h"
-#include "MemoryTracker.h"
+#include "DeanLib/Timer.h"
+#include "DeanLib/PerformanceTracker.h"
+#include "DeanLib/MemoryTracker.h"
 
 using namespace std;
 

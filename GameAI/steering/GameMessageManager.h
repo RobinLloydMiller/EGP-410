@@ -1,7 +1,8 @@
-#pragma once
+#ifndef _GAMEMESSAGEMANAGER_H
+#define _GAMEMESSAGEMANAGER_H
 
 #include <list>
-#include "Trackable.h"
+#include "DeanLib/Trackable.h"
 
 class GameMessage;
 
@@ -19,3 +20,4 @@ private:
 	std::list<GameMessage*> mMessages;
 };
 
+#endif

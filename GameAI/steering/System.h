@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SYSTEM_H
+#define _SYSTEM_H
 
 #include <String>
 
@@ -45,3 +46,5 @@ const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution t
 #define GAME gpSystem->getGame()
 #define MESSAGE_MANAGER gpSystem->getGame()->getMessageManager()
 #define GRAPHICS_SYSTEM gpSystem->getGraphicsSystem()
+
+#endif

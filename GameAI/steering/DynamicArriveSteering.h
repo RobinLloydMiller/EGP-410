@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DYNAMICARRIVESTEERING_H
+#define _DYNAMICARRIVESTEERING_H
 
 #include "Steering.h"
 
@@ -21,3 +22,5 @@ private:
 	float mSlowRadius;
 	float mTimeToTarget;
 };
+
+#endif
