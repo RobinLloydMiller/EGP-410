@@ -31,9 +31,9 @@ public:
 	bool operator == ( const Vector2D& rhs );
 	bool operator != ( const Vector2D& rhs );
 
-	const Vector2D Vector2D::operator+(const Vector2D &other) const;
-	const Vector2D Vector2D::operator-(const Vector2D &other) const;
-	const Vector2D Vector2D::operator*(float mult) const;
+	const Vector2D operator+(const Vector2D &other) const;
+	const Vector2D operator-(const Vector2D &other) const;
+	const Vector2D operator*(float mult) const;
 
 	//getters and setters
 	inline float getX() const { return mX; };
