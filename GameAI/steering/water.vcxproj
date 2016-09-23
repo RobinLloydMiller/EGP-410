@@ -11,15 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddUnitMessage.h" />
     <ClInclude Include="Defines.h" />
+    <ClInclude Include="DeleteUnitMessage.h" />
     <ClInclude Include="DynamicArriveSteering.h" />
     <ClInclude Include="DynamicSeekSteering.h" />
+    <ClInclude Include="ExitGameMessage.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameMessage.h" />
     <ClInclude Include="GameMessageManager.h" />
     <ClInclude Include="GraphicsBuffer.h" />
     <ClInclude Include="GraphicsBufferManager.h" />
     <ClInclude Include="GraphicsSystem.h" />
+    <ClInclude Include="InputManager.h" />
     <ClInclude Include="Kinematic.h" />
     <ClInclude Include="KinematicArriveSteering.h" />
     <ClInclude Include="KinematicSeekSteering.h" />
@@ -32,14 +36,18 @@
     <ClInclude Include="KinematicUnitManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddUnitMessage.cpp" />
+    <ClCompile Include="DeleteUnitMessage.cpp" />
     <ClCompile Include="DynamicArriveSteering.cpp" />
     <ClCompile Include="DynamicSeekSteering.cpp" />
+    <ClCompile Include="ExitGameMessage.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameMessage.cpp" />
     <ClCompile Include="GameMessageManager.cpp" />
     <ClCompile Include="GraphicsBuffer.cpp" />
     <ClCompile Include="GraphicsBufferManager.cpp" />
     <ClCompile Include="GraphicsSystem.cpp" />
+    <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Kinematic.cpp" />
     <ClCompile Include="KinematicArriveSteering.cpp" />
     <ClCompile Include="KinematicSeekSteering.cpp" />

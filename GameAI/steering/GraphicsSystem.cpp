@@ -88,3 +88,9 @@ ALLEGRO_BITMAP* GraphicsSystem::switchTargetBitmap( ALLEGRO_BITMAP* pNewTarget )
 
 	return pOldTarget;
 }
+
+void GraphicsSystem::drawText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, const char* text)
+{
+	//al_draw_text(mpFont, al_map_rgb(255, 255, 255), mMouseState.x, mMouseState.y, ALLEGRO_ALIGN_CENTRE, mMousePos.str().c_str());
+	al_draw_text(pFont, al_map_rgb(r, g, b), x, y, flags, text);
+}

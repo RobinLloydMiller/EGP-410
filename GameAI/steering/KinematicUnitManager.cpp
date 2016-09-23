@@ -1,4 +1,7 @@
 #include "KinematicUnitManager.h"
+#include "Game.h"
+#include "GameMessageManager.h"
+#include "ExitGameMessage.h"
 
 KinematicUnitManager::~KinematicUnitManager()
 {
@@ -22,6 +25,12 @@ void KinematicUnitManager::update(float time)
 	}
 
 	mpPlayer->update(time);
+
+	if (mUnits.size() == 0)
+	{
+		GameMessage* pMessage = new ExitGameMessage();
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
 
 	return;
 }
@@ -53,9 +62,10 @@ bool KinematicUnitManager::addUnit(Sprite* pSprite, const Vector2D& position, fl
 
 bool KinematicUnitManager::deleteUnit(size_t index)
 {
-	if (mUnits.size() <= index || mUnits[index] == NULL)
+	if ((mUnits.size() <= index && index >= 0) || mUnits[index] == NULL)
 		return false;
 
+	delete mUnits[index];
 	mUnits.erase(mUnits.begin() + index);
 
 	return true;

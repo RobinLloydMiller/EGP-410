@@ -29,6 +29,8 @@ const int HEIGHT = 768;
 Game::Game()
 	:mpGraphicsSystem(NULL)
 	,mpGraphicsBufferManager(NULL)
+	,mpInputManager(NULL)
+	,mpKinematicUnitManager(NULL)
 	,mpSpriteManager(NULL)
 	,mpLoopTimer(NULL)
 	,mpMasterTimer(NULL)
@@ -74,6 +76,7 @@ bool Game::init()
 	mpGraphicsBufferManager = new GraphicsBufferManager();
 	mpSpriteManager = new SpriteManager();
 	mpKinematicUnitManager = new KinematicUnitManager();
+	mpInputManager = new InputManager();
 
 	//startup a lot of allegro stuff
 
@@ -174,20 +177,20 @@ bool Game::init()
 		pArrowSprite = mpSpriteManager->createAndManageSprite( PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight() );
 	}
 	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer( mEnemyIconBufferID );
-	Sprite* pEnemyArrow = NULL;
+	mpEnemyArrow = NULL;
 	if( pAIBuffer != NULL )
 	{
-		pEnemyArrow = mpSpriteManager->createAndManageSprite( AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, pAIBuffer->getWidth(), pAIBuffer->getHeight() );
+		mpEnemyArrow = mpSpriteManager->createAndManageSprite( AI_ICON_SPRITE_ID, pAIBuffer, 0, 0, pAIBuffer->getWidth(), pAIBuffer->getHeight() );
 	}
 
 	//setup units
 	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(0.0f, 0.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
-	mpKinematicUnitManager->addUnit( pEnemyArrow, Vector2D(1000.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
+	mpKinematicUnitManager->addUnit( mpEnemyArrow, Vector2D(1000.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
 	//unit count from manager excludes the player so count - 1 get the unit last added because the vecotr is always added to from the back
 	//give steeing behavior
 	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicArrive(mpKinematicUnitManager->getPlayer());
 
-	mpKinematicUnitManager->addUnit( pEnemyArrow, Vector2D(500.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
+	mpKinematicUnitManager->addUnit( mpEnemyArrow, Vector2D(500.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
 	//give steering behavior
 	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicSeek(mpKinematicUnitManager->getPlayer());
 
@@ -216,6 +219,8 @@ void Game::cleanup()
 	mpSpriteManager = NULL;
 	delete mpMessageManager;
 	mpMessageManager = NULL;
+	delete mpInputManager;
+	mpInputManager = NULL;
 
 	al_destroy_sample(mpSample);
 	mpSample = NULL;
@@ -242,6 +247,7 @@ void Game::processLoop()
 {
 	//update units and player
 	mpKinematicUnitManager->update(LOOP_TARGET_TIME / 1000.0f);
+	mpInputManager->update();
 	
 	//draw background
 	Sprite* pBackgroundSprite = mpSpriteManager->getSprite( BACKGROUND_SPRITE_ID );
@@ -249,47 +255,12 @@ void Game::processLoop()
 
 	//draw units and player
 	mpKinematicUnitManager->draw(GRAPHICS_SYSTEM->getBackBuffer());
+	//mpInputManager->drawText(GRAPHICS_SYSTEM->getBackBuffer());
+	GRAPHICS_SYSTEM->drawText(mpFont, 255, 255, 255, mpInputManager->getMouseX(), mpInputManager->getMouseY(), ALLEGRO_ALIGN_CENTRE, mpInputManager->getMousePosString().c_str());
 
 	mpMessageManager->processMessagesForThisframe();
 
-	//get input - should be moved someplace better
-	ALLEGRO_MOUSE_STATE mouseState;
-	al_get_mouse_state( &mouseState );
-
-	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
-	{
-		Vector2D pos( mouseState.x, mouseState.y );
-		GameMessage* pMessage = new PlayerMoveToMessage( pos );
-		MESSAGE_MANAGER->addMessage( pMessage, 0 );
-	}
-
-
-
-	//all this should be moved to InputManager!!!
-	{
-		//get mouse state
-		ALLEGRO_MOUSE_STATE mouseState;
-		al_get_mouse_state( &mouseState );
-
-		//create mouse text
-		stringstream mousePos;
-		mousePos << mouseState.x << ":" << mouseState.y;
-
-		//write text at mouse position
-		al_draw_text( mpFont, al_map_rgb( 255, 255, 255 ), mouseState.x, mouseState.y, ALLEGRO_ALIGN_CENTRE, mousePos.str().c_str() );
-
-		mpGraphicsSystem->swap();
-
-		//get current keyboard state
-		ALLEGRO_KEYBOARD_STATE keyState;
-		al_get_keyboard_state( &keyState );
-
-		//if escape key was down then exit the loop
-		if( al_key_down( &keyState, ALLEGRO_KEY_ESCAPE ) )
-		{
-			mShouldExit = true;
-		}
-	}
+	mpGraphicsSystem->swap();
 }
 
 bool Game::endLoop()

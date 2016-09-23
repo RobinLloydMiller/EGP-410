@@ -5,7 +5,10 @@
 enum MessageType
 {
 	INVALID_MESSAGE_TYPE = -1,
-	PLAYER_MOVETO_MESSAGE = 0
+	PLAYER_MOVETO_MESSAGE = 0,
+	EXIT_GAME_MESSAGE = 1,
+	ADD_UNIT_MESSAGE = 2,
+	DELETE_UNIT_MESSAGE = 3
 };
 
 class GameMessage: public Trackable

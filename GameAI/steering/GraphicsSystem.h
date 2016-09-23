@@ -25,6 +25,7 @@ public:
 	inline GraphicsBuffer* getBackBuffer() { return mpBackBuffer; };
 
 	static ALLEGRO_BITMAP* switchTargetBitmap( ALLEGRO_BITMAP* pNewTarget );//return old target
+	static void drawText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, const char* text);
 
 private:
 	ALLEGRO_DISPLAY* mpDisplay;

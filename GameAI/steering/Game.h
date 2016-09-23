@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Trackable.h"
+#include "InputManager.h"
 #include "PerformanceTracker.h"
 #include "Defines.h"
 #include "KinematicUnitManager.h"
@@ -41,13 +42,14 @@ public:
 	inline GraphicsSystem* getGraphicsSystem() const { return mpGraphicsSystem; };
 	inline GraphicsBufferManager* getGraphicsBufferManager() const { return mpGraphicsBufferManager; };
 	inline KinematicUnitManager* getKinematicUnitManager() const { return mpKinematicUnitManager; };
+	inline KinematicUnit* getPlayer() const { return mpKinematicUnitManager->getPlayer(); };
 	inline SpriteManager* getSpriteManager() const { return mpSpriteManager; };
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
-
-	inline KinematicUnit* getPlayerUnit() { return mpKinematicUnitManager->getPlayer(); };//should be someplace else
+	inline void exitGame() { mShouldExit = true; };
+	inline Sprite* getEnemySprite() const { return mpEnemyArrow; };
 
 private:
 	GraphicsSystem* mpGraphicsSystem;
@@ -55,9 +57,11 @@ private:
 	KinematicUnitManager* mpKinematicUnitManager;
 	SpriteManager* mpSpriteManager;
 	GameMessageManager* mpMessageManager;
+	InputManager* mpInputManager;
 	Timer* mpLoopTimer;
 	Timer* mpMasterTimer;
 	bool mShouldExit;
+	Sprite* mpEnemyArrow;
 
 	//should be somewhere else
 	ALLEGRO_FONT* mpFont;
@@ -72,4 +76,3 @@ float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Mil
 
 extern Game* gpGame;
 extern PerformanceTracker* gpPerformanceTracker;
-
