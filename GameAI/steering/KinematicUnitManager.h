@@ -7,7 +7,7 @@
 //UnitManager - manager class that creates, destroys, and updates kinematic units. Also holds pointers to all kinematic units in game
 //Duncan
 
-class KinematicUnitManager
+class KinematicUnitManager : public Trackable
 {
 public:
 	KinematicUnitManager() {};

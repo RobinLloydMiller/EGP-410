@@ -67,7 +67,9 @@
     <ClCompile Include="AddUnitMessage.cpp">
       <Filter>Source Files\Messaging</Filter>
     </ClCompile>
-    <ClCompile Include="DeleteUnitMessage.cpp" />
+    <ClCompile Include="DeleteUnitMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">

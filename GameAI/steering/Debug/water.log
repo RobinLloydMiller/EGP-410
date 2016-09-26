@@ -1,12 +1,16 @@
-﻿  Sprite.cpp
-  GraphicsBuffer.cpp
+﻿  AddUnitMessage.cpp
   Generating Code...
-  Compiling...
+  Skipping... (no relevant changes detected)
   main.cpp
+  PlayerMoveToMessage.cpp
+  KinematicWanderSteering.cpp
+  KinematicUnitManager.cpp
   KinematicUnit.cpp
+  InputManager.cpp
   GraphicsSystem.cpp
+  GameMessageManager.cpp
   Game.cpp
-  Generating Code...
-AddUnitMessage.obj : warning LNK4075: ignoring '/EDITANDCONTINUE' due to '/SAFESEH' specification
+  ExitGameMessage.cpp
+  DeleteUnitMessage.cpp
   water.vcxproj -> E:\school\EGP-410\GameAI\steering\Debug\steering.exe
   water.vcxproj -> E:\school\EGP-410\GameAI\steering\Debug\steering.pdb (Full PDB)

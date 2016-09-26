@@ -8,7 +8,7 @@
 #include <allegro5/allegro.h>
 #include <sstream>
 
-class InputManager
+class InputManager : public Trackable
 {
 public:
 	InputManager();
