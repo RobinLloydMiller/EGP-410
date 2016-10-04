@@ -17,16 +17,17 @@ typedef struct ALLEGRO_BITMAP ALLEGRO_BITMAP;
  */
 enum {
    ALLEGRO_MEMORY_BITMAP            = 0x0001,
-   ALLEGRO_KEEP_BITMAP_FORMAT       = 0x0002,
-   ALLEGRO_FORCE_LOCKING            = 0x0004,
+   _ALLEGRO_KEEP_BITMAP_FORMAT      = 0x0002,	/* now a bitmap loader flag */
+   ALLEGRO_FORCE_LOCKING            = 0x0004,	/* no longer honoured */
    ALLEGRO_NO_PRESERVE_TEXTURE      = 0x0008,
-   ALLEGRO_ALPHA_TEST               = 0x0010,
+   _ALLEGRO_ALPHA_TEST              = 0x0010,   /* now a render state flag */
    _ALLEGRO_INTERNAL_OPENGL         = 0x0020,
    ALLEGRO_MIN_LINEAR               = 0x0040,
    ALLEGRO_MAG_LINEAR               = 0x0080,
    ALLEGRO_MIPMAP                   = 0x0100,
-   ALLEGRO_NO_PREMULTIPLIED_ALPHA   = 0x0200,
-   ALLEGRO_VIDEO_BITMAP             = 0x0400
+   _ALLEGRO_NO_PREMULTIPLIED_ALPHA  = 0x0200,	/* now a bitmap loader flag */
+   ALLEGRO_VIDEO_BITMAP             = 0x0400,
+   ALLEGRO_CONVERT_BITMAP           = 0x1000
 };
 
 
@@ -60,9 +61,15 @@ AL_FUNC(void, al_get_clipping_rectangle, (int *x, int *y, int *w, int *h));
 AL_FUNC(ALLEGRO_BITMAP *, al_create_sub_bitmap, (ALLEGRO_BITMAP *parent, int x, int y, int w, int h));
 AL_FUNC(bool, al_is_sub_bitmap, (ALLEGRO_BITMAP *bitmap));
 AL_FUNC(ALLEGRO_BITMAP *, al_get_parent_bitmap, (ALLEGRO_BITMAP *bitmap));
+AL_FUNC(int, al_get_bitmap_x, (ALLEGRO_BITMAP *bitmap));
+AL_FUNC(int, al_get_bitmap_y, (ALLEGRO_BITMAP *bitmap));
+AL_FUNC(void, al_reparent_bitmap, (ALLEGRO_BITMAP *bitmap,
+   ALLEGRO_BITMAP *parent, int x, int y, int w, int h));
 
 /* Miscellaneous */
 AL_FUNC(ALLEGRO_BITMAP *, al_clone_bitmap, (ALLEGRO_BITMAP *bitmap));
+AL_FUNC(void, al_convert_bitmap, (ALLEGRO_BITMAP *bitmap));
+AL_FUNC(void, al_convert_bitmaps, (void));
 
 #ifdef __cplusplus
    }

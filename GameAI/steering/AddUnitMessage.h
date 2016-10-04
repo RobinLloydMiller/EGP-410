@@ -6,8 +6,10 @@
 
 enum SteeringType
 {
-	DYNAMIC_ARRIVE = 0,
-	DYNAMIC_SEEK = 1
+	DYNAMIC_ARRIVE,
+	DYNAMIC_SEEK,
+	WANDER_AND_SEEK,
+	WANDER_AND_FLEE
 };
 
 class AddUnitMessage : public GameMessage
@@ -21,7 +23,7 @@ public:
 private:
 	float mOrientation, mRotationVel, mMaxVelocity, mMaxAcceleration, mXOffset;
 	Vector2D mVelocity;
-	int mSteeringType;
+	SteeringType mSteeringType;
 };
 
 #endif

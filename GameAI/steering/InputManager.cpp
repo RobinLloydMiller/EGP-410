@@ -45,6 +45,18 @@ void InputManager::update()
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	if (keyDown(ALLEGRO_KEY_W, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new AddUnitMessage(WANDER_AND_SEEK, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+	
+	if (keyDown(ALLEGRO_KEY_E, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new AddUnitMessage(WANDER_AND_FLEE, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
 	mPrevKeyState = mKeyState;
 }
 

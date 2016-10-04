@@ -24,8 +24,12 @@ void AddUnitMessage::process()
 	gpGame->getKinematicUnitManager()->addUnit(gpGame->getEnemySprite(), pos, mOrientation, mVelocity, mRotationVel, mMaxVelocity, mMaxAcceleration);
 
 	//set steering type based on parameter
-	if(mSteeringType == 0)
-		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->dynamicArrive(gpGame->getKinematicUnitManager()->getPlayer());
-	else if(mSteeringType == 1)
-		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->dynamicSeek(gpGame->getKinematicUnitManager()->getPlayer());
+	if (mSteeringType == DYNAMIC_ARRIVE)
+		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->dynamicArrive(gpGame->getPlayer());
+	else if (mSteeringType == DYNAMIC_SEEK)
+		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->dynamicSeek(gpGame->getPlayer());
+	else if (mSteeringType == WANDER_AND_SEEK)
+		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->wanderAndSeek(gpGame->getPlayer());
+	else if (mSteeringType == WANDER_AND_FLEE)
+		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->wanderAndSeek(gpGame->getPlayer(), true);
 }

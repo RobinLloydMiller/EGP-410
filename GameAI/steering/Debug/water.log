@@ -1,16 +1,22 @@
-﻿  AddUnitMessage.cpp
+﻿  WanderAndSeekSteering.cpp
+  KinematicUnit.cpp
+  InputManager.cpp
+  AddUnitMessage.cpp
   Generating Code...
-  Skipping... (no relevant changes detected)
+  Compiling...
   main.cpp
   PlayerMoveToMessage.cpp
   KinematicWanderSteering.cpp
   KinematicUnitManager.cpp
-  KinematicUnit.cpp
-  InputManager.cpp
+  KinematicSeekSteering.cpp
+  KinematicArriveSteering.cpp
   GraphicsSystem.cpp
   GameMessageManager.cpp
   Game.cpp
   ExitGameMessage.cpp
+  DynamicSeekSteering.cpp
+  DynamicArriveSteering.cpp
   DeleteUnitMessage.cpp
+  Generating Code...
   water.vcxproj -> E:\school\EGP-410\GameAI\steering\Debug\steering.exe
   water.vcxproj -> E:\school\EGP-410\GameAI\steering\Debug\steering.pdb (Full PDB)
