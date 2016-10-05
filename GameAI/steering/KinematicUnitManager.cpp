@@ -26,12 +26,6 @@ void KinematicUnitManager::update(float time)
 
 	mpPlayer->update(time);
 
-	if (mUnits.size() == 0)
-	{
-		GameMessage* pMessage = new ExitGameMessage();
-		gpGame->getMessageManager()->addMessage(pMessage, 0);
-	}
-
 	return;
 }
 
@@ -89,4 +83,40 @@ bool KinematicUnitManager::addPlayer(Sprite* pSprite, const Vector2D& position, 
 	mpPlayer = new KinematicUnit(pSprite, position, orientation, velocity, rotationVel, maxVelocity, maxAcceleration);
 
 	return true;
+}
+
+void KinematicUnitManager::updateMaxVelocity(float vel)
+{
+	for (auto it : mUnits)
+	{
+		it->setMaxVelocity(vel);
+	}
+	return;
+}
+
+void KinematicUnitManager::updateMaxAcceleration(float accel)
+{
+	for (auto it : mUnits)
+	{
+		it->setMaxAcceleration(accel);
+	}
+	return;
+}
+
+void KinematicUnitManager::updateReactionRadius(float radius)
+{
+	for (auto it : mUnits)
+	{
+		it->getSteering()->setRadius(radius);
+	}
+	return;
+}
+
+void KinematicUnitManager::updateAngularVelocity(float angVel)
+{
+	for (auto it : mUnits)
+	{
+		it->getSteering()->setAngular(angVel);
+	}
+	return;
 }

@@ -1,10 +1,12 @@
 #pragma once
 
 #include "Trackable.h"
+#include "StateManager.h"
 #include "InputManager.h"
 #include "PerformanceTracker.h"
 #include "Defines.h"
 #include "KinematicUnitManager.h"
+#include "StateManager.h"
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_audio.h>
@@ -50,6 +52,22 @@ public:
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
 	inline void exitGame() { mShouldExit = true; };
 	inline Sprite* getEnemySprite() const { return mpEnemyArrow; };
+	inline GameState getCurrState() const { return mpStateManager->getCurrState(); };
+	inline EnemyProperty getCurrProperty() const { return mpStateManager->getCurrProperty(); };
+	inline float getEnemyMaxVelocity() const { return mpKinematicUnitManager->getUnit(0)->getMaxVelocity(); };
+	inline float getEnemyReactionRadius() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getRadius(); };
+	inline float getEnemyAngularVelocity() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getAngular(); };
+	inline float getEnemyMaxAcceleration() const { return mpKinematicUnitManager->getUnit(0)->getMaxAcceleration(); };
+	
+	//i know this could be easier with a bool but i hope this can be expanded to include other game states
+	void toggleDebugState()
+	{
+		if (mpStateManager->getCurrState() == DEBUG_OFF)
+			mpStateManager->setCurrState(DEBUG_ON);
+		else
+			mpStateManager->setCurrState(DEBUG_OFF);
+	}
+	inline void setCurrProperty(EnemyProperty prop) { mpStateManager->setCurrProperty(prop); }
 
 private:
 	GraphicsSystem* mpGraphicsSystem;
@@ -62,6 +80,7 @@ private:
 	Timer* mpMasterTimer;
 	bool mShouldExit;
 	Sprite* mpEnemyArrow;
+	StateManager* mpStateManager;
 
 	//should be somewhere else
 	ALLEGRO_FONT* mpFont;

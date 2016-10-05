@@ -19,6 +19,11 @@ public:
 	//deletes a random unit if no index is given
 	bool deleteUnit();
 	bool addPlayer(Sprite* pSprite, const Vector2D& position, float orientation, const Vector2D& velocity, float rotationVel, float maxVelocity = 1.0f, float maxAcceleration = 1.0f);
+
+	void updateMaxVelocity(float vel);
+	void updateMaxAcceleration(float accel);
+	void updateReactionRadius(float radius);
+	void updateAngularVelocity(float angVel);
 	
 	//getter functions
 	KinematicUnit* getPlayer() { return mpPlayer; };

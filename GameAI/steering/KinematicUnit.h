@@ -30,9 +30,12 @@ public:
 	void setTarget( const Vector2D& target ) { mTarget = target; };
 	const Vector2D& getPosition() const { return mPosition; };
 	float getMaxVelocity() const { return mMaxVelocity; };
+	void setMaxVelocity(float vel) { mMaxVelocity = vel; };
 	Vector2D getVelocity() const { return mVelocity; };
 	float getMaxAcceleration() const { return mMaxAcceleration; };
+	void setMaxAcceleration(float accel) { mMaxAcceleration = accel; };
 	void setVelocity( const Vector2D& velocity ){ mVelocity = velocity; };
+	Steering* getSteering() { return mpCurrentSteering; };
 
 	virtual void setNewOrientation();//face the direction you are moving
 

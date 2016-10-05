@@ -21,7 +21,7 @@ class Steering: public Trackable
 {
 public:
 	//constructors and destructors
-	Steering( const Vector2D& theLinear = gZeroVector2D, float theAngular = 0.0f, bool applyDirectly = false ):mLinear(theLinear),mAngular(theAngular) {};
+	Steering( const Vector2D& theLinear = gZeroVector2D, float theAngular = 0.0f, bool applyDirectly = false ):mLinear(theLinear),mAngular(theAngular),mSeekRadius(200),mAvoidRadius(75) {};
 	Steering( const Steering& rhs ):mLinear(rhs.mLinear), mAngular(rhs.mAngular), mApplyDirectly(rhs.mApplyDirectly){};
 	~Steering(){};
 
@@ -31,6 +31,8 @@ public:
 	void setLinear( const Vector2D& linear ) { mLinear = linear; };
 	void setAngular( float angular ) { mAngular = angular; };
 	bool shouldApplyDirectly() const { return mApplyDirectly; };
+	float getRadius() { return mSeekRadius; }
+	void setRadius(float radius) { mSeekRadius = radius; }
 
 	virtual Steering* getSteering() { return this; };//overridden by sub-classes
 
@@ -38,5 +40,7 @@ protected:
 	Vector2D mLinear;//linear velocity
 	float mAngular;//angular velocity
 	bool mApplyDirectly;
+	float mSeekRadius;//used in wander behaviors
+	float mAvoidRadius;
 
 };

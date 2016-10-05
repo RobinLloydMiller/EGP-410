@@ -73,6 +73,15 @@
     <ClCompile Include="WanderAndSeekSteering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="ToggleDebugMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectPropertiesMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="ChangePropertiesMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -146,6 +155,18 @@
     </ClInclude>
     <ClInclude Include="WanderAndSeekSteering.h">
       <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="StateManager.h">
+      <Filter>Header Files\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="ToggleDebugMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="ChangePropertiesMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectPropertiesMessage.h">
+      <Filter>Header Files\Messaging</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

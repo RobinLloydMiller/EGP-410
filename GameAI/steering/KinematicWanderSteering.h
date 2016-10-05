@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Steering.h"
+#include <algorithm>
 
 class KinematicUnit;
 

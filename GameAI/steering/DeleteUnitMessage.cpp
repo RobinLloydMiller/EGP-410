@@ -18,7 +18,9 @@ DeleteUnitMessage::~DeleteUnitMessage()
 
 void DeleteUnitMessage::process()
 {
-	if (mIndex == -1)
+	if (gpGame->getKinematicUnitManager()->getUnitCount() == 0)
+		gpGame->exitGame();
+	else if (mIndex == -1)
 		gpGame->getKinematicUnitManager()->deleteUnit();
 	else
 		gpGame->getKinematicUnitManager()->deleteUnit(mIndex);

@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddUnitMessage.h" />
+    <ClInclude Include="ChangePropertiesMessage.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DeleteUnitMessage.h" />
     <ClInclude Include="DynamicArriveSteering.h" />
@@ -30,14 +31,18 @@
     <ClInclude Include="KinematicUnit.h" />
     <ClInclude Include="KinematicWanderSteering.h" />
     <ClInclude Include="PlayerMoveToMessage.h" />
+    <ClInclude Include="SelectPropertiesMessage.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="StateManager.h" />
     <ClInclude Include="Steering.h" />
     <ClInclude Include="KinematicUnitManager.h" />
+    <ClInclude Include="ToggleDebugMessage.h" />
     <ClInclude Include="WanderAndSeekSteering.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddUnitMessage.cpp" />
+    <ClCompile Include="ChangePropertiesMessage.cpp" />
     <ClCompile Include="DeleteUnitMessage.cpp" />
     <ClCompile Include="DynamicArriveSteering.cpp" />
     <ClCompile Include="DynamicSeekSteering.cpp" />
@@ -56,10 +61,12 @@
     <ClCompile Include="KinematicWanderSteering.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="PlayerMoveToMessage.cpp" />
+    <ClCompile Include="SelectPropertiesMessage.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="KinematicUnitManager.cpp" />
+    <ClCompile Include="ToggleDebugMessage.cpp" />
     <ClCompile Include="WanderAndSeekSteering.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

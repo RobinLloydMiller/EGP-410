@@ -77,6 +77,7 @@ bool Game::init()
 	mpSpriteManager = new SpriteManager();
 	mpKinematicUnitManager = new KinematicUnitManager();
 	mpInputManager = new InputManager();
+	mpStateManager = new StateManager();
 
 	//startup a lot of allegro stuff
 
@@ -185,14 +186,6 @@ bool Game::init()
 
 	//setup units
 	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(0.0f, 0.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
-	mpKinematicUnitManager->addUnit( mpEnemyArrow, Vector2D(1000.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
-	//unit count from manager excludes the player so count - 1 get the unit last added because the vecotr is always added to from the back
-	//give steeing behavior
-	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicArrive(mpKinematicUnitManager->getPlayer());
-
-	mpKinematicUnitManager->addUnit( mpEnemyArrow, Vector2D(500.0f, 500.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f );
-	//give steering behavior
-	mpKinematicUnitManager->getUnit(mpKinematicUnitManager->getUnitCount() - 1)->dynamicSeek(mpKinematicUnitManager->getPlayer());
 
 	return true;
 }
@@ -221,6 +214,8 @@ void Game::cleanup()
 	mpMessageManager = NULL;
 	delete mpInputManager;
 	mpInputManager = NULL;
+	delete mpStateManager;
+	mpStateManager = NULL;
 
 	al_destroy_sample(mpSample);
 	mpSample = NULL;
@@ -257,6 +252,14 @@ void Game::processLoop()
 	mpKinematicUnitManager->draw(GRAPHICS_SYSTEM->getBackBuffer());
 	//mpInputManager->drawText(GRAPHICS_SYSTEM->getBackBuffer());
 	GRAPHICS_SYSTEM->drawText(mpFont, 255, 255, 255, mpInputManager->getMouseX(), mpInputManager->getMouseY(), ALLEGRO_ALIGN_CENTRE, mpInputManager->getMousePosString().c_str());
+
+	if (getCurrState() == DEBUG_ON)
+	{
+		if (mpKinematicUnitManager->getUnitCount() > 0)
+			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, getEnemyMaxVelocity(), getEnemyReactionRadius(), getEnemyAngularVelocity(), getEnemyMaxAcceleration());
+		else
+			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, 0, 0, 0, 0);
+	}
 
 	mpMessageManager->processMessagesForThisframe();
 

@@ -27,6 +27,7 @@ public:
 
 	static ALLEGRO_BITMAP* switchTargetBitmap( ALLEGRO_BITMAP* pNewTarget );//return old target
 	static void drawText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, const char* text);
+	static void drawDebugText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, float vel, float radius, float angVel, float accel);
 
 private:
 	ALLEGRO_DISPLAY* mpDisplay;

@@ -20,7 +20,6 @@ private:
 	float getDistance(Vector2D pos, Vector2D pos2);
 	KinematicUnit* mpMover;
 	KinematicUnit* mpTarget;
-	const float SEEK_RADIUS = 200;
 };
 
 #endif

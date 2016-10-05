@@ -9,10 +9,10 @@ WanderAndSeekSteering::WanderAndSeekSteering(KinematicUnit * pMover, KinematicUn
 Steering* WanderAndSeekSteering::getSteering()
 {
 	float distance = getDistance(mpMover->getPosition(), mpTarget->getPosition());
-	std::cout << distance << std::endl;
+	//std::cout << distance << std::endl;
 
 	//seek
-	if (distance < SEEK_RADIUS)
+	if (distance < mSeekRadius)
 	{
 		mApplyDirectly = false;
 
@@ -31,6 +31,37 @@ Steering* WanderAndSeekSteering::getSteering()
 		mApplyDirectly = true;
 		mLinear = mpMover->getOrientationAsVector() * mpMover->getMaxVelocity();
 		mAngular = mpMover->getOrientation() * (genRandomBinomial() * MAX_WANDER_ROTATION);
+	}
+
+	//avoid other units
+	int closestIndex = -1;
+	int closestDistance = mAvoidRadius;
+
+	for (int j = 0; j < gpGame->getKinematicUnitManager()->getUnitCount(); j++)
+	{
+		if (gpGame->getKinematicUnitManager()->getUnit(j) != mpMover)
+		{
+			float dist = getDistance(gpGame->getKinematicUnitManager()->getUnit(j)->getPosition(), mpMover->getPosition());
+
+			if (dist < closestDistance)
+			{
+				closestDistance = dist;
+				closestIndex = j;
+			}
+		}
+	}
+
+	if (closestIndex != -1)
+	{
+		mApplyDirectly = false;
+		//float x = (mpMover->getVelocity().getX() + gpGame->getKinematicUnitManager()->getUnit(closestIndex)->getVelocity().getX()) / 2.0f;
+		//float y = (mpMover->getVelocity().getY() + gpGame->getKinematicUnitManager()->getUnit(closestIndex)->getVelocity().getY()) / 2.0f;
+		//Vector2D direction(x, y);
+		Vector2D direction = mpMover->getPosition() - gpGame->getKinematicUnitManager()->getUnit(closestIndex)->getPosition();
+		direction.normalize();
+		direction *= mpMover->getMaxVelocity();
+		mLinear = direction;
+		mAngular = 0;
 	}
 
 	return this;
