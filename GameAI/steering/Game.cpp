@@ -166,7 +166,7 @@ bool Game::init()
 	mpMessageManager = new GameMessageManager();
 
 	//load buffers
-	mBackgroundBufferID = mpGraphicsBufferManager->loadBuffer("wallpaper.bmp");
+	mBackgroundBufferID = mpGraphicsBufferManager->loadBuffer("Background.png");
 	mPlayerIconBufferID = mpGraphicsBufferManager->loadBuffer("arrow.bmp");
 	mEnemyIconBufferID = mpGraphicsBufferManager->loadBuffer("enemy-arrow.bmp");
 	

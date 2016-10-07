@@ -22,6 +22,7 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float or
 ,mMaxVelocity(maxVelocity)
 ,mMaxAcceleration(maxAcceleration)
 {
+	mFleeTarget = Vector2D(1024/2, 768/2);
 	Vector2D topCorner(position.getX() - 18, position.getY() - 18);
 	Vector2D bottomCorner(position.getX() + 18, position.getY() + 18);
 	mpCollider = new BoxCollider(topCorner, bottomCorner);
@@ -41,7 +42,8 @@ void KinematicUnit::draw( GraphicsBuffer* pBuffer )
 void KinematicUnit::update(float time)
 {
 	Steering* steering;
-	if( mpCurrentSteering != NULL )
+	
+	if (mpCurrentSteering != NULL)
 	{
 		steering = mpCurrentSteering->getSteering();
 	}
@@ -50,39 +52,40 @@ void KinematicUnit::update(float time)
 		steering = &gNullSteering;
 	}
 
-	if( steering->shouldApplyDirectly() )
+	if (steering->shouldApplyDirectly())
 	{
 		//not stopped
-		if( getVelocity().getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED )
+		if (getVelocity().getLengthSquared() > MIN_VELOCITY_TO_TURN_SQUARED)
 		{
-			setVelocity( steering->getLinear() );
-			setOrientation( steering->getAngular() );
+			setVelocity(steering->getLinear());
+			setOrientation(steering->getAngular());
 		}
 
 		//since we are applying the steering directly we don't want any rotational velocity
-		setRotationalVelocity( 0.0f );
-		steering->setAngular( 0.0f );
+		setRotationalVelocity(0.0f);
+		steering->setAngular(0.0f);
 	}
-	mOldPos = mPosition;
-	//move the unit using current velocities
-	Kinematic::update( time );
 
-	mpCollider->update(mPosition - mOldPos);
 	for (auto it : gpGame->getWalls())
 	{
 		if (mpCollider->checkCollision(it))
 		{
-			setVelocity(mVelocity * -2.5f);
-			mOldPos = mPosition;
-			Kinematic::update(time);
-			mpCollider->update(mPosition - mOldPos);
-			break;
+			Vector2D newVel = mFleeTarget - mPosition;
+			newVel.normalize();
+			newVel *= mMaxVelocity;
+			setVelocity(newVel);			
 		}
 	}
 
+	mOldPos = mPosition;
+
+	//move the unit using current velocities
+	Kinematic::update(time);
+
+	mpCollider->update(mPosition - mOldPos);
 	//calculate new velocities
-	calcNewVelocities( *steering, time, mMaxVelocity, 25.0f );
-	
+	calcNewVelocities(*steering, time, mMaxVelocity, 25.0f);	
+		
 	//move to oposite side of screen if we are off
 	GRAPHICS_SYSTEM->wrapCoordinates( mPosition );
 

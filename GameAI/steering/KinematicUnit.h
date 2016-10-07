@@ -62,7 +62,7 @@ private:
 	float mMaxVelocity;
 	float mMaxAcceleration;
 	BoxCollider* mpCollider;
-	Vector2D mOldPos;
+	Vector2D mOldPos, mFleeTarget;
 
 	void setSteering( Steering* pSteering );
 

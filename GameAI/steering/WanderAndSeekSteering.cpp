@@ -4,6 +4,7 @@
 WanderAndSeekSteering::WanderAndSeekSteering(KinematicUnit * pMover, KinematicUnit * pTarget, bool shouldFlee)
 :mpMover(pMover), mpTarget(pTarget), mShouldFlee(shouldFlee)
 {
+	newWanderTarget();
 }
 
 Steering* WanderAndSeekSteering::getSteering()
@@ -25,12 +26,23 @@ Steering* WanderAndSeekSteering::getSteering()
 		mLinear *= mpMover->getMaxVelocity();
 		mAngular = 0;
 	}
+	//new wander behavior that interacts with walls better
+	//wanders to random point until close to it than chooses a new point
 	//wander
-	else
+	else if(getDistance(mpMover->getPosition(), mWanderTarget) > mWanderTargetRadius)
 	{
-		mApplyDirectly = true;
-		mLinear = mpMover->getOrientationAsVector() * mpMover->getMaxVelocity();
-		mAngular = mpMover->getOrientation() * (genRandomBinomial() * MAX_WANDER_ROTATION);
+		mLinear = mWanderTarget - mpMover->getPosition();
+		mLinear.normalize();
+		mLinear *= mpMover->getMaxVelocity();
+		mAngular = 0;
+
+		//mApplyDirectly = true;
+		//mLinear = mpMover->getOrientationAsVector() * mpMover->getMaxVelocity();
+		//mAngular = mpMover->getOrientation() * (genRandomBinomial() * MAX_WANDER_ROTATION);
+	}
+	else if (getDistance(mpMover->getPosition(), mWanderTarget) < mWanderTargetRadius)
+	{
+		newWanderTarget();
 	}
 
 	//avoid other units
