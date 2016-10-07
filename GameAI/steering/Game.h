@@ -58,6 +58,7 @@ public:
 	inline float getEnemyReactionRadius() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getRadius(); };
 	inline float getEnemyAngularVelocity() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getAngular(); };
 	inline float getEnemyMaxAcceleration() const { return mpKinematicUnitManager->getUnit(0)->getMaxAcceleration(); };
+	inline std::vector<BoxCollider*> getWalls() const { return mpWalls; }
 	
 	//i know this could be easier with a bool but i hope this can be expanded to include other game states
 	void toggleDebugState()
@@ -81,6 +82,9 @@ private:
 	bool mShouldExit;
 	Sprite* mpEnemyArrow;
 	StateManager* mpStateManager;
+	//wall indexes
+	//0 top, 1 bottom, 2 left, 3 right
+	std::vector<BoxCollider*> mpWalls;
 
 	//should be somewhere else
 	ALLEGRO_FONT* mpFont;

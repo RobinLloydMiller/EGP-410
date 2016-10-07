@@ -22,11 +22,15 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float or
 ,mMaxVelocity(maxVelocity)
 ,mMaxAcceleration(maxAcceleration)
 {
+	Vector2D topCorner(position.getX() - 18, position.getY() - 18);
+	Vector2D bottomCorner(position.getX() + 18, position.getY() + 18);
+	mpCollider = new BoxCollider(topCorner, bottomCorner);
 }
 
 KinematicUnit::~KinematicUnit()
 {
 	delete mpCurrentSteering;
+	delete mpCollider;
 }
 
 void KinematicUnit::draw( GraphicsBuffer* pBuffer )
@@ -36,6 +40,8 @@ void KinematicUnit::draw( GraphicsBuffer* pBuffer )
 
 void KinematicUnit::update(float time)
 {
+	mOldPos = mPosition;
+
 	Steering* steering;
 	if( mpCurrentSteering != NULL )
 	{
@@ -62,8 +68,17 @@ void KinematicUnit::update(float time)
 
 	//move the unit using current velocities
 	Kinematic::update( time );
+
+	mpCollider->update(mPosition - mOldPos);
+	for (auto it : gpGame->getWalls())
+	{
+		if (mpCollider->checkCollision(it))
+			std::cout << "get outta here";
+	}
+
 	//calculate new velocities
 	calcNewVelocities( *steering, time, mMaxVelocity, 25.0f );
+	
 	//move to oposite side of screen if we are off
 	GRAPHICS_SYSTEM->wrapCoordinates( mPosition );
 

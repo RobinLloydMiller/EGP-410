@@ -25,6 +25,7 @@ Game* gpGame = NULL;
 
 const int WIDTH = 1024;
 const int HEIGHT = 768;
+const int WALL_DEPTH = 50;
 
 Game::Game()
 	:mpGraphicsSystem(NULL)
@@ -78,6 +79,10 @@ bool Game::init()
 	mpKinematicUnitManager = new KinematicUnitManager();
 	mpInputManager = new InputManager();
 	mpStateManager = new StateManager();
+	mpWalls.push_back(new BoxCollider(Vector2D(0, 0), Vector2D(WIDTH, WALL_DEPTH)));	
+	mpWalls.push_back(new BoxCollider(Vector2D(0, HEIGHT - WALL_DEPTH), Vector2D(WIDTH, HEIGHT)));
+	mpWalls.push_back(new BoxCollider(Vector2D(0, 0), Vector2D(WALL_DEPTH, HEIGHT - WALL_DEPTH)));
+	mpWalls.push_back(new BoxCollider(Vector2D(WIDTH - WALL_DEPTH, 0), Vector2D(WIDTH, HEIGHT)));
 
 	//startup a lot of allegro stuff
 
@@ -185,7 +190,7 @@ bool Game::init()
 	}
 
 	//setup units
-	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(0.0f, 0.0f), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
+	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(100, 100), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
 
 	return true;
 }
@@ -216,6 +221,13 @@ void Game::cleanup()
 	mpInputManager = NULL;
 	delete mpStateManager;
 	mpStateManager = NULL;
+
+	for(size_t i = 0; i < mpWalls.size(); i++)
+	{
+		delete mpWalls[i];
+	}
+	
+	mpWalls.clear();
 
 	al_destroy_sample(mpSample);
 	mpSample = NULL;

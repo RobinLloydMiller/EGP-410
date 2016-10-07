@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddUnitMessage.h" />
+    <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="ChangePropertiesMessage.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DeleteUnitMessage.h" />
@@ -42,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AddUnitMessage.cpp" />
+    <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="ChangePropertiesMessage.cpp" />
     <ClCompile Include="DeleteUnitMessage.cpp" />
     <ClCompile Include="DynamicArriveSteering.cpp" />

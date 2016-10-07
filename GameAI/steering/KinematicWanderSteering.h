@@ -5,7 +5,7 @@
 
 class KinematicUnit;
 
-const float MAX_WANDER_ROTATION = 1.0f;
+const float MAX_WANDER_ROTATION = 3.5f;
 
 class KinematicWanderSteering:public Steering
 {
