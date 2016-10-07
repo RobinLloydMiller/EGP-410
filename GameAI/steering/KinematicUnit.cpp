@@ -40,8 +40,6 @@ void KinematicUnit::draw( GraphicsBuffer* pBuffer )
 
 void KinematicUnit::update(float time)
 {
-	mOldPos = mPosition;
-
 	Steering* steering;
 	if( mpCurrentSteering != NULL )
 	{
@@ -65,7 +63,7 @@ void KinematicUnit::update(float time)
 		setRotationalVelocity( 0.0f );
 		steering->setAngular( 0.0f );
 	}
-
+	mOldPos = mPosition;
 	//move the unit using current velocities
 	Kinematic::update( time );
 
@@ -73,7 +71,13 @@ void KinematicUnit::update(float time)
 	for (auto it : gpGame->getWalls())
 	{
 		if (mpCollider->checkCollision(it))
-			std::cout << "get outta here";
+		{
+			setVelocity(mVelocity * -2.5f);
+			mOldPos = mPosition;
+			Kinematic::update(time);
+			mpCollider->update(mPosition - mOldPos);
+			break;
+		}
 	}
 
 	//calculate new velocities
