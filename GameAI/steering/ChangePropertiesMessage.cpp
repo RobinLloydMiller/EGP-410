@@ -37,11 +37,11 @@ void ChangePropertiesMessage::process()
 		else
 			gpGame->getKinematicUnitManager()->updateReactionRadius(gpGame->getEnemyReactionRadius() + change);
 		break;
-	case ANGULAR_VELOCITY:
-		if (gpGame->getEnemyAngularVelocity() + change < 0)
-			gpGame->getKinematicUnitManager()->updateAngularVelocity(0);
+	case ROTATIONAL_VELOCITY:
+		if (gpGame->getEnemyMaxRotationalVelocity() + change < 0)
+			gpGame->getKinematicUnitManager()->updateMaxRotationalVelocity(0);
 		else
-			gpGame->getKinematicUnitManager()->updateAngularVelocity(gpGame->getEnemyAngularVelocity() + change);
+			gpGame->getKinematicUnitManager()->updateMaxRotationalVelocity(gpGame->getEnemyMaxRotationalVelocity() + change);
 		break;
 	case MAX_ACCELERATION:
 		if (gpGame->getEnemyMaxAcceleration() + change < 0)

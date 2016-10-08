@@ -21,6 +21,7 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float or
 ,mpCurrentSteering(NULL)
 ,mMaxVelocity(maxVelocity)
 ,mMaxAcceleration(maxAcceleration)
+,mMaxRotationalVelocity(25.0f)
 {
 	mFleeTarget = Vector2D(1024/2, 768/2);
 	Vector2D topCorner(position.getX() - 18, position.getY() - 18);
@@ -84,13 +85,13 @@ void KinematicUnit::update(float time)
 
 	mpCollider->update(mPosition - mOldPos);
 	//calculate new velocities
-	calcNewVelocities(*steering, time, mMaxVelocity, 25.0f);	
+	calcNewVelocities(*steering, time, mMaxVelocity, mMaxRotationalVelocity);	
 		
 	//move to oposite side of screen if we are off
 	GRAPHICS_SYSTEM->wrapCoordinates( mPosition );
 
 	//set the orientation to match the direction of travel
-	//setNewOrientation();
+	setNewOrientation();
 }
 
 //private - deletes old Steering before setting

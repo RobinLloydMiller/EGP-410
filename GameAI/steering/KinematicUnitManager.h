@@ -23,7 +23,7 @@ public:
 	void updateMaxVelocity(float vel);
 	void updateMaxAcceleration(float accel);
 	void updateReactionRadius(float radius);
-	void updateAngularVelocity(float angVel);
+	void updateMaxRotationalVelocity(float rotVel);
 	
 	//getter functions
 	KinematicUnit* getPlayer() { return mpPlayer; };

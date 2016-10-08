@@ -35,6 +35,8 @@ public:
 	void setMaxVelocity(float vel) { mMaxVelocity = vel; };
 	Vector2D getVelocity() const { return mVelocity; };
 	float getMaxAcceleration() const { return mMaxAcceleration; };
+	float getMaxRotationalVelocity() const { return mMaxRotationalVelocity; };
+	void setMaxRotationalVelocity(float rotVel) { mMaxRotationalVelocity = rotVel; };
 	void setMaxAcceleration(float accel) { mMaxAcceleration = accel; };
 	void setVelocity( const Vector2D& velocity ){ mVelocity = velocity; };
 	Steering* getSteering() { return mpCurrentSteering; };
@@ -61,6 +63,7 @@ private:
 	Vector2D mTarget;//used only for Kinematic seek and arrive
 	float mMaxVelocity;
 	float mMaxAcceleration;
+	float mMaxRotationalVelocity;
 	BoxCollider* mpCollider;
 	Vector2D mOldPos, mFleeTarget;
 

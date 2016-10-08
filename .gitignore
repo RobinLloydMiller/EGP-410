@@ -1,3 +1,0 @@
-#ignore debug folder and visual studio temp stuff
-./GameAI/steering/Debug/
-./GameAI/steering/.vs/

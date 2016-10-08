@@ -268,7 +268,7 @@ void Game::processLoop()
 	if (getCurrState() == DEBUG_ON)
 	{
 		if (mpKinematicUnitManager->getUnitCount() > 0)
-			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, getEnemyMaxVelocity(), getEnemyReactionRadius(), getEnemyAngularVelocity(), getEnemyMaxAcceleration());
+			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, getEnemyMaxVelocity(), getEnemyReactionRadius(), getEnemyMaxRotationalVelocity(), getEnemyMaxAcceleration());
 		else
 			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, 0, 0, 0, 0);
 	}

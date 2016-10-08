@@ -56,7 +56,7 @@ public:
 	inline EnemyProperty getCurrProperty() const { return mpStateManager->getCurrProperty(); };
 	inline float getEnemyMaxVelocity() const { return mpKinematicUnitManager->getUnit(0)->getMaxVelocity(); };
 	inline float getEnemyReactionRadius() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getRadius(); };
-	inline float getEnemyAngularVelocity() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getAngular(); };
+	inline float getEnemyMaxRotationalVelocity() const { return mpKinematicUnitManager->getUnit(0)->getMaxRotationalVelocity(); };
 	inline float getEnemyMaxAcceleration() const { return mpKinematicUnitManager->getUnit(0)->getMaxAcceleration(); };
 	inline std::vector<BoxCollider*> getWalls() const { return mpWalls; }
 	

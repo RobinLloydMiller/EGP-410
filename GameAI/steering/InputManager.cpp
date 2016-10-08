@@ -80,7 +80,7 @@ void InputManager::update()
 
 	if (keyDown(ALLEGRO_KEY_A, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new SelectPropertiesMessage(ANGULAR_VELOCITY);
+		GameMessage* pMessage = new SelectPropertiesMessage(ROTATIONAL_VELOCITY);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 

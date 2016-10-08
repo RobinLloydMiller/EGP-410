@@ -95,7 +95,7 @@ void GraphicsSystem::drawText(ALLEGRO_FONT* pFont, int r, int g, int b, float x,
 	al_draw_text(pFont, al_map_rgb(r, g, b), x, y, flags, text);
 }
 
-void GraphicsSystem::drawDebugText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, float vel, float radius, float angVel, float accel)
+void GraphicsSystem::drawDebugText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, float vel, float radius, float rotVel, float accel)
 {
 	std::string draw = "Enemy Max Velocity: " + std::to_string(vel);
 	if(gpGame->getCurrProperty() == MAX_VELOCITY)
@@ -109,8 +109,8 @@ void GraphicsSystem::drawDebugText(ALLEGRO_FONT* pFont, int r, int g, int b, flo
 	else
 		drawText(pFont, r, g, b, x, y + 25, ALLEGRO_ALIGN_LEFT, draw.c_str());
 
-	draw = "Angular Velocity: " + std::to_string(angVel);
-	if (gpGame->getCurrProperty() == ANGULAR_VELOCITY)
+	draw = "Max Rotational Velocity: " + std::to_string(rotVel);
+	if (gpGame->getCurrProperty() == ROTATIONAL_VELOCITY)
 		drawText(pFont, 0, 0, 0, x, y + 50, ALLEGRO_ALIGN_LEFT, draw.c_str());
 	else
 		drawText(pFont, r, g, b, x, y + 50, ALLEGRO_ALIGN_LEFT, draw.c_str());

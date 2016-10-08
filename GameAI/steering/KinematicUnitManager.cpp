@@ -112,11 +112,11 @@ void KinematicUnitManager::updateReactionRadius(float radius)
 	return;
 }
 
-void KinematicUnitManager::updateAngularVelocity(float angVel)
+void KinematicUnitManager::updateMaxRotationalVelocity(float rotVel)
 {
 	for (auto it : mUnits)
 	{
-		it->getSteering()->setAngular(angVel);
+		it->setMaxRotationalVelocity(rotVel);
 	}
 	return;
 }
