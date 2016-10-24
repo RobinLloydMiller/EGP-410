@@ -15,7 +15,6 @@ class AlignmentSteering : public Steering
 	private:
 		//the radius in which a boid will start aligning with other boids
 		const float mFlockRadius = 200;
-		int mBoidCount = 0;
 		KinematicUnit* mpMover;
 };
 

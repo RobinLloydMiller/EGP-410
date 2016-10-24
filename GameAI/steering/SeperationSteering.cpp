@@ -8,6 +8,10 @@ SeperationSteering::SeperationSteering(KinematicUnit* pMover)
 
 Steering* SeperationSteering::getSteering()
 {
+	int boidCount = 0;
+
+	mLinear = mpMover->getVelocity();
+
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)
 	{
 		if (gpGame->getKinematicUnitManager()->getUnit(i) != mpMover)
@@ -15,15 +19,15 @@ Steering* SeperationSteering::getSteering()
 			if (getDistance(gpGame->getKinematicUnitManager()->getUnit(i)->getPosition(), mpMover->getPosition()) < mFlockRadius)
 			{
 				mLinear += (mpMover->getPosition() - gpGame->getKinematicUnitManager()->getUnit(i)->getPosition());
-				++mBoidCount;
+				++boidCount;
 			}
 		}
 	}
 
-	if (mBoidCount == 0)
+	if (boidCount == 0)
 		return this;
 
-	mLinear /= mBoidCount;
+	mLinear /= boidCount;
 	mLinear.normalize();
 	mAngular = 0;
 

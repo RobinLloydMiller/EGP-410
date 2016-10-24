@@ -23,23 +23,24 @@ BoidsSteering::~BoidsSteering()
 
 Steering* BoidsSteering::getSteering()
 {
-	/*if (getDistance(mpMover->getPosition(), mWanderTarget) > mWanderTargetRadius)
+	mApplyDirectly = false;
+
+	if (getDistance(mpMover->getPosition(), mWanderTarget) > mWanderTargetRadius)
 	{
 		mLinear = mWanderTarget - mpMover->getPosition();
-		mLinear.normalize();
 		mLinear *= mpMover->getMaxVelocity();
-		mAngular = 0;
+		mLinear.normalize();
 	}
 	else
 	{
 		newWanderTarget();
-	}*/
+	}
 
 	mpAlignmentSteering->getSteering();
 	mpCohesionSteering->getSteering();
 	mpSeperationSteering->getSteering();
 
-	mLinear += mpAlignmentSteering->getLinear() + mpCohesionSteering->getLinear() + mpSeperationSteering->getLinear();
+	mLinear += (mpAlignmentSteering->getLinear() * 3) +(mpCohesionSteering->getLinear() * 1) + (mpSeperationSteering->getLinear() * 3);
 	mLinear.normalize();
 	mLinear *= mpMover->getMaxVelocity();
 

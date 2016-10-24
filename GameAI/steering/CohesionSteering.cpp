@@ -8,6 +8,10 @@ CohesionSteering::CohesionSteering(KinematicUnit* pMover)
 
 Steering* CohesionSteering::getSteering()
 {
+	int boidCount = 0;
+
+	mLinear = mpMover->getVelocity();
+	
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)
 	{
 		if (gpGame->getKinematicUnitManager()->getUnit(i) != mpMover)
@@ -15,15 +19,15 @@ Steering* CohesionSteering::getSteering()
 			if (getDistance(gpGame->getKinematicUnitManager()->getUnit(i)->getPosition(), mpMover->getPosition()) < mFlockRadius)
 			{
 				mLinear += gpGame->getKinematicUnitManager()->getUnit(i)->getPosition();
-				++mBoidCount;
+				++boidCount;
 			}
 		}
 	}
 
-	if (mBoidCount == 0)
+	if (boidCount == 0)
 		return this;
 
-	mLinear /= mBoidCount;
+	mLinear /= boidCount;
 	mLinear -= mpMover->getPosition();
 	mLinear.normalize();
 	mAngular = 0;
