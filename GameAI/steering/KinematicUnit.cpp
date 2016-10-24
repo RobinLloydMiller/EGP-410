@@ -10,6 +10,7 @@
 #include "DynamicSeekSteering.h"
 #include "DynamicArriveSteering.h"
 #include "WanderAndSeekSteering.h"
+#include "BoidsSteering.h"
 
 using namespace std;
 
@@ -146,4 +147,10 @@ void KinematicUnit::wanderAndSeek(KinematicUnit* pTarget, bool shouldFlee)
 {
 	WanderAndSeekSteering* pWanderAndSeekSteering = new WanderAndSeekSteering(this, pTarget, shouldFlee);
 	setSteering(pWanderAndSeekSteering);
+}
+
+void KinematicUnit::boids()
+{
+	BoidsSteering* pBoidSteering = new BoidsSteering(this);
+	setSteering(pBoidSteering);
 }

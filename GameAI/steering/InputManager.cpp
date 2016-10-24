@@ -49,6 +49,12 @@ void InputManager::update()
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	if (keyDown(ALLEGRO_KEY_Z, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new AddUnitMessage(BOIDS, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
 	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new ToggleDebugMessage();

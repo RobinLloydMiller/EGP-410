@@ -57,6 +57,7 @@ public:
 	void dynamicFlee( KinematicUnit* pTarget );
 	void dynamicArrive( KinematicUnit* pTarget );
 	void wanderAndSeek(KinematicUnit* pTarget, bool shouldFlee = false);
+	void boids();
 
 private:
 	Sprite* mpSprite;

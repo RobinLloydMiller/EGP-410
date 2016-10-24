@@ -24,7 +24,7 @@ public:
 	//constructors and destructors
 	Steering( const Vector2D& theLinear = gZeroVector2D, float theAngular = 0.0f, bool applyDirectly = false ):mLinear(theLinear),mAngular(theAngular),mSeekRadius(200),mAvoidRadius(75) {};
 	Steering( const Steering& rhs ):mLinear(rhs.mLinear), mAngular(rhs.mAngular), mApplyDirectly(rhs.mApplyDirectly){};
-	~Steering(){};
+	virtual ~Steering(){};
 
 	//accessors
 	const Vector2D& getLinear() const { return mLinear; };
@@ -43,6 +43,18 @@ protected:
 	bool mApplyDirectly;
 	float mSeekRadius;//used in wander behaviors
 	float mAvoidRadius;
+
+	//distance formula for 2D vector
+	float getDistance(Vector2D pos, Vector2D pos2)
+	{
+		float x = pos2.getX() - pos.getX();
+		float y = pos2.getY() - pos.getY();
+
+		x *= x;
+		y *= y;
+
+		return pow((x + y), .5f);
+	}
 
 };
 

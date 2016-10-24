@@ -9,7 +9,8 @@ enum SteeringType
 	DYNAMIC_ARRIVE,
 	DYNAMIC_SEEK,
 	WANDER_AND_SEEK,
-	WANDER_AND_FLEE
+	WANDER_AND_FLEE,
+	BOIDS
 };
 
 class AddUnitMessage : public GameMessage

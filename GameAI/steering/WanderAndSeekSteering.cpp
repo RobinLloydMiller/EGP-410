@@ -78,15 +78,3 @@ Steering* WanderAndSeekSteering::getSteering()
 
 	return this;
 }
-
-//distance formula for 2D vector
-float WanderAndSeekSteering::getDistance(Vector2D pos, Vector2D pos2)
-{
-	float x = pos2.getX() - pos.getX();
-	float y = pos2.getY() - pos.getY();
-
-	x *= x;
-	y *= y;
-
-	return pow((x + y), .5f);
-}

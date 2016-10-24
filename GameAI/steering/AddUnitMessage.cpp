@@ -32,4 +32,6 @@ void AddUnitMessage::process()
 		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->wanderAndSeek(gpGame->getPlayer());
 	else if (mSteeringType == WANDER_AND_FLEE)
 		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->wanderAndSeek(gpGame->getPlayer(), true);
+	else if (mSteeringType == BOIDS)
+		gpGame->getKinematicUnitManager()->getUnit(gpGame->getKinematicUnitManager()->getUnitCount() - 1)->boids();
 }

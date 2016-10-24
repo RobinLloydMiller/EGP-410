@@ -18,7 +18,6 @@ public:
 
 private:
 	bool mShouldFlee;
-	float getDistance(Vector2D pos, Vector2D pos2);
 	void newWanderTarget() { mWanderTarget = Vector2D(rand() % 1024, rand() % 768); }
 	KinematicUnit* mpMover;
 	KinematicUnit* mpTarget;
