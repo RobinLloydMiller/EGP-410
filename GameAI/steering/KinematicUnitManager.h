@@ -5,7 +5,6 @@
 #include <vector>
 
 //UnitManager - manager class that creates, destroys, and updates kinematic units. Also holds pointers to all kinematic units in game
-//Duncan
 
 class KinematicUnitManager : public Trackable
 {
@@ -26,9 +25,9 @@ public:
 	void updateMaxRotationalVelocity(float rotVel);
 	
 	//getter functions
-	KinematicUnit* getPlayer() { return mpPlayer; };
-	KinematicUnit* getUnit(int index) { return mUnits[index]; };
-	int getUnitCount() { return mUnits.size(); }; //this count is excluding the player
+	KinematicUnit* getPlayer() const { return mpPlayer; };
+	KinematicUnit* getUnit(int index) const { return mUnits[index]; };
+	int getUnitCount() const { return mUnits.size(); }; //this count is excluding the player
 
 	//updates all units
 	void update(float time);

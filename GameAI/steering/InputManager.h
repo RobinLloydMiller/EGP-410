@@ -1,8 +1,6 @@
 #ifndef _INPUTMANAGER_H
 #define _INPUTMANAGER_H
 
-#include "Defines.h"
-#include <Vector2D.h>
 #include "PlayerMoveToMessage.h"
 #include "ExitGameMessage.h"
 #include <allegro5/allegro.h>
@@ -16,8 +14,8 @@ public:
 	void update();
 
 	//getters
-	float getMouseX() { return mMouseState.x; }
-	float getMouseY() { return mMouseState.y; }
+	float getMouseX() const { return mMouseState.x; }
+	float getMouseY() const { return mMouseState.y; }
 	std::string getMousePosString() {
 		std::stringstream mousePos;
 		mousePos << mMouseState.x << ":" << mMouseState.y;

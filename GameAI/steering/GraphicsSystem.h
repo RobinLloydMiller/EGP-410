@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRAPHICSSYSTEM_H
+#define _GRAPHICSSYSTEM_H
 
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_font.h>
@@ -35,3 +36,5 @@ private:
 	int mWidth;
 	int mHeight;
 };
+
+#endif

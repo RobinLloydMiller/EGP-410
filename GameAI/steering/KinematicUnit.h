@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _KINEMATICUNIT_H
+#define _KINEMATICUNIT_H
 
 #include "Kinematic.h"
 #include "Steering.h"
@@ -70,3 +71,5 @@ private:
 	void setSteering( Steering* pSteering );
 
 };
+
+#endif

@@ -24,23 +24,12 @@ void InputManager::update()
 	}
 
 	//keypresses
+	//calling appropriate event for the keypress
 	if( al_key_down( &mKeyState, ALLEGRO_KEY_ESCAPE ) )
 	{
 		GameMessage* pMessage = new ExitGameMessage();
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
-
-	/*if (keyDown(ALLEGRO_KEY_A, mKeyState, mPrevKeyState))
-	{
-		GameMessage* pMessage = new AddUnitMessage(DYNAMIC_ARRIVE, 200, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
-		gpGame->getMessageManager()->addMessage(pMessage, 0);
-	}
-
-	if (keyDown(ALLEGRO_KEY_S, mKeyState, mPrevKeyState))
-	{
-		GameMessage* pMessage = new AddUnitMessage(DYNAMIC_SEEK, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
-		gpGame->getMessageManager()->addMessage(pMessage, 0);
-	}*/
 
 	if (keyDown(ALLEGRO_KEY_D, mKeyState, mPrevKeyState))
 	{
@@ -104,10 +93,12 @@ void InputManager::update()
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
-
+	//save previous keystate to have ability to check for key up
 	mPrevKeyState = mKeyState;
 }
 
+//functions identical to Unity's keyDown function
+//checks if key was up last frame and down on current frame
 bool InputManager::keyDown(int key, ALLEGRO_KEYBOARD_STATE& currKeyState, ALLEGRO_KEYBOARD_STATE& prevKeyState)
 {
 	return (al_key_down(&currKeyState, key) && !al_key_down(&prevKeyState, key));

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRAPHICSBUFFER_H
+#define _GRAPHICSBUFFER_H
 
 #include "Trackable.h"
 #include <allegro5/allegro.h>
@@ -41,3 +42,5 @@ public:
 private:
 	ALLEGRO_BITMAP* mpBitmap;//never a subBitmap
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAMEMESSAGE_H
+#define _GAMEMESSAGE_H
 
 #include "Trackable.h"
 
@@ -34,3 +35,5 @@ private:
 	virtual void process() = 0; 
 };
 
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SPRITE_H
+#define _SPRITE_H
 
 #include <string>
 
@@ -28,3 +29,5 @@ ALLEGRO_BITMAP* mpBitmap;//subBitmap based off the GraphicsBuffer object is cont
 	int mWidth;
 	int mHeight;
 };
+
+#endif

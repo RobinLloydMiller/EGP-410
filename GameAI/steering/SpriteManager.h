@@ -1,3 +1,6 @@
+#ifndef _SPRITEMANAGER_H
+#define _SPRITEMANAGER_H
+
 #include "Trackable.h"
 #include "Defines.h"
 #include <map>
@@ -18,3 +21,5 @@ public:
 private:
 	std::map<IDType,Sprite*> mpSprites;
 };
+
+#endif

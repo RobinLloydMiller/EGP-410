@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAME_H
+#define _GAME_H
 
 #include "Trackable.h"
 #include "StateManager.h"
@@ -41,23 +42,29 @@ public:
 	void processLoop();
 	bool endLoop();
 
+	//get manager and other game classes
 	inline GraphicsSystem* getGraphicsSystem() const { return mpGraphicsSystem; };
 	inline GraphicsBufferManager* getGraphicsBufferManager() const { return mpGraphicsBufferManager; };
 	inline KinematicUnitManager* getKinematicUnitManager() const { return mpKinematicUnitManager; };
 	inline KinematicUnit* getPlayer() const { return mpKinematicUnitManager->getPlayer(); };
 	inline SpriteManager* getSpriteManager() const { return mpSpriteManager; };
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
+
+	//get member variables
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
-	inline void exitGame() { mShouldExit = true; };
 	inline Sprite* getEnemySprite() const { return mpEnemyArrow; };
 	inline GameState getCurrState() const { return mpStateManager->getCurrState(); };
-	inline EnemyProperty getCurrProperty() const { return mpStateManager->getCurrProperty(); };
+	
+	//get enemy properties
 	inline float getEnemyMaxVelocity() const { return mpKinematicUnitManager->getUnit(0)->getMaxVelocity(); };
 	inline float getEnemyReactionRadius() const { return mpKinematicUnitManager->getUnit(0)->getSteering()->getRadius(); };
 	inline float getEnemyMaxRotationalVelocity() const { return mpKinematicUnitManager->getUnit(0)->getMaxRotationalVelocity(); };
 	inline float getEnemyMaxAcceleration() const { return mpKinematicUnitManager->getUnit(0)->getMaxAcceleration(); };
+	inline EnemyProperty getCurrProperty() const { return mpStateManager->getCurrProperty(); };
+	
+	inline void exitGame() { mShouldExit = true; };
 	inline std::vector<BoxCollider*> getWalls() const { return mpWalls; }
 	
 	//i know this could be easier with a bool but i hope this can be expanded to include other game states
@@ -99,3 +106,5 @@ float genRandomFloat();//range 0:1 from "Artificial Intelligence for Games", Mil
 
 extern Game* gpGame;
 extern PerformanceTracker* gpPerformanceTracker;
+
+#endif
