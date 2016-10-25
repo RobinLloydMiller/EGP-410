@@ -28,7 +28,7 @@ class BoidsSteering : public Steering
 		virtual Steering* getSteering();
 
 	private:
-		void newWanderTarget() { mWanderTarget = Vector2D(rand() % 1024, rand() % 768); std::cout << mWanderTarget.getX() << std::endl; }
+		void newWanderTarget() { mWanderTarget = Vector2D(rand() % 1024, rand() % 768); }
 
 		AlignmentSteering* mpAlignmentSteering;
 		CohesionSteering* mpCohesionSteering;

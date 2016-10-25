@@ -53,8 +53,10 @@ void InputManager::update()
 	{
 		GameMessage* pMessage = new AddUnitMessage(BOIDS, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
-		GameMessage* pMessage2 = new AddUnitMessage(BOIDS, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		GameMessage* pMessage2 = new AddUnitMessage(BOIDS, 150, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
 		gpGame->getMessageManager()->addMessage(pMessage2, 0);
+		GameMessage* pMessage3 = new AddUnitMessage(BOIDS, 200, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		gpGame->getMessageManager()->addMessage(pMessage3, 0);
 	}
 
 	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
