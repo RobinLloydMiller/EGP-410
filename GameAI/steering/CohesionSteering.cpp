@@ -8,6 +8,7 @@ CohesionSteering::CohesionSteering(KinematicUnit* pMover)
 
 Steering* CohesionSteering::getSteering()
 {
+	mLinear = Vector2D();
 	int boidCount = 0;
 	
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)

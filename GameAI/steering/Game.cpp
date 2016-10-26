@@ -20,6 +20,7 @@
 #include "Timer.h"
 #include "KinematicUnit.h"
 #include "PlayerMoveToMessage.h"
+#include "BoxCollider.h"
 
 Game* gpGame = NULL;
 

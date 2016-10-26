@@ -9,6 +9,29 @@ BoxCollider::~BoxCollider()
 {
 }
 
+Vector2D BoxCollider::getCenter() const
+{
+	Vector2D center;
+
+	float x = mBottomRightCorner.getX() - mTopLeftCorner.getX();
+	float y = mBottomRightCorner.getY() - mTopLeftCorner.getY();
+
+	center.setX(mTopLeftCorner.getX() + (x / 2));
+	center.setY(mTopLeftCorner.getY() + (y / 2));
+
+	return center;
+}
+
+float BoxCollider::getWidth() const
+{
+	return mBottomRightCorner.getX() - mTopLeftCorner.getX();
+}
+
+float BoxCollider::getHeight() const
+{
+	return mBottomRightCorner.getY() - mTopLeftCorner.getY();;
+}
+
 bool BoxCollider::checkCollision(BoxCollider * coll)
 {
 	if (mBottomRightCorner.getX() < coll->getTopCorner().getX())

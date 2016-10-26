@@ -10,8 +10,11 @@ public:
 	BoxCollider(Vector2D topCorner, Vector2D bottomCorner);
 	~BoxCollider();
 
-	Vector2D getTopCorner() { return mTopLeftCorner; }
-	Vector2D getBottomCorner() { return mBottomRightCorner; }
+	Vector2D getTopCorner() const { return mTopLeftCorner; }
+	Vector2D getBottomCorner() const { return mBottomRightCorner; }
+	Vector2D getCenter() const;
+	float getWidth() const;
+	float getHeight() const;
 
 	bool checkCollision(BoxCollider* coll);
 	void update(Vector2D deltaDistance);

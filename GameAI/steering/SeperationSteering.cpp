@@ -8,6 +8,7 @@ SeperationSteering::SeperationSteering(KinematicUnit* pMover)
 
 Steering* SeperationSteering::getSteering()
 {
+	mLinear = Vector2D();
 	int boidCount = 0;
 
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)

@@ -97,6 +97,9 @@
     <ClCompile Include="BoidsSteering.cpp">
       <Filter>Source Files\Steering</Filter>
     </ClCompile>
+    <ClCompile Include="CircleCollider.cpp">
+      <Filter>Source Files\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GraphicsBuffer.h">
@@ -197,6 +200,9 @@
     </ClInclude>
     <ClInclude Include="BoidsSteering.h">
       <Filter>Header Files\Steering</Filter>
+    </ClInclude>
+    <ClInclude Include="CircleCollider.h">
+      <Filter>Header Files\Units</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

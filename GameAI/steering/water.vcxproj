@@ -16,6 +16,7 @@
     <ClInclude Include="BoidsSteering.h" />
     <ClInclude Include="BoxCollider.h" />
     <ClInclude Include="ChangePropertiesMessage.h" />
+    <ClInclude Include="CircleCollider.h" />
     <ClInclude Include="CohesionSteering.h" />
     <ClInclude Include="Defines.h" />
     <ClInclude Include="DeleteUnitMessage.h" />
@@ -51,6 +52,7 @@
     <ClCompile Include="BoidsSteering.cpp" />
     <ClCompile Include="BoxCollider.cpp" />
     <ClCompile Include="ChangePropertiesMessage.cpp" />
+    <ClCompile Include="CircleCollider.cpp" />
     <ClCompile Include="CohesionSteering.cpp" />
     <ClCompile Include="DeleteUnitMessage.cpp" />
     <ClCompile Include="DynamicArriveSteering.cpp" />

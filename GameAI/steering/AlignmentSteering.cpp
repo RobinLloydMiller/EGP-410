@@ -8,6 +8,7 @@ AlignmentSteering::AlignmentSteering(KinematicUnit* pMover)
 
 Steering* AlignmentSteering::getSteering()
 {
+	mLinear = Vector2D();
 	int boidCount = 0;
 
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)

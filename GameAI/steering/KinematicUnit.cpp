@@ -24,10 +24,8 @@ KinematicUnit::KinematicUnit(Sprite *pSprite, const Vector2D &position, float or
 ,mMaxAcceleration(maxAcceleration)
 ,mMaxRotationalVelocity(25.0f)
 {
-	mFleeTarget = Vector2D(1024/2, 768/2);
-	Vector2D topCorner(position.getX() - 18, position.getY() - 18);
-	Vector2D bottomCorner(position.getX() + 18, position.getY() + 18);
-	mpCollider = new BoxCollider(topCorner, bottomCorner);
+	mFleeTarget = Vector2D(1024 / 2, 768 / 2);
+	mpCollider = new CircleCollider(Vector2D(position.getX(), position.getY()));
 }
 
 KinematicUnit::~KinematicUnit()

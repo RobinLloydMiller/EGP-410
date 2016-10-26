@@ -3,7 +3,7 @@
 
 #include "Kinematic.h"
 #include "Steering.h"
-#include "BoxCollider.h"
+#include "CircleCollider.h"
 
 /*KinematicUnit - a unit that is derived from the Kinematic class.  Adds behaviors and max speeds and a current Steering.
 
@@ -66,7 +66,7 @@ private:
 	float mMaxVelocity;
 	float mMaxAcceleration;
 	float mMaxRotationalVelocity;
-	BoxCollider* mpCollider;
+	CircleCollider* mpCollider;
 	Vector2D mOldPos, mFleeTarget;
 
 	void setSteering( Steering* pSteering );

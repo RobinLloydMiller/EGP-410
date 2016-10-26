@@ -12,7 +12,7 @@ BoidsSteering::BoidsSteering(KinematicUnit* pMover)
 	mpAlignmentSteering = new AlignmentSteering(pMover);
 	mpCohesionSteering = new CohesionSteering(pMover);
 	mpSeperationSteering = new SeperationSteering(pMover);
-
+	
 	//newWanderTarget();
 }
 
@@ -26,7 +26,7 @@ BoidsSteering::~BoidsSteering()
 Steering* BoidsSteering::getSteering()
 {
 	mApplyDirectly = false;
-	mLinear = Vector2D(0.1f, 0.1f);
+	mLinear = Vector2D();
 
 	/*bool free = true;
 	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)
