@@ -73,7 +73,7 @@ void KinematicUnit::update(float time)
 			Vector2D newVel = mFleeTarget - mPosition;
 			newVel.normalize();
 			newVel *= mMaxVelocity;
-			setVelocity(newVel);			
+			setVelocity(newVel);
 		}
 	}
 

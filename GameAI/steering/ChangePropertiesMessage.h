@@ -14,6 +14,7 @@ public:
 
 private:
 	int mChange = 10;
+	float mWChange = 0.5f;
 	bool mShouldAdd;
 };
 

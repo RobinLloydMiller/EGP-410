@@ -16,10 +16,17 @@ void ChangePropertiesMessage::process()
 		return;
 
 	int change;
+	float wChange;
 	if (!mShouldAdd)
+	{
 		change = mChange * -1;
+		wChange = mWChange * -1;
+	}
 	else
+	{
 		change = mChange;
+		wChange = mWChange;
+	}
 
 	EnemyProperty property = gpGame->getCurrProperty();
 
@@ -50,13 +57,22 @@ void ChangePropertiesMessage::process()
 			gpGame->getKinematicUnitManager()->updateMaxAcceleration(gpGame->getEnemyMaxAcceleration() + change);
 		break;
 	case ALIGNMENT_WEIGHT:
-		gpGame->getStateManager()->setAlignmentWeight(gpGame->getStateManager()->getAlignmentWeight() + 0.5f);
+		if (gpGame->getStateManager()->getAlignmentWeight() + wChange < 0)
+			gpGame->getStateManager()->setAlignmentWeight(0);
+		else
+			gpGame->getStateManager()->setAlignmentWeight(gpGame->getStateManager()->getAlignmentWeight() + wChange);
 		break;		
 	case COHESION_WEIGHT:
-		gpGame->getStateManager()->setCohesionWeight(gpGame->getStateManager()->getCohesionWeight() + 0.5f);
+		if (gpGame->getStateManager()->getCohesionWeight() + wChange < 0)
+			gpGame->getStateManager()->setCohesionWeight(0);
+		else
+			gpGame->getStateManager()->setCohesionWeight(gpGame->getStateManager()->getCohesionWeight() + wChange);
 		break;
 	case SEPERATION_WEIGHT:
-		gpGame->getStateManager()->setSeperationWeight(gpGame->getStateManager()->getSeperationWeight() + 0.5f);
+		if (gpGame->getStateManager()->getSeperationWeight() + wChange < 0)
+			gpGame->getStateManager()->setSeperationWeight(0);
+		else
+			gpGame->getStateManager()->setSeperationWeight(gpGame->getStateManager()->getSeperationWeight() + wChange);
 		break;
 	}
 }
