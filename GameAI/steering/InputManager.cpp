@@ -16,12 +16,13 @@ void InputManager::update()
 	al_get_keyboard_state(&mKeyState);
 
 	//mouse input
+	/*
 	if (al_mouse_button_down(&mMouseState, 1))//left mouse click
 	{
 		Vector2D pos(mMouseState.x, mMouseState.y);
 		GameMessage* pMessage = new PlayerMoveToMessage(pos);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
-	}
+	}*/
 
 	//keypresses
 	//calling appropriate event for the keypress
@@ -37,7 +38,7 @@ void InputManager::update()
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
-	if (keyDown(ALLEGRO_KEY_S, mKeyState, mPrevKeyState))
+	/*if (keyDown(ALLEGRO_KEY_S, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new AddUnitMessage(WANDER_AND_SEEK, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
@@ -47,21 +48,38 @@ void InputManager::update()
 	{
 		GameMessage* pMessage = new AddUnitMessage(WANDER_AND_FLEE, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}*/
+
+	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
+	{
+		for (int i = 0; i < 5; ++i)
+		{
+			GameMessage* pMessage = new AddUnitMessage(BOIDS, Vector2D(300 + (50*i), 300 + (32 * i)), 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+			gpGame->getMessageManager()->addMessage(pMessage, 0);
+		}
 	}
 
 	if (keyDown(ALLEGRO_KEY_Z, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new AddUnitMessage(BOIDS, 100, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
+		GameMessage* pMessage = new ToggleDebugMessage();
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
-		GameMessage* pMessage2 = new AddUnitMessage(BOIDS, 150, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
-		gpGame->getMessageManager()->addMessage(pMessage2, 0);
-		GameMessage* pMessage3 = new AddUnitMessage(BOIDS, 200, 1, Vector2D(0.0f, 0.0f), 0.0f, 180.0f, 100.0f);
-		gpGame->getMessageManager()->addMessage(pMessage3, 0);
 	}
 
-	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
+	if (keyDown(ALLEGRO_KEY_C, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new ToggleDebugMessage();
+		GameMessage* pMessage = new SelectPropertiesMessage(COHESION_WEIGHT);
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_S, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SelectPropertiesMessage(SEPERATION_WEIGHT);
+		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_A, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SelectPropertiesMessage(ALIGNMENT_WEIGHT);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
@@ -77,7 +95,7 @@ void InputManager::update()
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
 	}
 
-	if (keyDown(ALLEGRO_KEY_A, mKeyState, mPrevKeyState))
+	if (keyDown(ALLEGRO_KEY_O, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new SelectPropertiesMessage(ROTATIONAL_VELOCITY);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
@@ -101,6 +119,11 @@ void InputManager::update()
 	{
 		GameMessage* pMessage = new ChangePropertiesMessage(true);
 		gpGame->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_S, mKeyState, mPrevKeyState) && (al_key_down(&mKeyState, ALLEGRO_KEY_LCTRL) || al_key_down(&mKeyState, ALLEGRO_KEY_RCTRL)))
+	{
+		gpGame->getStateManager()->saveData();
 	}
 
 	//save previous keystate to have ability to check for key up

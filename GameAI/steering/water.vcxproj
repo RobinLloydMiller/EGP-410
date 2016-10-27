@@ -76,6 +76,7 @@
     <ClCompile Include="SeperationSteering.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="StateManager.cpp" />
     <ClCompile Include="Steering.cpp" />
     <ClCompile Include="KinematicUnitManager.cpp" />
     <ClCompile Include="ToggleDebugMessage.cpp" />

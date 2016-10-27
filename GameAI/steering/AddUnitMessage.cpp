@@ -1,10 +1,10 @@
 #include "AddUnitMessage.h"
 #include "Game.h"
 
-AddUnitMessage::AddUnitMessage(SteeringType sType, float xOffset, float orientation, Vector2D& velocity, float rotationVel, float maxVelocity, float maxAcceleration)
+AddUnitMessage::AddUnitMessage(SteeringType sType, Vector2D pos, float orientation, Vector2D& velocity, float rotationVel, float maxVelocity, float maxAcceleration)
 :GameMessage(ADD_UNIT_MESSAGE)
 ,mSteeringType(sType)
-,mXOffset(xOffset)
+,mPos(pos)
 ,mOrientation(orientation)
 ,mVelocity(velocity)
 ,mRotationVel(rotationVel)
@@ -19,9 +19,8 @@ AddUnitMessage::~AddUnitMessage()
 
 void AddUnitMessage::process()
 {
-	Vector2D pos(gpGame->getPlayer()->getPosition().getX() + mXOffset, gpGame->getPlayer()->getPosition().getY());
 	//add unit
-	gpGame->getKinematicUnitManager()->addUnit(gpGame->getEnemySprite(), pos, mOrientation, mVelocity, mRotationVel, mMaxVelocity, mMaxAcceleration);
+	gpGame->getKinematicUnitManager()->addUnit(gpGame->getEnemySprite(), mPos, mOrientation, mVelocity, mRotationVel, mMaxVelocity, mMaxAcceleration);
 
 	//set steering type based on parameter
 	if (mSteeringType == DYNAMIC_ARRIVE)

@@ -12,8 +12,6 @@ BoidsSteering::BoidsSteering(KinematicUnit* pMover)
 	mpAlignmentSteering = new AlignmentSteering(pMover);
 	mpCohesionSteering = new CohesionSteering(pMover);
 	mpSeperationSteering = new SeperationSteering(pMover);
-	
-	//newWanderTarget();
 }
 
 BoidsSteering::~BoidsSteering()
@@ -28,37 +26,11 @@ Steering* BoidsSteering::getSteering()
 	mApplyDirectly = false;
 	mLinear = Vector2D();
 
-	/*bool free = true;
-	for (int i = 0; i < gpGame->getKinematicUnitManager()->getUnitCount(); ++i)
-	{
-		if (gpGame->getKinematicUnitManager()->getUnit(i) != mpMover)
-		{
-			if (getDistance(gpGame->getKinematicUnitManager()->getUnit(i)->getPosition(), mpMover->getPosition()) < 200)
-			{
-				free = false; //sets false if any close
-			}
-		}
-	}
-	if (free) // only does wander if not found in a boid group
-	{
-		if (getDistance(mpMover->getPosition(), mWanderTarget) > mWanderTargetRadius)
-		{
-			mLinear = mWanderTarget - mpMover->getPosition();
-			mLinear *= mpMover->getMaxVelocity();
-			mLinear.normalize();
-		}
-		else
-		{
-			newWanderTarget();
-		}
-	}*/
-
-
 	mpAlignmentSteering->getSteering();
 	mpCohesionSteering->getSteering();
 	mpSeperationSteering->getSteering();
 
-	mLinear += (mpAlignmentSteering->getLinear() * 1) +(mpCohesionSteering->getLinear() * 1) + (mpSeperationSteering->getLinear() * 1.25f);
+	mLinear += (mpAlignmentSteering->getLinear() * gpGame->getStateManager()->getAlignmentWeight()) +(mpCohesionSteering->getLinear() * gpGame->getStateManager()->getCohesionWeight()) + (mpSeperationSteering->getLinear() * gpGame->getStateManager()->getSeperationWeight());
 	mLinear.normalize();
 	mLinear *= mpMover->getMaxVelocity();
 

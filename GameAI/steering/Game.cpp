@@ -168,7 +168,7 @@ bool Game::init()
 
 	//load buffers
 	mBackgroundBufferID = mpGraphicsBufferManager->loadBuffer("Background.png");
-	mPlayerIconBufferID = mpGraphicsBufferManager->loadBuffer("arrow.bmp");
+	//mPlayerIconBufferID = mpGraphicsBufferManager->loadBuffer("arrow.bmp");
 	mEnemyIconBufferID = mpGraphicsBufferManager->loadBuffer("enemy-arrow.bmp");
 	
 	//setup sprites
@@ -177,12 +177,13 @@ bool Game::init()
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
-	GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer( mPlayerIconBufferID );
+	/*GraphicsBuffer* pPlayerBuffer = mpGraphicsBufferManager->getBuffer( mPlayerIconBufferID );
 	Sprite* pArrowSprite = NULL;
 	if( pPlayerBuffer != NULL )
 	{
 		pArrowSprite = mpSpriteManager->createAndManageSprite( PLAYER_ICON_SPRITE_ID, pPlayerBuffer, 0, 0, pPlayerBuffer->getWidth(), pPlayerBuffer->getHeight() );
-	}
+	}*/
+
 	GraphicsBuffer* pAIBuffer = mpGraphicsBufferManager->getBuffer( mEnemyIconBufferID );
 	mpEnemyArrow = NULL;
 	if( pAIBuffer != NULL )
@@ -191,7 +192,7 @@ bool Game::init()
 	}
 
 	//setup units
-	mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(100, 100), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
+	//mpKinematicUnitManager->addPlayer(pArrowSprite, Vector2D(100, 100), 1, Vector2D(0.0f, 0.0f), 0.0f, 200.0f, 10.0f);
 
 	return true;
 }
@@ -269,9 +270,10 @@ void Game::processLoop()
 	if (getCurrState() == DEBUG_ON)
 	{
 		if (mpKinematicUnitManager->getUnitCount() > 0)
-			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, getEnemyMaxVelocity(), getEnemyReactionRadius(), getEnemyMaxRotationalVelocity(), getEnemyMaxAcceleration());
+			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, getEnemyMaxVelocity(), getEnemyReactionRadius(), getEnemyMaxRotationalVelocity(), getEnemyMaxAcceleration(), 
+				mpStateManager->getAlignmentWeight(), mpStateManager->getCohesionWeight(), mpStateManager->getSeperationWeight());
 		else
-			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, 0, 0, 0, 0);
+			GRAPHICS_SYSTEM->drawDebugText(mpFont, 255, 255, 255, 0, 0, ALLEGRO_ALIGN_CENTRE, 0, 0, 0, 0, 0, 0, 0);
 	}
 
 	mpMessageManager->processMessagesForThisframe();

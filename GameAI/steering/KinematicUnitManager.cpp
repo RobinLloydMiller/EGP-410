@@ -24,7 +24,8 @@ void KinematicUnitManager::update(float time)
 		it->update(time);
 	}
 
-	mpPlayer->update(time);
+	if(mpPlayer != NULL)
+		mpPlayer->update(time);
 
 	return;
 }
@@ -36,7 +37,8 @@ void KinematicUnitManager::draw(GraphicsBuffer* pBuffer)
 		it->draw(pBuffer);
 	}
 
-	mpPlayer->draw(pBuffer);
+	if(mpPlayer != NULL)
+		mpPlayer->draw(pBuffer);
 
 	return;
 }

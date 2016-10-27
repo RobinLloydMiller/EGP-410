@@ -1,4 +1,4 @@
-#ifndef _DEFINES_H
+﻿#ifndef _DEFINES_H
 #define _DEFINES_H
 
 #include <string>

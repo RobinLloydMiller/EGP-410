@@ -49,5 +49,14 @@ void ChangePropertiesMessage::process()
 		else
 			gpGame->getKinematicUnitManager()->updateMaxAcceleration(gpGame->getEnemyMaxAcceleration() + change);
 		break;
+	case ALIGNMENT_WEIGHT:
+		gpGame->getStateManager()->setAlignmentWeight(gpGame->getStateManager()->getAlignmentWeight() + 0.5f);
+		break;		
+	case COHESION_WEIGHT:
+		gpGame->getStateManager()->setCohesionWeight(gpGame->getStateManager()->getCohesionWeight() + 0.5f);
+		break;
+	case SEPERATION_WEIGHT:
+		gpGame->getStateManager()->setSeperationWeight(gpGame->getStateManager()->getSeperationWeight() + 0.5f);
+		break;
 	}
 }

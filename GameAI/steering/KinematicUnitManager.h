@@ -9,7 +9,7 @@
 class KinematicUnitManager : public Trackable
 {
 public:
-	KinematicUnitManager() {};
+	KinematicUnitManager() { mpPlayer = NULL; };
 	~KinematicUnitManager();
 	//returns true on success, false on failure
 	bool addUnit(Sprite* pSprite, const Vector2D& position, float orientation, const Vector2D& velocity, float rotationVel, float maxVelocity = 1.0f, float maxAcceleration = 1.0f);

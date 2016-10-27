@@ -24,7 +24,7 @@ const IDType BACKGROUND_SPRITE_ID = 0;
 const IDType PLAYER_ICON_SPRITE_ID = 1;
 const IDType AI_ICON_SPRITE_ID = 2;
 
-const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 class Game:public Trackable
 {
@@ -46,7 +46,8 @@ public:
 	inline KinematicUnitManager* getKinematicUnitManager() const { return mpKinematicUnitManager; };
 	inline KinematicUnit* getPlayer() const { return mpKinematicUnitManager->getPlayer(); };
 	inline SpriteManager* getSpriteManager() const { return mpSpriteManager; };
-	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
+	inline GameMessageManager* getMessageManager() const { return mpMessageManager; };
+	inline StateManager* getStateManager() const { return mpStateManager; };
 
 	//get member variables
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
