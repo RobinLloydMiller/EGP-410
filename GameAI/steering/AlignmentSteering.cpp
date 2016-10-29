@@ -6,6 +6,7 @@ AlignmentSteering::AlignmentSteering(KinematicUnit* pMover)
 {
 }
 
+//applies velocity based off velocity of other boids to make them align
 Steering* AlignmentSteering::getSteering()
 {
 	mLinear = Vector2D();

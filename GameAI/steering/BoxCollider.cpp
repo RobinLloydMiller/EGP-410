@@ -9,6 +9,7 @@ BoxCollider::~BoxCollider()
 {
 }
 
+//calculates center using width length and adding half to the corrdinates of the top left corner
 Vector2D BoxCollider::getCenter() const
 {
 	Vector2D center;
@@ -32,6 +33,7 @@ float BoxCollider::getHeight() const
 	return mBottomRightCorner.getY() - mTopLeftCorner.getY();;
 }
 
+//check if bound of rectangles intersect with each other
 bool BoxCollider::checkCollision(BoxCollider * coll)
 {
 	if (mBottomRightCorner.getX() < coll->getTopCorner().getX())

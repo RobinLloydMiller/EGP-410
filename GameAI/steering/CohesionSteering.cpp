@@ -6,6 +6,7 @@ CohesionSteering::CohesionSteering(KinematicUnit* pMover)
 {
 }
 
+//applies velocity in average direction of other boid
 Steering* CohesionSteering::getSteering()
 {
 	mLinear = Vector2D();

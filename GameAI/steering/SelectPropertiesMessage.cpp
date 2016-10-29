@@ -10,6 +10,7 @@ SelectPropertiesMessage::~SelectPropertiesMessage()
 {
 }
 
+//sets property in state manager to the property passed from input manager
 void SelectPropertiesMessage::process()
 {
 	gpGame->setCurrProperty(mProperty);

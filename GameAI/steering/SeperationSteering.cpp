@@ -6,6 +6,7 @@ SeperationSteering::SeperationSteering(KinematicUnit* pMover)
 {
 }
 
+//applies velocity is a direction away from a boid that is too close
 Steering* SeperationSteering::getSteering()
 {
 	mLinear = Vector2D();

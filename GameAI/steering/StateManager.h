@@ -31,7 +31,7 @@ public:
 	void setCurrProperty(EnemyProperty newProperty) { mCurrProperty = newProperty; }
 	EnemyProperty getCurrProperty() { return mCurrProperty; }
 
-	void saveData();
+	void saveData() const;
 	void loadData();
 
 	//update boids weights
@@ -48,6 +48,10 @@ private:
 	GameState mCurrState;
 	EnemyProperty mCurrProperty;
 	float mAlignmentWeight = 1.0f, mCohesionWeight = 1.0f, mSeperationWeight = 3.0f;
+
+	//checks for float characters in a string
+	//explained further in cpp definition
+	bool isFloat(const std::string& str) const;
 
 };
 

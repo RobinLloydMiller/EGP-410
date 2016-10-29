@@ -12,6 +12,8 @@
 *                                                                                          * 
 *******************************************************************************************/
 
+//the class that manages all three boids steering behaviors
+
 #include "Steering.h"
 
 class KinematicUnit;

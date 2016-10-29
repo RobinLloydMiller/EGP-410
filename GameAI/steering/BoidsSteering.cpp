@@ -21,6 +21,7 @@ BoidsSteering::~BoidsSteering()
 	delete mpSeperationSteering;
 }
 
+//combines all boids steering behaviors with a weight scalar to balance movement appropriately
 Steering* BoidsSteering::getSteering()
 {
 	mApplyDirectly = false;

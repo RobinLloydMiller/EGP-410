@@ -9,8 +9,6 @@ Template projects for base code for EGP 410 assignments.
    * state machine
    * steering
 
-Building instructions are left up to the student. 
-
 #Building Instructions
 In the folder ./GameAI/steering there is a.sln file which can be opened in Visual Studio as well as all source code and assets.  
 The .sln will open the Visual Studio solution. 
@@ -22,17 +20,31 @@ to run in older versions of Visual Studio.
    DeanLib is currently built for Win32 Debug.  
 
 #Program Controls
-F - Add a unit with Wander and Flee behavior relative to the player according to assignment specifications.  
-S - Add a unit with Wander and Seek behavior relative to the player according to assignment specifications.  
-D - Deletes a random unit that is not the player. When no non-player units are left the game closes.  
+I - Adds five units with boids steering behavior in the center of the screen.
+D - Deletes a random unit that is not the player. When no non-player units are left the game closes when this key is pressed.  
 Left Click - Player moves towards the mouse location. The mouse cursor is replaced by x:y coordinates on screen.  
-I - Toggles display of debug properties in left corner of the screen. The black text is the property currently selected.
+Z - Toggles display of debug properties in left corner of the screen. The black text is the property currently selected.
 + - Increases value for all units on screen.
 - - Decrease value for all units on screen. Value cannot drop below 0.
 V - Select Max Velocity control.
 R - Select Reaction Radius control.
 A - Select Max Rotational Velocity control.
 M - Select Max Acceleration control.
+C - Select Cohesion steering weight control.
+S - Select Separation steering weight control.
+A - Select Alignment steering weight control.
+CTRL + S - Saves the current weight configuration to a text file called save_data.txt in the project directory.
+
 ESC - Closes the game.  
+
+#Save File
+The save file is formatted as follows:
+1 //The weight of alignment
+1 // The weight of cohesion
+1.25 //The weight of the separation
+
+Each number is read as a floating point number and the newline is used to separate the different weight values
+If this file exists on the start up of the program than the numbers in the file will be default weights for the steering behaviors
+If a valid number is not provided for any of the weights than default values will be used
 
 #[GitHub Link] (https://github.com/theMagicDunky/EGP-410)

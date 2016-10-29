@@ -95,6 +95,8 @@ void GraphicsSystem::drawText(ALLEGRO_FONT* pFont, int r, int g, int b, float x,
 	al_draw_text(pFont, al_map_rgb(r, g, b), x, y, flags, text);
 }
 
+//this function manually sets the lines of debug text at different heights so they do not overlap
+//this is because allegro's draw text function doesn't support new line characters
 void GraphicsSystem::drawDebugText(ALLEGRO_FONT* pFont, int r, int g, int b, float x, float y, int flags, float vel, float radius, float rotVel, float accel, float alignment, float cohesion, float seperation)
 {
 	std::string draw = "[V] Enemy Max Velocity: " + std::to_string(vel);

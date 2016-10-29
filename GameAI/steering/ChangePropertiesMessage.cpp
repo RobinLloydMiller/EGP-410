@@ -10,6 +10,8 @@ ChangePropertiesMessage::~ChangePropertiesMessage()
 {
 }
 
+//modifies value of currently selected property in state manager
+//bool mShouldAdd denotes whether to add or subtract from value
 void ChangePropertiesMessage::process()
 {
 	if (gpGame->getKinematicUnitManager()->getUnitCount() == 0 || gpGame->getCurrState() == DEBUG_OFF)

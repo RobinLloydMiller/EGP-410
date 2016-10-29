@@ -15,6 +15,8 @@ void CircleCollider::update(Vector2D deltaDistance)
 bool CircleCollider::checkCollision(BoxCollider* coll)
 {
 	//thanks for the help http://stackoverflow.com/questions/401847/circle-rectangle-collision-detection-intersection
+	//used center of circle and center of rectangle to calculate if circle is close enough to intersect with rectangle
+
 	Vector2D rectCenter(coll->getCenter().getX(), coll->getCenter().getY());
 	float rectWidth = coll->getWidth();
 	float rectHeight = coll->getHeight();
