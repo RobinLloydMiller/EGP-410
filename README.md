@@ -47,4 +47,4 @@ Each number is read as a floating point number and the newline is used to separa
 If this file exists on the start up of the program than the numbers in the file will be default weights for the steering behaviors
 If a valid number is not provided for any of the weights than default values will be used
 
-#[GitHub Link] (https://github.com/theMagicDunky/EGP-410)
+#[GitHub Link] (https://github.com/theMagicDunky/EGP-410/commit/80b85a32bfd9ceff6647c3757d4c16d1a6cf21ad)
