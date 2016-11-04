@@ -30,7 +30,7 @@ int main(void)
 	gpPerformanceTracker = new PerformanceTracker();
 	gpGame = new GameApp();
 
-	//have to create this object using downcasting in order 
+	//have to create this object using downcasting in order to access the GameApp specific functions
 	gpGameApp = dynamic_cast<GameApp*>(gpGame);
 
 	gpGame->init();
@@ -49,7 +49,7 @@ int main(void)
 	//cleanup
 	delete pWallpaper;
 	gpGame->cleanup();
-	delete gpGame;
+	delete gpGameApp;
 	delete gpPerformanceTracker;
 
 	gMemoryTracker.reportAllocations( std::cout );

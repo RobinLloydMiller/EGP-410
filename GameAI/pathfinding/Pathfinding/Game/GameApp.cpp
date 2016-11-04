@@ -26,7 +26,7 @@
 
 const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
 const int GRID_SQUARE_SIZE = 32;
-const std::string gFileName = "pathgrid.txt";
+const std::string gFileName = "../Editor/pathgrid.txt";
 
 GameApp::GameApp()
 :mpMessageManager(NULL)
