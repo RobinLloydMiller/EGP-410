@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PATHFINDER_H
+#define _PATHFINDER_H
 
 #include <vector>
 #include <Trackable.h>
@@ -24,3 +25,5 @@ protected:
 	Path mPath;  //cached version of the calculated path
 	
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRIDPATHFINDER_H
+#define _GRIDPATHFINDER_H
 
 #include "Pathfinder.h"
 class GridGraph;
@@ -27,3 +28,5 @@ protected:
 
 	double mTimeElapsed;
 };
+
+#endif

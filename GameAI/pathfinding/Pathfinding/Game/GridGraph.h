@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRIDGRAPH_H
+#define _GRIDGRAPH_H
 
 #include "Graph.h"
 
@@ -16,3 +17,5 @@ public:
 private:
 	Grid* mpGrid;
 };
+
+#endif

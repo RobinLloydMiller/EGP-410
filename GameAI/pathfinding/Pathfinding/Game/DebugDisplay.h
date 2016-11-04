@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _DEBUGDISPLAY_H
+#define _DEBUGDISPLAY_H
 
 #include <Trackable.h>
 #include <Vector2D.h>
@@ -22,3 +23,5 @@ private:
 	Vector2D mPos;
 
 };
+
+#endif

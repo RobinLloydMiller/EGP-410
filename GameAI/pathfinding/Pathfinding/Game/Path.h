@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PATH_H
+#define _PATH_H
 
 #include <vector>
 #include <Trackable.h>
@@ -24,3 +25,5 @@ private:
 	std::vector<Node*> mNodes;
 
 };
+
+#endif

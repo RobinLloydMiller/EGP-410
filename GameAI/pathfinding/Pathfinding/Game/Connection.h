@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _CONNECTION_H
+#define _CONNECTION_H
 
 #include <Trackable.h>
 class Node;
@@ -18,3 +19,5 @@ private:
 	Node* mpTo;
 	float mCost;
 };
+
+#endif

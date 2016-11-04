@@ -19,6 +19,7 @@
 #include "GridVisualizer.h"
 #include "DebugDisplay.h"
 #include "PathfindingDebugContent.h"
+#include "InputManager.h"
 
 #include <fstream>
 #include <vector>
@@ -29,6 +30,7 @@ const std::string gFileName = "pathgrid.txt";
 
 GameApp::GameApp()
 :mpMessageManager(NULL)
+,mpInputManager(NULL)
 ,mpGrid(NULL)
 ,mpGridGraph(NULL)
 ,mpPathfinder(NULL)
@@ -51,6 +53,7 @@ bool GameApp::init()
 	}
 
 	mpMessageManager = new GameMessageManager();
+	mpInputManager = new InputManager();
 
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
@@ -102,6 +105,9 @@ void GameApp::cleanup()
 
 	delete mpDebugDisplay;
 	mpDebugDisplay = NULL;
+
+	delete mpInputManager;
+	mpInputManager = NULL;
 }
 
 void GameApp::beginLoop()
@@ -125,20 +131,7 @@ void GameApp::processLoop()
 
 	mpMessageManager->processMessagesForThisframe();
 
-	ALLEGRO_MOUSE_STATE mouseState;
-	al_get_mouse_state( &mouseState );
-
-	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
-	{
-		static Vector2D lastPos( 0.0f, 0.0f );
-		Vector2D pos( mouseState.x, mouseState.y );
-		if( lastPos.getX() != pos.getX() || lastPos.getY() != pos.getY() )
-		{
-			GameMessage* pMessage = new PathToMessage( lastPos, pos );
-			mpMessageManager->addMessage( pMessage, 0 );
-			lastPos = pos;
-		}
-	}
+	mpInputManager->update();	
 
 	//should be last thing in processLoop
 	Game::processLoop();

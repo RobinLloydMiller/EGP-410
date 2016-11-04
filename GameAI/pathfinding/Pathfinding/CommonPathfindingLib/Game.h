@@ -17,10 +17,12 @@ class GraphicsBuffer;
 class GraphicsBufferManager;
 class SpriteManager;
 class Game;
+class GameApp;
 struct ALLEGRO_FONT;
 
 extern PerformanceTracker* gpPerformanceTracker;
 extern Game* gpGame;
+extern GameApp* gpGameApp;
 
 const IDType BACKGROUND_SPRITE_ID = 0;
 

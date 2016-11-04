@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GRAPH_H
+#define _GRAPH_H
 
 #include <vector>
 #include <map>
@@ -26,3 +27,5 @@ protected:
 	//a map of Connection&'s vectors indexed on Node id
 	std::map< NODE_ID, std::vector<Connection*> > mConnectionMap;
 };
+
+#endif

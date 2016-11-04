@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _NODE_H
+#define _NODE_H
 
 #include <Trackable.h>
 
@@ -17,3 +18,5 @@ public:
 private:
 	const NODE_ID mId;
 };
+
+#endif

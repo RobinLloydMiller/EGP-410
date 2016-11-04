@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _PATHTOMESSAGE_H
+#define _PATHTOMESSAGE_H
 
 #include "GameMessage.h"
 
@@ -19,3 +20,5 @@ private:
 	Vector2D mFrom;
 	Vector2D mTo;
 };
+
+#endif

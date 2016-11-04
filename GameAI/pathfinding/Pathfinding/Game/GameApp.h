@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _GAMEAPP_H
+#define _GAMEAPP_H
 
 /*Game - class to hold all game related info.
 
@@ -19,6 +20,7 @@ class GridVisualizer;
 class GridGraph;
 class GridPathfinder;
 class DebugDisplay;
+class InputManager;
 
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -49,8 +51,10 @@ private:
 	GridVisualizer* mpGridVisualizer;
 	GridGraph* mpGridGraph;
 	DebugDisplay* mpDebugDisplay;
+	InputManager* mpInputManager;
 
 	GridPathfinder* mpPathfinder;
 
 };
 
+#endif
