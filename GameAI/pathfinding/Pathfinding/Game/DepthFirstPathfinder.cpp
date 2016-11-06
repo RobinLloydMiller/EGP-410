@@ -50,7 +50,7 @@ const Path& DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 		vector<Connection*> connections = mpGraph->getConnections( pCurrentNode->getId() );
 
 		//add all toNodes in the connections to the "toVisit" list, if they are not already in the list
-		for( unsigned int i=0; i<connections.size(); i++ )
+		for( unsigned int i=0; i<connections.size(); ++i )
 		{
 			Connection* pConnection = connections[i];
 			Node* pTempToNode = connections[i]->getToNode();
@@ -58,8 +58,8 @@ const Path& DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 				!mPath.containsNode( pTempToNode ) && 
 				find(nodesToVisit.begin(), nodesToVisit.end(), pTempToNode ) == nodesToVisit.end() )
 			{
-				nodesToVisit.push_front( pTempToNode );//uncomment me for depth-first search
-				//nodesToVisit.push_back( pTempToNode );//uncomment me for breadth-first search
+				//nodesToVisit.push_front( pTempToNode );//uncomment me for depth-first search
+				nodesToVisit.push_back( pTempToNode );//uncomment me for breadth-first search
 				if( pTempToNode == pTo )
 				{
 					toNodeAdded = true;
@@ -67,7 +67,6 @@ const Path& DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 #ifdef VISUALIZE_PATH
 				mVisitedNodes.push_back( pTempToNode );
 #endif
-
 			}
 		}
 	}
@@ -79,3 +78,7 @@ const Path& DepthFirstPathfinder::findPath( Node* pFrom, Node* pTo )
 
 }
 
+void DepthFirstPathfinder::clearPath()
+{
+	mPath.clear();
+}

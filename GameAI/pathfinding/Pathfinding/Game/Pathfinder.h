@@ -19,6 +19,7 @@ public:
 	virtual ~Pathfinder();
 
 	virtual const Path& findPath( Node* pFrom, Node* pTo ) = 0;
+	virtual void clearPath() = 0;
 
 protected:
 	Graph* mpGraph;

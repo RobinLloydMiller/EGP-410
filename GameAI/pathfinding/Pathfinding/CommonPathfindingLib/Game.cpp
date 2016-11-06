@@ -65,6 +65,18 @@ bool Game::init()
 		return false;
 	}
 
+	if (!al_install_keyboard())
+	{
+		printf("Keyboard not installed!\n");
+		return false;
+	}
+
+	if (!al_install_mouse())
+	{
+		printf("Mouse not installed!\n");
+		return false;
+	}
+
 	mpGraphicsBufferManager = new GraphicsBufferManager();
 	mpSpriteManager = new SpriteManager();
 
@@ -93,20 +105,6 @@ bool Game::init()
 	if (!al_reserve_samples(1))
 	{
 		fprintf(stderr, "failed to reserve samples!\n");
-		return false;
-	}
-
-	//should probably be done in the InputSystem!
-	if( !al_install_keyboard() )
-	{
-		printf( "Keyboard not installed!\n" ); 
-		return false;
-	}
-
-	//should probably be done in the InputSystem!
-	if( !al_install_mouse() )
-	{
-		printf( "Mouse not installed!\n" ); 
 		return false;
 	}
 

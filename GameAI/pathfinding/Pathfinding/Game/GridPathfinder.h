@@ -16,6 +16,7 @@ public:
 	virtual ~GridPathfinder();
 
 	virtual const Path& findPath( Node* pFrom, Node* pTo ) = 0;
+	virtual void clearPath() = 0;
 	
 #ifdef VISUALIZE_PATH
 	//just for visualization

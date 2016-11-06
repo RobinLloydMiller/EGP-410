@@ -3,8 +3,11 @@
 #include "GameMessageManager.h"
 #include "Vector2D.h"
 #include "PathToMessage.h"
+#include "GridPathfinder.h"
 
-InputManager::InputManager() {}
+InputManager::InputManager() {
+
+}
 InputManager::~InputManager() {}
 
 void InputManager::update()
@@ -12,28 +15,19 @@ void InputManager::update()
 	al_get_mouse_state(&mMouseState);
 	al_get_keyboard_state(&mKeyState);
 
-
-
-
-
-
-
-	//make sure you draw that shit boi
-
-
-
-
-
-
-
-
 	//mouse inout
 	if (mouseDown(1, mMouseState, mPrevMouseState))
 	{
 		static Vector2D lastPos(0.0f, 0.0f);
 		if (mStartSelect)
 		{
+			gpGameApp->getPathfinder()->clearPath();
 			lastPos = Vector2D(mMouseState.x, mMouseState.y);
+
+			//find path to itself to draw the start node
+			GameMessage* pMessage = new PathToMessage(lastPos, lastPos);
+			gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+
 			mStartSelect = false;
 		}
 
