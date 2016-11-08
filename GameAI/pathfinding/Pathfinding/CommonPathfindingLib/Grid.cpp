@@ -71,10 +71,17 @@ std::vector<int> Grid::getAdjacentIndices( int theSquareIndex ) const
 {
 	std::vector<int> indices;
 
-	static const int NUM_DIRS = 8;
+	//make this 8 for using diagonal connections
+	static const int NUM_DIRS = 4;
+	//uses diagonal connections
 	//						        N  NE	E  SE	S	SW	 W	NW
-	static int xMods[NUM_DIRS] = {	0,	1,	1,	1,	0,	-1,	-1,	-1 };
-	static int yMods[NUM_DIRS] = { -1, -1,	0,	1,	1,	 1,	 0,	-1 };
+	//static int xMods[NUM_DIRS] = {	0,	1,	1,	1,	0,	-1,	-1,	-1 };
+	//static int yMods[NUM_DIRS] = { -1, -1,	0,	1,	1,	 1,	 0,	-1 };
+
+
+	//removes diagonal connections
+	static int xMods[NUM_DIRS] = { 0,	1,	0,	-1};
+	static int yMods[NUM_DIRS] = { -1, 	0,	1,	 0 };
 
 	//find the x,y of the passed in index
 	int x = theSquareIndex % mGridWidth;

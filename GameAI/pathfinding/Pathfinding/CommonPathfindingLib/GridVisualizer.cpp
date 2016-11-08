@@ -101,7 +101,7 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 				text = "S";
 			else if (iter->first.r == mStopColor.r && iter->first.g == mStopColor.g && iter->first.b == mStopColor.b)
 				text = "E";
-			al_draw_text(gpGame->getFont(), al_map_rgb(255, 255, 255), ulPos.getX(), ulPos.getY(), ALLEGRO_ALIGN_LEFT, text);
+			al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX(), ulPos.getY(), ALLEGRO_ALIGN_LEFT, text);
 
 			//mpBuffer->fillRegion( ulPos, Vector2D( ulPos.getX() + squareSize, ulPos.getY() + squareSize ), iter->first );
 		}
