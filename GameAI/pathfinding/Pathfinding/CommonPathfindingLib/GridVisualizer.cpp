@@ -1,5 +1,6 @@
 #include <allegro5/allegro_primitives.h>
 #include <allegro5/allegro_ttf.h>
+#include <allegro5/allegro_primitives.h>
 #include "GridVisualizer.h"
 #include "GraphicsSystem.h"
 #include "GraphicsBuffer.h"
@@ -100,14 +101,33 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 			if (iter->first.r == mStartColor.r && iter->first.g == mStartColor.g && iter->first.b == mStartColor.b)
 				text = "S";
 			else if (iter->first.r == mStopColor.r && iter->first.g == mStopColor.g && iter->first.b == mStopColor.b)
-				text = "E";
+				text = "G";
 			al_draw_text(gpGame->getFont(), al_map_rgb(0, 0, 0), ulPos.getX(), ulPos.getY(), ALLEGRO_ALIGN_LEFT, text);
 
 			//mpBuffer->fillRegion( ulPos, Vector2D( ulPos.getX() + squareSize, ulPos.getY() + squareSize ), iter->first );
 		}
 	}
+}
 
-	GraphicsSystem::switchTargetBitmap( pOldTarget );
+void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPath)
+{
+	ALLEGRO_BITMAP* pOldTarget = GraphicsSystem::switchTargetBitmap(dest.getBitmap());
+
+	for (size_t i = 0; i < nodesInPath.size(); ++i)
+	{
+		Vector2D one = mpGrid->getULCornerOfSquare(nodesInPath[i]);
+		Vector2D two = mpGrid->getULCornerOfSquare(nodesInPath[i + 1]);
+
+		al_draw_line(one.getX(), one.getY(), two.getX(), two.getY(), al_map_rgb(255, 255, 255), 5.0f);
+
+		if (i + 1 >= nodesInPath.size() - 1)
+			break;
+	}
+}
+
+void GridVisualizer::flipBuffer(GraphicsBuffer & dest)
+{
+	GraphicsSystem::switchTargetBitmap(dest.getBitmap());
 }
 
 void GridVisualizer::clear()

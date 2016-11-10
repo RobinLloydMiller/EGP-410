@@ -21,6 +21,9 @@ public:
 	void removeEntry( int index, const ALLEGRO_COLOR& color );
 	void setModified() { mDirty = true; };
 	void draw( GraphicsBuffer& dest );
+	void drawPath(GraphicsBuffer& dest, std::vector<int>& nodesInPath);
+	void flipBuffer(GraphicsBuffer& dest);
+
 	void clear();
 private:
 	void refresh();

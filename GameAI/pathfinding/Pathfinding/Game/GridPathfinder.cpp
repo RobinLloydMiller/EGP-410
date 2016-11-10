@@ -56,5 +56,6 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 	}
 
 	mpVisualizer->draw(*pDest);
+	mpVisualizer->drawPath(*pDest, mNodesInPath);
 }
 #endif

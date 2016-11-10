@@ -2,6 +2,7 @@
 #define _GRIDPATHFINDER_H
 
 #include "Pathfinder.h"
+
 class GridGraph;
 class GridVisualizer;
 class GraphicsBuffer;
@@ -25,6 +26,9 @@ public:
 protected:
 	std::vector<Node*> mVisitedNodes;
 	GridVisualizer* mpVisualizer;
+	//added this to be the real shorest path, nodes in here will be have a line drawn to connect them all
+	std::vector<int> mNodesInPath;
+
 #endif
 
 	double mTimeElapsed;

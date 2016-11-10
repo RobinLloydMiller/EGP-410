@@ -23,8 +23,7 @@ public:
 
 protected:
 	Graph* mpGraph;
-	Path mPath;  //cached version of the calculated path
-	
+	Path mPath;  //cached version of the calculated path	
 };
 
 #endif
