@@ -85,19 +85,16 @@ const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 	if (pTo->getId() != pFrom->getId())
 	{
 		//mPath.addNode(pFrom);
-		mNodesInPath.push_back(pFrom->getId());
+		mNodesInPath.push_back(pTo->getId());
 		Node* next = pTo->getPrevNode();
 
-		while (true)
+		while (next->getId() != pFrom->getId())
 		{
-			if (next->getId() == pFrom->getId())
-			{
-				mNodesInPath.push_back(pTo->getId());
-				break;
-			}
 			mNodesInPath.push_back(next->getId());
 			next = next->getPrevNode();
 		}
+
+		mNodesInPath.push_back(pFrom->getId());
 	}
 
 	//std::cout << "num nodes " << mPath.getNumNodes() << std::endl;

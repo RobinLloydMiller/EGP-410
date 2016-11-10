@@ -118,7 +118,9 @@ void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPa
 		Vector2D one = mpGrid->getULCornerOfSquare(nodesInPath[i]);
 		Vector2D two = mpGrid->getULCornerOfSquare(nodesInPath[i + 1]);
 
-		al_draw_line(one.getX(), one.getY(), two.getX(), two.getY(), al_map_rgb(255, 255, 255), 5.0f);
+		al_draw_line(one.getX() + mpGrid->getSquareSize() / 2, one.getY() + mpGrid->getSquareSize() / 2,
+			two.getX() + mpGrid->getSquareSize() / 2, two.getY() + mpGrid->getSquareSize() / 2,
+			al_map_rgb(255, 255, 255), 5.0f);
 
 		if (i + 1 >= nodesInPath.size() - 1)
 			break;
