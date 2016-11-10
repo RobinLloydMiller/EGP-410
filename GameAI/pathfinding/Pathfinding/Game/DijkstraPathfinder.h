@@ -3,6 +3,7 @@
 
 #include "GridPathfinder.h"
 #include <vector>
+#include <list>
 
 
 class Path;
@@ -20,6 +21,9 @@ public:
 	virtual void clearPath();
 
 private:
+	std::list<Node*> mUnvisitedNodes;
+
+	Node* getShortestDistanceNode() const;
 };
 
 #endif

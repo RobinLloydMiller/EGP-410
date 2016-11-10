@@ -15,8 +15,18 @@ public:
 
 	const NODE_ID& getId() const {return mId;};
 
+	//getters
+	double getDistToSource() const { return mDistanceToSource; }
+	Node* getPrevNode() const { return mPrev; }
+
+	//setters
+	void setDistToSource(double dist) { mDistanceToSource = dist; }
+	void setPrevNode(Node* prev) { mPrev = prev; }
+
 private:
 	const NODE_ID mId;
+	double mDistanceToSource;
+	Node* mPrev;
 };
 
 #endif
