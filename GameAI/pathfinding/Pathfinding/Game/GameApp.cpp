@@ -1,5 +1,4 @@
 #include <allegro5/allegro.h>
-#include "Game.h"
 #include "GameApp.h"
 #include "GameMessageManager.h"
 #include "PathToMessage.h"
@@ -70,6 +69,8 @@ bool GameApp::init()
 
 	mpPathfinder = new AStarPathfinder(mpGridGraph);
 	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+
+	mPathfindingType = PathfinderType::ASTAR;
 
 	//load buffers
 	mpGraphicsBufferManager->loadBuffer( BACKGROUND_ID, "wallpaper.bmp");
@@ -145,4 +146,28 @@ void GameApp::processLoop()
 bool GameApp::endLoop()
 {
 	return Game::endLoop();
+}
+
+void GameApp::switchPathfinding(PathfinderType newPathfinding)
+{
+	delete mpPathfinder;
+	mpPathfinder = NULL;
+
+	delete mpDebugDisplay;
+	mpDebugDisplay = NULL;
+
+	switch (newPathfinding)
+	{
+		case PathfinderType::DIJKSTRA:
+			mpPathfinder = new DijkstraPathfinder(mpGridGraph);
+			break;
+		case PathfinderType::ASTAR:
+			mpPathfinder = new AStarPathfinder(mpGridGraph);
+			break;
+	}
+
+	mPathfindingType = newPathfinding;
+
+	PathfindingDebugContent* pContent = new PathfindingDebugContent(mpPathfinder);
+	mpDebugDisplay = new DebugDisplay(Vector2D(0, 12), pContent);
 }

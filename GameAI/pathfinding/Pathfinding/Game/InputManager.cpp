@@ -4,6 +4,8 @@
 #include "Vector2D.h"
 #include "PathToMessage.h"
 #include "GridPathfinder.h"
+#include "SwitchPathfindingMessage.h"
+#include "ExitGameMessage.h"
 
 InputManager::InputManager() {
 
@@ -15,7 +17,7 @@ void InputManager::update()
 	al_get_mouse_state(&mMouseState);
 	al_get_keyboard_state(&mKeyState);
 
-	//mouse inout
+	//mouse input
 	if (mouseDown(1, mMouseState, mPrevMouseState))
 	{
 		static Vector2D lastPos(0.0f, 0.0f);
@@ -44,7 +46,20 @@ void InputManager::update()
 	//calling appropriate event for the keypress
 	if (al_key_down(&mKeyState, ALLEGRO_KEY_ESCAPE))
 	{
-		gpGame->markForExit();
+		GameMessage* pMessage = new ExitGameMessage();
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_A, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchPathfindingMessage(PathfinderType::ASTAR);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_D, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchPathfindingMessage(PathfinderType::DIJKSTRA);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
 	//save previous keystate to have ability to check for key up

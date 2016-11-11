@@ -3,7 +3,7 @@
 #include "GridGraph.h"
 #include "GridVisualizer.h"
 #include "Path.h"
-#include "Game.h"
+#include "GameApp.h"
 #include "GraphicsBuffer.h"
 
 GridPathfinder::GridPathfinder( GridGraph* pGraph )
@@ -34,7 +34,19 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 		mpVisualizer->clear();
 	}
 
-	static ALLEGRO_COLOR pathColor = al_map_rgb( 255, 64, 64 );
+	static ALLEGRO_COLOR pathColor = al_map_rgb(33, 137, 43);
+
+	switch (gpGameApp->getPathfindingType())
+	{
+	case PathfinderType::ASTAR:
+		pathColor = al_map_rgb(4, 75, 201);
+		break;
+	case PathfinderType::DIJKSTRA:
+		pathColor = al_map_rgb(239, 31, 31);
+		break;
+	}
+
+
 	static ALLEGRO_COLOR startColor = al_map_rgb(1, 255, 128);
 	static ALLEGRO_COLOR stopColor = al_map_rgb(1, 128, 255);
 

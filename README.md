@@ -10,7 +10,7 @@ Template projects for base code for EGP 410 assignments.
    * steering
 
 #Building Instructions
-In the folder ./GameAI/steering there is a.sln file which can be opened in Visual Studio as well as all source code and assets.  
+In the folder ./GameAI/pathfinding there is a.sln file which can be opened in Visual Studio as well as all source code and assets.  
 The .sln will open the Visual Studio solution. 
 All Allegro files are already linked in the Visual Studio solution so you can build the program as Win32 and Debug  
 by using the build button in Visual Studio. Will build in Visual Studio 2015. Requires a re-compile of the DeanLib library
@@ -20,31 +20,26 @@ to run in older versions of Visual Studio.
    DeanLib is currently built for Win32 Debug.  
 
 #Program Controls
-I - Adds five units with boids steering behavior in the center of the screen.
-D - Deletes a random unit that is not the player. When no non-player units are left the game closes when this key is pressed.  
-Left Click - Player moves towards the mouse location. The mouse cursor is replaced by x:y coordinates on screen.  
-Z - Toggles display of debug properties in left corner of the screen. The black text is the property currently selected.
-+ - Increases value for all units on screen.
-- - Decrease value for all units on screen. Value cannot drop below 0.
-V - Select Max Velocity control.
-R - Select Reaction Radius control.
-A - Select Max Rotational Velocity control.
-M - Select Max Acceleration control.
-C - Select Cohesion steering weight control.
-S - Select Separation steering weight control.
-A - Select Alignment steering weight control.
-CTRL + S - Saves the current weight configuration to a text file called save_data.txt in the project directory.
 
-ESC - Closes the game.  
+This Visual Studio solution contains two execuatable projects, Game and Editor.
+The game project is used to demonstrate Dijkstra and A* pathfinding algorithms.
+The editor project is used to draw a map of walls for the game to pathfind around.
 
-#Save File
-The save file is formatted as follows:
-1 //The weight of alignment
-1 // The weight of cohesion
-1.25 //The weight of the separation
 
-Each number is read as a floating point number and the newline is used to separate the different weight values
-If this file exists on the start up of the program than the numbers in the file will be default weights for the steering behaviors
-If a valid number is not provided for any of the weights than default values will be used
+Game:
+Left Mouse Click - place start and goal locations
+	* The first click will place the start location and draw it
+	* Once the start is placed another click will place the goal and run pathfinding between the points
+
+A - Switch pathfinding to A* algorithm (A* is the default pathfinding on startup)
+D - Switch pathfinding to Dijkstra algorithm
+ESC - Close the program.
+
+Editor:
+Left Mouse Click - Place a wall on the tile map
+Right Mouse Click - Erase a wall on the tile map
+
+S - Save the current map. The game project will use whatever map was last saved in the editor this way
+ESC - Close the program.
 
 #[GitHub Link] (https://github.com/theMagicDunky/EGP-410/commit/80b85a32bfd9ceff6647c3757d4c16d1a6cf21ad)
