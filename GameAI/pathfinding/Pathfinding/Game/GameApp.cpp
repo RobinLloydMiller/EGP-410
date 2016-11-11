@@ -21,6 +21,7 @@
 #include "PathfindingDebugContent.h"
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
+#include "AStarPathfinder.h"
 
 #include <fstream>
 #include <vector>
@@ -67,7 +68,7 @@ bool GameApp::init()
 	//init the nodes and connections
 	mpGridGraph->init();
 
-	mpPathfinder = new DijkstraPathfinder(mpGridGraph);
+	mpPathfinder = new AStarPathfinder(mpGridGraph);
 	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
 
 	//load buffers

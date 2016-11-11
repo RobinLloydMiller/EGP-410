@@ -1,23 +1,25 @@
-#include "DijkstraPathfinder.h"
+#include "AStarPathfinder.h"
 #include "Path.h"
 #include "Connection.h"
 #include "GridGraph.h"
-#include "Game.h"
+#include "Grid.h"
+#include "GameApp.h"
 #include <PerformanceTracker.h>
 #include <algorithm>
+#include "Vector2D.h"
 
 using namespace std;
 
-DijkstraPathfinder::DijkstraPathfinder(Graph* pGraph)
-:GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
+AStarPathfinder::AStarPathfinder(Graph* pGraph)
+	:GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
 {
 }
 
-DijkstraPathfinder::~DijkstraPathfinder()
+AStarPathfinder::~AStarPathfinder()
 {
 }
 
-const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
+const Path& AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 {
 	gpPerformanceTracker->clearTracker("path");
 	gpPerformanceTracker->startTracking("path");
@@ -36,9 +38,9 @@ const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 	clearPath();
 	mNodesInPath.clear();
 
-	Node* pCurrentNode = NULL;
+	Node* pCurrentNode = NULL, *pClosest = pFrom;
 	bool toNodeAdded = false;
-	
+
 
 	while (pCurrentNode != pTo && nodesToVisit.size() > 0)
 	{
@@ -57,11 +59,11 @@ const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 		{
 			Connection* pConnection = connections[i];
 			Node* pTempToNode = connections[i]->getToNode();
-			if (!toNodeAdded && 
+			if (!toNodeAdded &&
 				!mPath.containsNode(pTempToNode) &&
 				find(nodesToVisit.begin(), nodesToVisit.end(), pTempToNode) == nodesToVisit.end())
 			{
-								//one is always connection weight because we are moving on a grid without diagonals
+				//one is always connection weight because we are moving on a grid without diagonals
 				if (pCurrentNode->getDistToSource() + 1 < pTempToNode->getDistToSource())
 				{
 					//add one to the distance of the last node because in a grid all connections are weight one
@@ -69,11 +71,17 @@ const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 					pTempToNode->setPrevNode(pCurrentNode);
 				}
 
+				//ifcurrent is closer to end that shortest push front
 
-				//nodesToVisit.push_front( pTempToNode );//uncomment me for depth-first search
-				nodesToVisit.push_back(pTempToNode);//uncomment me for breadth-first search
-
-
+				if (getDistance(pTempToNode, pTo) < getDistance(pClosest, pTo))
+				{
+					pClosest = pTempToNode;
+					nodesToVisit.push_front(pClosest);
+				}
+				else
+				{
+					nodesToVisit.push_back(pTempToNode);//uncomment me for breadth-first search
+				}
 
 				if (pTempToNode == pTo)
 				{
@@ -116,12 +124,23 @@ const Path& DijkstraPathfinder::findPath(Node* pFrom, Node* pTo)
 
 }
 
-void DijkstraPathfinder::clearPath()
+void AStarPathfinder::clearPath()
 {
 	mPath.clear();
 }
 
-Node* DijkstraPathfinder::getShortestDistanceNode() const
+float AStarPathfinder::getDistance(Node * first, Node * second)
+{
+	Vector2D firstLoc = gpGameApp->getGrid()->getULCornerOfSquare(first->getId());
+	Vector2D secondLoc = gpGameApp->getGrid()->getULCornerOfSquare(second->getId());
+
+	float x = std::pow((firstLoc.getX() - secondLoc.getX()), 2);
+	float y = std::pow((firstLoc.getY() - secondLoc.getY()), 2);
+
+	return (float)std::pow((x + y), 0.5);
+}
+
+Node* AStarPathfinder::getShortestDistanceNode() const
 {
 	Node* shortest = mUnvisitedNodes.front();
 
