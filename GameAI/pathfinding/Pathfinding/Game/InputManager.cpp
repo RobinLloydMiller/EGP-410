@@ -6,6 +6,7 @@
 #include "GridPathfinder.h"
 #include "SwitchPathfindingMessage.h"
 #include "ExitGameMessage.h"
+#include "PlayerMoveMessage.h"
 
 InputManager::InputManager() {
 
@@ -16,6 +17,8 @@ void InputManager::update()
 {
 	al_get_mouse_state(&mMouseState);
 	al_get_keyboard_state(&mKeyState);
+
+	Vector2D playerPos = gpGameApp->getPlayerPos();
 
 	//mouse input
 	if (mouseDown(1, mMouseState, mPrevMouseState))
@@ -59,6 +62,13 @@ void InputManager::update()
 	if (keyDown(ALLEGRO_KEY_D, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new SwitchPathfindingMessage(PathfinderType::DIJKSTRA);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+
+	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new PlayerMoveToMessage(Vector2D(playerPos.getX(), playerPos.getY() + 10));
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 

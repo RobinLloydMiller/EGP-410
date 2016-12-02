@@ -10,7 +10,8 @@ public:
 	Player( GraphicsBuffer* pBuffer, float srcX, float srcY, float width, float height );
 	~Player() {}
 
-	Vector2D getPos() { return mPos; }
+	Vector2D getPos() const { return mPos; }
+	void setPos(Vector2D newPos) { mPos = newPos; }
 
 private:
 	Vector2D mPos;

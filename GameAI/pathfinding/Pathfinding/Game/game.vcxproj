@@ -99,6 +99,7 @@
     <ClInclude Include="PathfindingDebugContent.h" />
     <ClInclude Include="PathToMessage.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerMoveMessage.h" />
     <ClInclude Include="SwitchPathfindingMessage.h" />
   </ItemGroup>
   <ItemGroup>
@@ -122,6 +123,7 @@
     <ClCompile Include="PathfindingDebugContent.cpp" />
     <ClCompile Include="PathToMessage.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerMoveMessage.cpp" />
     <ClCompile Include="SwitchPathfindingMessage.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

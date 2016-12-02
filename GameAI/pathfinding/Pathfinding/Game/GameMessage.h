@@ -9,7 +9,8 @@ enum MessageType
 	PLAYER_MOVETO_MESSAGE = 0,
 	PATH_TO_MESSAGE = 1,
 	SWITCH_PATHFINDING_MESSAGE = 2,
-	EXIT_GAME_MESSAGE = 3
+	EXIT_GAME_MESSAGE = 3,
+	PLAYER_MOVE_TO_MESSAGE = 4
 };
 
 class GameMessage: public Trackable

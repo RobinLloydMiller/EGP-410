@@ -7,7 +7,6 @@
 #include "GraphicsBufferManager.h"
 #include "Sprite.h"
 #include "SpriteManager.h"
-#include "Vector2D.h"
 #include "Grid.h"
 #include "GridGraph.h"
 #include "Connection.h"
@@ -21,7 +20,6 @@
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
-#include "Player.h"
 
 #include <fstream>
 #include <vector>
@@ -85,7 +83,7 @@ bool GameApp::init()
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
 
-	mpGraphicsBufferManager->loadBuffer(69, "memes.bmp");
+	mpGraphicsBufferManager->loadBuffer(69, "bee.png");
 	mpPlayer = new Player(mpGraphicsBufferManager->getBuffer(69), 0, 0, mpGraphicsBufferManager->getBuffer(69)->getWidth(), mpGraphicsBufferManager->getBuffer(69)->getWidth());
 
 	//debug display
