@@ -21,6 +21,7 @@
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
+#include "Player.h"
 
 #include <fstream>
 #include <vector>
@@ -36,6 +37,7 @@ GameApp::GameApp()
 ,mpGridGraph(NULL)
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
+,mpPlayer(NULL)
 {
 }
 
@@ -77,10 +79,14 @@ bool GameApp::init()
 
 	//setup sprites
 	GraphicsBuffer* pBackGroundBuffer = mpGraphicsBufferManager->getBuffer( BACKGROUND_ID );
+
 	if( pBackGroundBuffer != NULL )
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
+
+	mpGraphicsBufferManager->loadBuffer(69, "memes.bmp");
+	mpPlayer = new Player(mpGraphicsBufferManager->getBuffer(69), 0, 0, mpGraphicsBufferManager->getBuffer(69)->getWidth(), mpGraphicsBufferManager->getBuffer(69)->getWidth());
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -112,6 +118,9 @@ void GameApp::cleanup()
 
 	delete mpInputManager;
 	mpInputManager = NULL;
+
+	delete mpPlayer;
+	mpPlayer = NULL;
 }
 
 void GameApp::beginLoop()
@@ -128,7 +137,7 @@ void GameApp::processLoop()
 	mpGridVisualizer->draw( *pBackBuffer );
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+	//mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
 #endif
 
 	mpGridVisualizer->flipBuffer(*pBackBuffer);
@@ -138,6 +147,8 @@ void GameApp::processLoop()
 	mpMessageManager->processMessagesForThisframe();
 
 	mpInputManager->update();	
+
+	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()), mpPlayer->getPos().getX(), mpPlayer->getPos().getY());
 
 	//should be last thing in processLoop
 	Game::processLoop();

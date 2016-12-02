@@ -18,7 +18,7 @@ class Sprite:public Trackable
 {
 public:
 	Sprite( GraphicsBuffer* pBuffer, float srcX, float srcY, float width, float height );
-	~Sprite();
+	virtual ~Sprite();
 
 	//draw the contents of the sprite to a GraphicsBuffer - may be rotated
 	void draw( GraphicsBuffer& dest, float dx, float dy, float rotationInRadians = 0, int flags = 0 );
