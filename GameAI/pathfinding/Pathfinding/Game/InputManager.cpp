@@ -21,6 +21,7 @@ void InputManager::update()
 	Vector2D playerPos = gpGameApp->getPlayerPos();
 
 	//mouse input
+	/*
 	if (mouseDown(1, mMouseState, mPrevMouseState))
 	{
 		static Vector2D lastPos(0.0f, 0.0f);
@@ -43,7 +44,7 @@ void InputManager::update()
 			gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 			mStartSelect = true;
 		}
-	}
+	}*/
 
 	//keypresses
 	//calling appropriate event for the keypress
@@ -68,7 +69,25 @@ void InputManager::update()
 
 	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new PlayerMoveToMessage(Vector2D(playerPos.getX(), playerPos.getY() + 10));
+		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::DOWN);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_UP, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::UP);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_LEFT, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::LEFT);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_RIGHT, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::RIGHT);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 

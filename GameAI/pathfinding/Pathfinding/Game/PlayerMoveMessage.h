@@ -1,20 +1,19 @@
-#ifndef _PLAYERMOVETOMESSAGE_H
-#define _PLAYERMOVETOMESSAGE_H
+#ifndef _PLAYERMOVEMESSAGE_H
+#define _PLAYERMOVEMESSAGE_H
 
 #include "GameMessage.h"
-#include "Vector2D.h"
 #include "GameApp.h"
 
 class PlayerMoveToMessage : public GameMessage
 {
 public:
-	PlayerMoveToMessage(Vector2D newPos);
+	PlayerMoveToMessage(PlayerDirection dir);
 	~PlayerMoveToMessage() {}
 
 	void process();
 
 private:
-	Vector2D mNewPos;
+	PlayerDirection mDir;
 };
 
 #endif

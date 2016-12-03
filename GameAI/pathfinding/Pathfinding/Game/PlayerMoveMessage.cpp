@@ -1,12 +1,13 @@
 #include "PlayerMoveMessage.h"
+#include "Grid.h"
 
-PlayerMoveToMessage::PlayerMoveToMessage(Vector2D newPos)
-:GameMessage(PLAYER_MOVE_TO_MESSAGE)
-,mNewPos(newPos)
+PlayerMoveToMessage::PlayerMoveToMessage(PlayerDirection dir)
+:GameMessage(PLAYER_MOVE_MESSAGE)
+,mDir(dir)
 {
 }
 
 void PlayerMoveToMessage::process()
 {
-	gpGameApp->setPlayerPos(mNewPos);
+	gpGameApp->setPlayerDir(mDir);
 }

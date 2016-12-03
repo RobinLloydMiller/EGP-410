@@ -144,8 +144,9 @@ void GameApp::processLoop()
 
 	mpMessageManager->processMessagesForThisframe();
 
-	mpInputManager->update();	
+	mpInputManager->update();
 
+	mpPlayer->update();
 	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()), mpPlayer->getPos().getX(), mpPlayer->getPos().getY());
 
 	//should be last thing in processLoop

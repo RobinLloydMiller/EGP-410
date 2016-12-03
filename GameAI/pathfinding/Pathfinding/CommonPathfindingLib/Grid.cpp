@@ -43,6 +43,16 @@ int Grid::getValueAtPixelXY( int x, int y ) const
 	int index = getSquareIndexFromPixelXY( x, y );
 	return getValueAtIndex( index );
 }
+
+bool Grid::isCollidingAtPixelXY( int x, int y ) const
+{
+	int index = getValueAtPixelXY(x, y);
+	int index2 = getValueAtPixelXY(x + mSquareSize, y);
+	int index3 = getValueAtPixelXY(x, y + mSquareSize);
+	int index4 = getValueAtPixelXY(x + mSquareSize, y + mSquareSize);
+
+	return (index == 0 && index2 == 0 && index3 == 0 && index4 == 0);
+}
 	
 void Grid::setValueAtIndex( int index, int value )
 {

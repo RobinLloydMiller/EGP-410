@@ -55,9 +55,9 @@ public:
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 
-	void setPlayerPos(Vector2D newPos)
+	void setPlayerDir(PlayerDirection newDir)
 	{
-		mpPlayer->setPos(newPos);
+		mpPlayer->setDir(newDir);
 	}
 
 	void switchPathfinding(PathfinderType newPathfinding);
