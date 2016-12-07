@@ -27,6 +27,7 @@ private:
 	Vector2D mPos;
 	PlayerDirection mDir;
 	float mSpeed = 0.1f;
+	int mScore = 0;
 };
 
 #endif

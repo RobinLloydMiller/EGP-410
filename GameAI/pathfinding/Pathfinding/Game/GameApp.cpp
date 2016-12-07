@@ -67,6 +67,9 @@ bool GameApp::init()
 	//init the nodes and connections
 	mpGridGraph->init();
 
+	/*adding coins here for now this will be moved into loading thing when editor is complete*/
+	mpGrid->setValueAtPixelXY(64, 64, 2);
+
 	mpPathfinder = new AStarPathfinder(mpGridGraph);
 	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
 
@@ -84,7 +87,7 @@ bool GameApp::init()
 	}
 
 	mpGraphicsBufferManager->loadBuffer(69, "bee.png");
-	mpPlayer = new Player(mpGraphicsBufferManager->getBuffer(69), 0, 0, mpGraphicsBufferManager->getBuffer(69)->getWidth(), mpGraphicsBufferManager->getBuffer(69)->getWidth());
+	mpPlayer = new Player(mpGraphicsBufferManager->getBuffer(69), 0, 0, mpGraphicsBufferManager->getBuffer(69)->getWidth(), mpGraphicsBufferManager->getBuffer(69)->getHeight());
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );

@@ -25,6 +25,7 @@ public:
 	void flipBuffer(GraphicsBuffer& dest);
 
 	void clear();
+	void setDirty() { mDirty = true; }
 private:
 	void refresh();
 
