@@ -44,14 +44,24 @@ int Grid::getValueAtPixelXY( int x, int y ) const
 	return getValueAtIndex( index );
 }
 
-bool Grid::isCollidingAtPixelXY( int x, int y, int value) const
+//returns the point of collision and (-1, -1) on no collision
+Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 {
 	int index = getValueAtPixelXY(x, y);
 	int index2 = getValueAtPixelXY(x + mSquareSize, y);
 	int index3 = getValueAtPixelXY(x, y + mSquareSize);
 	int index4 = getValueAtPixelXY(x + mSquareSize, y + mSquareSize);
 
-	return (index == value || index2 == value || index3 == value || index4 == value);
+	if (index == value)
+		return Vector2D(x, y);
+	if (index2 == value)
+		return Vector2D(x + mSquareSize, y);
+	if (index3 == value)
+		return Vector2D(x, y + mSquareSize);
+	if (index4 == value)
+		return Vector2D(x + mSquareSize, y + mSquareSize);
+
+	return Vector2D(-1, -1);
 }
 	
 void Grid::setValueAtIndex( int index, int value )

@@ -31,15 +31,15 @@ void Player::update()
 	}
 
 	//check if space player is going to move to is empty
-	if (!gpGameApp->getGrid()->isCollidingAtPixelXY(newPos.getX(), newPos.getY()))
+	//(-1, -1) is returned if no collision is happening
+	if (gpGameApp->getGrid()->isCollidingAtPixelXY(newPos.getX(), newPos.getY()) == Vector2D(-1, -1))
 	{
 		mPos = newPos;
-		if (gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 2))
+		Vector2D collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 2);
+		if (collPoint != Vector2D(-1, -1))
 		{
 			mScore++;
-			std::cout << "Score: " << mScore << std::endl;
-			//gpGameApp->getGrid()->setValueAtPixelXY(mPos.getX(), mPos.getY(), 0);
-			gpGameApp->getGrid()->setValueAtPixelXY(64, 64, 0);
+			gpGameApp->getGrid()->setValueAtPixelXY(collPoint.getX(), collPoint.getY(), 0);
 			gpGameApp->getGridVisualizer()->setDirty();
 		}
 	}

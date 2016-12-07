@@ -27,6 +27,7 @@
 const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
 const int GRID_SQUARE_SIZE = 32;
 const std::string gFileName = "../Editor/pathgrid.txt";
+const int NUM_COINS = 10;
 
 GameApp::GameApp()
 :mpMessageManager(NULL)
@@ -67,8 +68,18 @@ bool GameApp::init()
 	//init the nodes and connections
 	mpGridGraph->init();
 
-	/*adding coins here for now this will be moved into loading thing when editor is complete*/
-	mpGrid->setValueAtPixelXY(64, 64, 2);
+	/*adding coins here randomly to the map*/
+	
+	for (int i = 0; i < NUM_COINS; ++i)
+	{
+		int x, y;
+		do
+		{
+			x = rand() % mpGrid->getPixelWidth();
+			y = rand() % mpGrid->getPixelHeight();
+		} while (mpGrid->getValueAtPixelXY(x, y) != 0);
+		mpGrid->setValueAtPixelXY(x, y, 2);
+	}
 
 	mpPathfinder = new AStarPathfinder(mpGridGraph);
 	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);

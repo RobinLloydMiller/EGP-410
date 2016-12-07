@@ -18,7 +18,7 @@ public:
 	int getSquareIndexFromPixelXY( int x, int y ) const;
 
 	int getValueAtIndex( int index ) const;
-	bool isCollidingAtPixelXY(int x, int y, int value = 1) const;
+	Vector2D isCollidingAtPixelXY(int x, int y, int value = 1) const;
 	int getValueAtPixelXY( int x, int y ) const;
 	void setValueAtIndex( int index, int value );
 	void setValueAtPixelXY( int x, int y, int value );
