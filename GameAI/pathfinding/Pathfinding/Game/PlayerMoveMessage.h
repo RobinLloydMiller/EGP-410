@@ -7,13 +7,13 @@
 class PlayerMoveToMessage : public GameMessage
 {
 public:
-	PlayerMoveToMessage(PlayerDirection dir);
+	PlayerMoveToMessage(Direction dir);
 	~PlayerMoveToMessage() {}
 
 	void process();
 
 private:
-	PlayerDirection mDir;
+	Direction mDir;
 };
 
 #endif

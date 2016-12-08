@@ -69,25 +69,25 @@ void InputManager::update()
 
 	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::DOWN);
+		GameMessage* pMessage = new PlayerMoveToMessage(Direction::DOWN);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
 	if (keyDown(ALLEGRO_KEY_UP, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::UP);
+		GameMessage* pMessage = new PlayerMoveToMessage(Direction::UP);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
 	if (keyDown(ALLEGRO_KEY_LEFT, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::LEFT);
+		GameMessage* pMessage = new PlayerMoveToMessage(Direction::LEFT);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
 	if (keyDown(ALLEGRO_KEY_RIGHT, mKeyState, mPrevKeyState))
 	{
-		GameMessage* pMessage = new PlayerMoveToMessage(PlayerDirection::RIGHT);
+		GameMessage* pMessage = new PlayerMoveToMessage(Direction::RIGHT);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 

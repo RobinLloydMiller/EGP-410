@@ -1,7 +1,7 @@
 #include "PlayerMoveMessage.h"
 #include "Grid.h"
 
-PlayerMoveToMessage::PlayerMoveToMessage(PlayerDirection dir)
+PlayerMoveToMessage::PlayerMoveToMessage(Direction dir)
 :GameMessage(PLAYER_MOVE_MESSAGE)
 ,mDir(dir)
 {

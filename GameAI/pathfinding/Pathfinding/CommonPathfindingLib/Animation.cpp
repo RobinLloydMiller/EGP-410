@@ -10,10 +10,9 @@ Animation::Animation(double frameTime)
 
 Animation::~Animation()
 {
-	for (size_t i = 0; i < mSprites.size(); ++i)
-	{
-		delete mSprites[i];
-	}
+	for (auto &it : mSprites)
+		delete it;
+
 	mSprites.clear();
 }
 

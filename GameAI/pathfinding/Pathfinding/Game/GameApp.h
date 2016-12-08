@@ -23,6 +23,7 @@ class GridGraph;
 class GridPathfinder;
 class DebugDisplay;
 class InputManager;
+class Enemy;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -55,7 +56,7 @@ public:
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 
-	void setPlayerDir(PlayerDirection newDir)
+	void setPlayerDir(Direction newDir)
 	{
 		mpPlayer->setDir(newDir);
 	}
@@ -74,7 +75,7 @@ private:
 	PathfinderType mPathfindingType;
 
 	Player* mpPlayer;
-
+	Enemy* mpEnemy;
 };
 
 #endif

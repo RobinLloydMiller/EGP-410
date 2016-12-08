@@ -1,36 +1,18 @@
 #ifndef _PLAYER_H
 #define _PLAYER_H
 
-#include "Sprite.h"
-#include "Vector2D.h"
+#include "Unit.h"
 
-class Animation;
-
-enum class PlayerDirection
-{
-	LEFT,
-	RIGHT,
-	UP,
-	DOWN
-};
-
-class Player : public Trackable
+class Player : public Unit
 {
 public:
-	Player();
+	Player(float speed, float frameTime);
 	~Player();
-
-	Vector2D getPos() const { return mPos; }
-	void setDir(PlayerDirection newDir) { mDir = newDir; }
 
 	void update(double deltaTime);
 	void draw(GraphicsBuffer& dest);
 
 private:
-	Animation* mpAnime;
-	Vector2D mPos;
-	PlayerDirection mDir;
-	float mSpeed = 50.0f;
 	int mScore = 0;
 };
 

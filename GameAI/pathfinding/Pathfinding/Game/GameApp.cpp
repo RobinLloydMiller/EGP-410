@@ -20,6 +20,7 @@
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
+#include "Enemy.h"
 
 #include <fstream>
 #include <vector>
@@ -37,6 +38,7 @@ GameApp::GameApp()
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 ,mpPlayer(NULL)
+,mpEnemy(NULL)
 {
 	mLoopTargetTime = LOOP_TARGET_TIME;
 }
@@ -100,7 +102,10 @@ bool GameApp::init()
 
 	mpGraphicsBufferManager->loadBuffer(69, "bee.png");
 	mpGraphicsBufferManager->loadBuffer(70, "bee_fly.png");
-	mpPlayer = new Player();
+	mpPlayer = new Player(150, .2f);
+
+	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
+	mpEnemy = new Enemy(100, .2f);
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -135,6 +140,9 @@ void GameApp::cleanup()
 
 	delete mpPlayer;
 	mpPlayer = NULL;
+
+	delete mpEnemy;
+	mpEnemy = NULL;
 }
 
 void GameApp::beginLoop()
@@ -164,10 +172,12 @@ void GameApp::processLoop()
 
 	//mpPlayer->update(mpLoopTimer->getElapsedTime());
 	mpPlayer->update(mLoopTargetTime / 1000.0);
+	mpEnemy->update(mLoopTargetTime / 1000.0);
 
 	std::cout << mpLoopTimer->getElapsedTime() << std::endl;
 
 	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
+	mpEnemy->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	//should be last thing in processLoop
 	Game::processLoop();

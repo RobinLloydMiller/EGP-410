@@ -48,18 +48,18 @@ int Grid::getValueAtPixelXY( int x, int y ) const
 Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 {
 	int index = getValueAtPixelXY(x, y);
-	int index2 = getValueAtPixelXY(x + mSquareSize, y);
-	int index3 = getValueAtPixelXY(x, y + mSquareSize);
-	int index4 = getValueAtPixelXY(x + mSquareSize, y + mSquareSize);
+	int index2 = getValueAtPixelXY(x + mSquareSize - 1, y);
+	int index3 = getValueAtPixelXY(x, y + mSquareSize - 1);
+	int index4 = getValueAtPixelXY(x + mSquareSize - 1, y + mSquareSize - 1);
 
 	if (index == value)
 		return Vector2D(x, y);
 	if (index2 == value)
-		return Vector2D(x + mSquareSize, y);
+		return Vector2D(x + mSquareSize - 1, y);
 	if (index3 == value)
-		return Vector2D(x, y + mSquareSize);
+		return Vector2D(x, y + mSquareSize - 1);
 	if (index4 == value)
-		return Vector2D(x + mSquareSize, y + mSquareSize);
+		return Vector2D(x + mSquareSize - 1, y + mSquareSize - 1);
 
 	return Vector2D(-1, -1);
 }
