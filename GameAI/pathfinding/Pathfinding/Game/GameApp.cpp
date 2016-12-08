@@ -98,7 +98,8 @@ bool GameApp::init()
 	}
 
 	mpGraphicsBufferManager->loadBuffer(69, "bee.png");
-	mpPlayer = new Player(mpGraphicsBufferManager->getBuffer(69), 0, 0, mpGraphicsBufferManager->getBuffer(69)->getWidth(), mpGraphicsBufferManager->getBuffer(69)->getHeight());
+	mpGraphicsBufferManager->loadBuffer(70, "bee_fly.png");
+	mpPlayer = new Player();
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -160,8 +161,8 @@ void GameApp::processLoop()
 
 	mpInputManager->update();
 
-	mpPlayer->update();
-	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()), mpPlayer->getPos().getX(), mpPlayer->getPos().getY());
+	mpPlayer->update(mpLoopTimer->getElapsedTime());
+	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	//should be last thing in processLoop
 	Game::processLoop();

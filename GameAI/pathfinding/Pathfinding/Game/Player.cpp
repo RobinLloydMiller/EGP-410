@@ -2,14 +2,28 @@
 #include "GameApp.h"
 #include "Grid.h"
 #include "GridVisualizer.h"
+#include "Animation.h"
+#include "GraphicsBufferManager.h"
+#include "GraphicsBuffer.h"
 
-Player::Player(GraphicsBuffer * pBuffer, float srcX, float srcY, float width, float height)
-:Sprite(pBuffer, srcX, srcY, width, height)
-,mPos(0, 0), mDir(PlayerDirection::RIGHT)
+Player::Player()
 {
+	GraphicsBufferManager* pBuffMan = gpGameApp->getGraphicsBufferManager();
+
+	mPos = Vector2D(0, 0);
+	mDir = PlayerDirection::RIGHT;
+
+	mpAnime = new Animation(50.0);
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(69), 0, 0, pBuffMan->getBuffer(69)->getWidth(), pBuffMan->getBuffer(69)->getHeight()));
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(70), 0, 0, pBuffMan->getBuffer(70)->getWidth(), pBuffMan->getBuffer(70)->getHeight()));
 }
 
-void Player::update()
+Player::~Player()
+{
+	delete mpAnime;
+}
+
+void Player::update(double deltaTime)
 {
 	Vector2D newPos(0,0);
 	switch (mDir)
@@ -43,4 +57,11 @@ void Player::update()
 			gpGameApp->getGridVisualizer()->setDirty();
 		}
 	}
+
+	mpAnime->update(deltaTime);
+}
+
+void Player::draw(GraphicsBuffer& dest)
+{
+	mpAnime->draw(dest, mPos.getX(), mPos.getY());
 }

@@ -4,6 +4,8 @@
 #include "Sprite.h"
 #include "Vector2D.h"
 
+class Animation;
+
 enum class PlayerDirection
 {
 	LEFT,
@@ -12,18 +14,20 @@ enum class PlayerDirection
 	DOWN
 };
 
-class Player : public Sprite
+class Player : public Trackable
 {
 public:
-	Player( GraphicsBuffer* pBuffer, float srcX, float srcY, float width, float height );
-	~Player() {}
+	Player();
+	~Player();
 
 	Vector2D getPos() const { return mPos; }
 	void setDir(PlayerDirection newDir) { mDir = newDir; }
 
-	void update();
+	void update(double deltaTime);
+	void draw(GraphicsBuffer& dest);
 
 private:
+	Animation* mpAnime;
 	Vector2D mPos;
 	PlayerDirection mDir;
 	float mSpeed = 0.1f;
