@@ -30,7 +30,7 @@ private:
 	Animation* mpAnime;
 	Vector2D mPos;
 	PlayerDirection mDir;
-	float mSpeed = 0.1f;
+	float mSpeed = 50.0f;
 	int mScore = 0;
 };
 

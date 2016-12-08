@@ -38,6 +38,7 @@ GameApp::GameApp()
 ,mpDebugDisplay(NULL)
 ,mpPlayer(NULL)
 {
+	mLoopTargetTime = LOOP_TARGET_TIME;
 }
 
 GameApp::~GameApp()
@@ -161,7 +162,11 @@ void GameApp::processLoop()
 
 	mpInputManager->update();
 
-	mpPlayer->update(mpLoopTimer->getElapsedTime());
+	//mpPlayer->update(mpLoopTimer->getElapsedTime());
+	mpPlayer->update(mLoopTargetTime / 1000.0);
+
+	std::cout << mpLoopTimer->getElapsedTime() << std::endl;
+
 	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	//should be last thing in processLoop
