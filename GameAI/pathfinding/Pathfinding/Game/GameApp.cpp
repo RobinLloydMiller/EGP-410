@@ -159,7 +159,7 @@ void GameApp::processLoop()
 	mpGridVisualizer->draw( *pBackBuffer );
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	//mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
 #endif
 
 	mpGridVisualizer->flipBuffer(*pBackBuffer);
@@ -174,10 +174,10 @@ void GameApp::processLoop()
 	mpPlayer->update(mLoopTargetTime / 1000.0);
 	mpEnemy->update(mLoopTargetTime / 1000.0);
 
-	std::cout << mpLoopTimer->getElapsedTime() << std::endl;
+	//std::cout << mpLoopTimer->getElapsedTime() << std::endl;
 
-	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
 	mpEnemy->draw(*(mpGraphicsSystem->getBackBuffer()));
+	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	//should be last thing in processLoop
 	Game::processLoop();

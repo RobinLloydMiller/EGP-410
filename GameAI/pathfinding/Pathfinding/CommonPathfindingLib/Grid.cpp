@@ -47,19 +47,23 @@ int Grid::getValueAtPixelXY( int x, int y ) const
 //returns the point of collision and (-1, -1) on no collision
 Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 {
-	int index = getValueAtPixelXY(x, y);
-	int index2 = getValueAtPixelXY(x + mSquareSize - 1, y);
-	int index3 = getValueAtPixelXY(x, y + mSquareSize - 1);
-	int index4 = getValueAtPixelXY(x + mSquareSize - 1, y + mSquareSize - 1);
+	int i = 5;
+
+
+	int index = getValueAtPixelXY(x + i, y + i);
+	int index2 = getValueAtPixelXY(x + mSquareSize - i, y + i);
+	int index3 = getValueAtPixelXY(x + i, y + mSquareSize - i);
+	int index4 = getValueAtPixelXY(x + mSquareSize - i, y + mSquareSize - i);
+
 
 	if (index == value)
-		return Vector2D(x, y);
+		return Vector2D(x + i, y + i);
 	if (index2 == value)
-		return Vector2D(x + mSquareSize - 1, y);
+		return Vector2D(x + mSquareSize - i, y + i);
 	if (index3 == value)
-		return Vector2D(x, y + mSquareSize - 1);
+		return Vector2D(x + i, y + mSquareSize - i);
 	if (index4 == value)
-		return Vector2D(x + mSquareSize - 1, y + mSquareSize - 1);
+		return Vector2D(x + mSquareSize - i, y + mSquareSize - i);
 
 	return Vector2D(-1, -1);
 }

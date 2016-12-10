@@ -23,6 +23,7 @@ public:
 	//just for visualization
 public:
 	void drawVisualization( Grid* pGrid, GraphicsBuffer* pDest );
+	std::vector<int> getNodesInPath() { return mNodesInPath; }
 protected:
 	std::vector<Node*> mVisitedNodes;
 	GridVisualizer* mpVisualizer;
