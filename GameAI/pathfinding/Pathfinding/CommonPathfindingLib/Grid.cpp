@@ -128,11 +128,32 @@ std::vector<int> Grid::getAdjacentIndices( int theSquareIndex ) const
 
 void Grid::save( std::ofstream& file )
 {
+
+	file << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+	file << "<map version=\"1.0\" orientation=\"orthogonal\" renderorder=\"right-down\" width=\"" 
+		<< mGridWidth << "\" height=\"" << mGridHeight << "\" tilewidth=\"" 
+		<< mSquareSize << "\" tileheight=\"" << mSquareSize << "\" nextobjectid=\"1\">\n";
+	file << "<properties>\n"
+		<< "<property name=\"Description\" value=\"Nintendo please don't sue.\"/>\n"
+		<< "<property name=\"name\" value=\"Mario!\"/>\n"
+		<< "</properties>\n";
+	file << "<tileset firstgid=\"1\" name=\"mario_tiles\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"924\" columns=\"33\">\n"
+		<< "<image source=\"mario_tiles.png\" width=\"1056\" height=\"896\"/>\n"
+		<< "</tileset>\n";
+	file << "<layer name =\"Background\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
+		<< "<data encoding=\"csv\">\n";
+
 	int numSquares = mGridWidth * mGridHeight;
-	for( int i=0; i<numSquares; i++ )
+	file << mpValues[0];
+	for( int i=1; i<numSquares; i++ )
 	{
-		file << mpValues[i] << " ";
+		file << "," << mpValues[i];
 	}
+
+	file << "</data>\n"
+		<< "</layer>\n"
+		<< "</map>";
+
 }
 
 void Grid::load( std::ifstream& file )
