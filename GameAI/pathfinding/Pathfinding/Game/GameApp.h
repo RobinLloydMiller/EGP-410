@@ -57,6 +57,8 @@ public:
 	inline GridGraph* getGridGraph() { return mGridGraphs[mMapIndex]; };
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
+	inline bool isPlayerInvincible() const { return mpPlayer->isInvincible(); }
+	inline float getLoopTime() const { return LOOP_TARGET_TIME; }
 
 	void changeGrid(int index)
 	{
@@ -96,6 +98,7 @@ public:
 	}
 
 	void switchPathfinding(PathfinderType newPathfinding);
+	void setPlayerInvincible(bool invincible) { mpPlayer->setInvincible(invincible); }
 
 private:
 	GameMessageManager* mpMessageManager;

@@ -8,6 +8,7 @@
 #include "ExitGameMessage.h"
 #include "PlayerMoveMessage.h"
 #include "SwitchDebugMessage.h"
+#include "SetPlayerInvincibleMessage.h"
 
 InputManager::InputManager() {
 
@@ -76,6 +77,18 @@ void InputManager::update()
 	if (keyDown(ALLEGRO_KEY_K, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new SwitchDebugMessage(false);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SetPlayerInvincibleMessage(true);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_U, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SetPlayerInvincibleMessage(false);
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 

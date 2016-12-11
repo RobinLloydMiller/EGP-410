@@ -22,11 +22,13 @@ void GridVisualizer::refresh()
 {
 	const ALLEGRO_COLOR& color = BLACK_COLOR; 
 	const ALLEGRO_COLOR& coinColor = YELLOW_COLOR;
+	const ALLEGRO_COLOR& candyColor = BLUE_COLOR;
 	if( mDirty )
 	{
 		//remove old entries first
 		removeAllEntriesOfColor( color );
 		removeAllEntriesOfColor( coinColor );
+		removeAllEntriesOfColor( candyColor );
 
 		int size = mpGrid->getGridWidth() * mpGrid->getGridHeight();
 		//get any non-zero squares and send them to the visualizer
@@ -39,6 +41,10 @@ void GridVisualizer::refresh()
 			else if (mpGrid->getValueAtIndex(i) == 2)
 			{
 				addColor(i, coinColor);
+			}
+			else if (mpGrid->getValueAtIndex(i) == 3)
+			{
+				addColor(i, candyColor);
 			}
 		}
 	}

@@ -36,7 +36,7 @@ Enemy::~Enemy()
 void Enemy::update(double deltaTime)
 {
 
-	std::cout << mPos.getY() << std::endl;
+	//std::cout << mPos.getY() << std::endl;
 
 	Unit::update(deltaTime);
 
@@ -97,8 +97,11 @@ void Enemy::seek(int index, double time)
 	if ((abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
 		(abs(mPos.getY() - playerPos.getY()) * 2 < (32 + 32)))
 	{
-		GameMessage* pMessage = new RespawnMessage();
-		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+		if (!gpGameApp->isPlayerInvincible())
+		{
+			GameMessage* pMessage = new RespawnMessage();
+			gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+		}
 	}
 }
 

@@ -46,7 +46,7 @@ GameApp::~GameApp()
 bool GameApp::init()
 {
 	bool retVal = Game::init();
-	if( retVal == false )
+	if (retVal == false)
 	{
 
 		return false;
@@ -57,8 +57,8 @@ bool GameApp::init()
 
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mGrids[0] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	std::ifstream theStream( gFileName );
-	mGrids[0]->load( theStream );
+	std::ifstream theStream(gFileName);
+	mGrids[0]->load(theStream);
 
 	mGrids[1] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
 	std::ifstream theStream2("../Editor/pathgrid2.txt");
@@ -66,14 +66,14 @@ bool GameApp::init()
 
 	mGridGraphs[0] = new GridGraph(mGrids[0]);
 	mGridGraphs[0]->init();
-	
+
 	mGridGraphs[1] = new GridGraph(mGrids[1]);
 	mGridGraphs[1]->init();
 
 	mpGridVisualizer = new GridVisualizer(mGrids[mMapIndex]);
 
 	/*adding coins here randomly to the map*/
-	
+
 	for (int i = 0; i < NUM_COINS; ++i)
 	{
 		int x, y;
@@ -83,6 +83,16 @@ bool GameApp::init()
 			y = rand() % mGrids[mMapIndex]->getPixelHeight();
 		} while (mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 0);
 		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 2);
+	}
+
+	{
+		int x, y;
+		do
+		{
+			x = rand() % mGrids[mMapIndex]->getPixelWidth();
+			y = rand() % mGrids[mMapIndex]->getPixelHeight();
+		} while (mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 0 && mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 2);
+		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 3);
 	}
 
 	mpPathfinder = new AStarPathfinder(mGridGraphs[mMapIndex]);
