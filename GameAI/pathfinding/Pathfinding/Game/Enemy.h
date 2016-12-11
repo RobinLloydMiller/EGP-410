@@ -9,7 +9,7 @@ class GridPathfinder;
 class Enemy : public Unit
 {
 public:
-	Enemy(float speed, float frameTime);
+	Enemy(float speed, float frameTime, Vector2D pos = Vector2D(32, 64));
 	~Enemy();
 
 	void update(double deltaTime);

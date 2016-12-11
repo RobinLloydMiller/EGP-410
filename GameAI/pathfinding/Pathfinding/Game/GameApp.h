@@ -14,6 +14,7 @@ Champlain College
 #include "Enemy.h"
 #include "GridVisualizer.h"
 #include "GridGraph.h"
+#include <vector>
 
 //forward declarations
 class GraphicsBuffer;
@@ -26,6 +27,7 @@ class DebugDisplay;
 class InputManager;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
+const int NUM_MAPS = 2;
 
 enum class PathfinderType
 {
@@ -52,20 +54,42 @@ public:
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid() { return mGrids[mMapIndex]; };
-	inline GridGraph* getGridGraph() { return mpGridGraph; };
+	inline GridGraph* getGridGraph() { return mGridGraphs[mMapIndex]; };
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 
 	void changeGrid(int index)
 	{
+		mMapIndex = index;
 		mpGridVisualizer->setGridPointer(mGrids[index]);
 		mpGridVisualizer->setDirty();
-		mpGridGraph->setGrid(mGrids[index]);
-		mpEnemy->newPathfinder();
-		mMapIndex = index;
+		for (auto &it : mEnemies)
+		{
+			it->newPathfinder();
+		}
 	}
-  	void setDrawDebugLine(bool drawDebug) { mpEnemy->setDrawDebug(drawDebug); }
-	void respawnPlayer() { delete mpPlayer; mpPlayer = new Player(150, .2f); delete mpEnemy; mpEnemy = new Enemy(100, .2f); }
+  	void setDrawDebugLine(bool drawDebug) 
+	{ 
+		for (auto &it : mEnemies)
+		{
+			it->setDrawDebug(drawDebug);
+		}
+	}
+	void respawnPlayer() 
+	{ 
+		delete mpPlayer; mpPlayer = new Player(150, .2f);
+
+		for (auto &it : mEnemies)
+		{
+			delete it;
+		}
+
+		mEnemies.clear();
+
+		mEnemies.push_back(new Enemy(100, .2f));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(64, 96)));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(96, 128)));
+	}
 	void setPlayerDir(Direction newDir)
 	{
 		mpPlayer->setDir(newDir);
@@ -75,9 +99,9 @@ public:
 
 private:
 	GameMessageManager* mpMessageManager;
-	Grid* mGrids[2];
+	Grid* mGrids[NUM_MAPS];
 	GridVisualizer* mpGridVisualizer;
-	GridGraph* mpGridGraph;
+	GridGraph* mGridGraphs[NUM_MAPS];
 	DebugDisplay* mpDebugDisplay;
 	InputManager* mpInputManager;
 
@@ -85,7 +109,7 @@ private:
 	PathfinderType mPathfindingType;
 
 	Player* mpPlayer;
-	Enemy* mpEnemy;
+	std::vector<Enemy*> mEnemies;
 
 	int mMapIndex = 0;
 };

@@ -22,7 +22,6 @@
 #include "AStarPathfinder.h"
 
 #include <fstream>
-#include <vector>
 
 const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
 const int GRID_SQUARE_SIZE = 32;
@@ -32,11 +31,9 @@ const int NUM_COINS = 10;
 GameApp::GameApp()
 :mpMessageManager(NULL)
 ,mpInputManager(NULL)
-,mpGridGraph(NULL)
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 ,mpPlayer(NULL)
-,mpEnemy(NULL)
 {
 	mLoopTargetTime = LOOP_TARGET_TIME;
 }
@@ -67,12 +64,13 @@ bool GameApp::init()
 	std::ifstream theStream2("../Editor/pathgrid2.txt");
 	mGrids[1]->load(theStream2);
 
-	mpGridVisualizer = new GridVisualizer(mGrids[mMapIndex]);
+	mGridGraphs[0] = new GridGraph(mGrids[0]);
+	mGridGraphs[0]->init();
+	
+	mGridGraphs[1] = new GridGraph(mGrids[1]);
+	mGridGraphs[1]->init();
 
-	//create the GridGraph for pathfinding
-	mpGridGraph = new GridGraph(mGrids[mMapIndex]);
-	//init the nodes and connections
-	mpGridGraph->init();
+	mpGridVisualizer = new GridVisualizer(mGrids[mMapIndex]);
 
 	/*adding coins here randomly to the map*/
 	
@@ -87,8 +85,7 @@ bool GameApp::init()
 		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 2);
 	}
 
-	mpPathfinder = new AStarPathfinder(mpGridGraph);
-	//mpPathfinder = new DepthFirstPathfinder(mpGridGraph);
+	mpPathfinder = new AStarPathfinder(mGridGraphs[mMapIndex]);
 
 	mPathfindingType = PathfinderType::ASTAR;
 
@@ -108,7 +105,10 @@ bool GameApp::init()
 	mpPlayer = new Player(150, .2f);
 
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
-	mpEnemy = new Enemy(100, .2f);
+
+	mEnemies.push_back(new Enemy(100, .2f));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(64, 96)));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(96, 128)));
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -132,8 +132,11 @@ void GameApp::cleanup()
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;
 
-	delete mpGridGraph;
-	mpGridGraph = NULL;
+	for (int i = 0; i < 2; ++i)
+	{
+		delete mGridGraphs[i];
+		mGridGraphs[i] = NULL;
+	}
 
 	delete mpPathfinder;
 	mpPathfinder = NULL;
@@ -147,8 +150,12 @@ void GameApp::cleanup()
 	delete mpPlayer;
 	mpPlayer = NULL;
 
-	delete mpEnemy;
-	mpEnemy = NULL;
+	delete mEnemies[0];
+	mEnemies[0] = NULL;
+	delete mEnemies[1];
+	mEnemies[1] = NULL;
+	delete mEnemies[2];
+	mEnemies[2] = NULL;
 }
 
 void GameApp::beginLoop()
@@ -178,11 +185,19 @@ void GameApp::processLoop()
 
 	//mpPlayer->update(mpLoopTimer->getElapsedTime());
 	mpPlayer->update(mLoopTargetTime / 1000.0);
-	mpEnemy->update(mLoopTargetTime / 1000.0);
+
+	for (auto &it : mEnemies)
+	{
+		it->update(mLoopTargetTime / 1000.0);
+	}
 
 	//std::cout << mpLoopTimer->getElapsedTime() << std::endl;
 
-	mpEnemy->draw(*(mpGraphicsSystem->getBackBuffer()));
+	for (auto &it : mEnemies)
+	{
+		it->draw(*(mpGraphicsSystem->getBackBuffer()));
+	}
+
 	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	//should be last thing in processLoop
@@ -205,10 +220,10 @@ void GameApp::switchPathfinding(PathfinderType newPathfinding)
 	switch (newPathfinding)
 	{
 		case PathfinderType::DIJKSTRA:
-			mpPathfinder = new DijkstraPathfinder(mpGridGraph);
+			mpPathfinder = new DijkstraPathfinder(mGridGraphs[0]);
 			break;
 		case PathfinderType::ASTAR:
-			mpPathfinder = new AStarPathfinder(mpGridGraph);
+			mpPathfinder = new AStarPathfinder(mGridGraphs[0]);
 			break;
 	}
 

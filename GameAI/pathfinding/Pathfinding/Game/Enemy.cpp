@@ -11,14 +11,14 @@
 #include "GridGraph.h"
 #include <math.h>
 
-Enemy::Enemy(float speed, float frameTime)
+Enemy::Enemy(float speed, float frameTime, Vector2D pos)
 :Unit(speed, frameTime)
 {
 	GraphicsBufferManager* pBuffMan = gpGameApp->getGraphicsBufferManager();
 
 	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(71), 0, 0, pBuffMan->getBuffer(71)->getWidth(), pBuffMan->getBuffer(71)->getHeight()));
 
-	mPos = Vector2D(32, 64);
+	mPos = pos;
 
 	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraph());	
 
@@ -35,6 +35,9 @@ Enemy::~Enemy()
 
 void Enemy::update(double deltaTime)
 {
+
+	std::cout << mPos.getY() << std::endl;
+
 	Unit::update(deltaTime);
 
 	//getem
