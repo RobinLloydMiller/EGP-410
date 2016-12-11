@@ -19,8 +19,12 @@
     <ClInclude Include="GraphicsSystem.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="GridVisualizer.h" />
+    <ClInclude Include="Level.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="SpriteSheet.h" />
+    <ClInclude Include="Tile.h" />
+    <ClInclude Include="TileLayer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Animation.cpp" />
@@ -30,8 +34,12 @@
     <ClCompile Include="GraphicsSystem.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="GridVisualizer.cpp" />
+    <ClCompile Include="Level.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="Tile.cpp" />
+    <ClCompile Include="TileLayer.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{B881029E-EB26-4143-A310-87D4D8AE0830}</ProjectGuid>
@@ -72,7 +80,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>tinyxml;..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
