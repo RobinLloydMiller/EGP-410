@@ -15,15 +15,18 @@ public:
 	void update(double deltaTime);
 	void draw(GraphicsBuffer& dest);
 
+	void setDrawDebug(bool drawDebug) { mDrawDebugLine = drawDebug; }
+
 private:
 	void seek(int index, double time);
 	void findAPath();
 
 	GridPathfinder* mpPathfinder;
-	bool mSeeking = false;
 	Vector2D mSeekPos;
+	Vector2D mSpawnPos = Vector2D(32, 128);
 	std::vector<int> mNodesInPath;
 	int mNodeSeekIndex = 0;
+	bool mDrawDebugLine = false;
 };
 
 #endif

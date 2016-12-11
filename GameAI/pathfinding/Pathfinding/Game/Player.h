@@ -12,8 +12,11 @@ public:
 	void update(double deltaTime);
 	void draw(GraphicsBuffer& dest);
 
+	void respawn() { mPos = mSpawnPos; }
+
 private:
 	int mScore = 0;
+	Vector2D mSpawnPos = Vector2D(32, 32);
 };
 
 #endif

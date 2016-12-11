@@ -6,8 +6,8 @@
 #include "GraphicsBuffer.h"
 #include "AStarPathfinder.h"
 #include "GridGraph.h"
-#include "PathToMessage.h"
 #include "GameMessageManager.h"
+#include "RespawnMessage.h"
 #include "Grid.h"
 #include <math.h>
 
@@ -22,12 +22,10 @@ Enemy::Enemy(float speed, float frameTime)
 
 	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraph());	
 
-	//mDir = Direction::DOWN;
-
 	findAPath();
 
-	//
 	mSpeed = 75;
+	mPos = mSpawnPos;
 }
 
 Enemy::~Enemy()
@@ -37,15 +35,10 @@ Enemy::~Enemy()
 
 void Enemy::update(double deltaTime)
 {
+	Unit::update(deltaTime);
+
 	//getem
-	if (!mSeeking)
-	{
-		//findAPath();
-	}
-
 	int index = mNodesInPath[mNodeSeekIndex];
-
-	//std::cout << mNodeSeekIndex << " " << mNodesInPath.size() << std::endl;
 
 	if (gpGameApp->getGrid()->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 2), std::ceil(mPos.getY() + 2)) == index
 		&& gpGameApp->getGrid()->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 30), std::ceil(mPos.getY()) + 30) == index)
@@ -57,23 +50,16 @@ void Enemy::update(double deltaTime)
 		}
 		else
 		{
-			std::cout << "made it";
 			++mNodeSeekIndex;
 		}
 	}
 
-	//std::cout << "here: " << gpGameApp->getGrid()->getSquareIndexFromPixelXY(mPos.getX(), mPos.getY()) << " needs to be here " << index << std::endl;
-	//std::cout << "seek index " << index << " current index: " << gpGameApp->getGrid()->getSquareIndexFromPixelXY(mPos.getX(), mPos.getY()) << std::endl;
-
-	seek(index, deltaTime);
-
-	
-	Unit::update(deltaTime);
+	seek(index, deltaTime);	
 }
 
 void Enemy::draw(GraphicsBuffer& dest)
 {
-	//mpPathfinder->drawVisualization(gpGameApp->getGrid(), &dest);
+	mpPathfinder->drawVisualization(gpGameApp->getGrid(), &dest, mDrawDebugLine);
 	Unit::draw(dest);
 }
 
@@ -82,35 +68,27 @@ void Enemy::seek(int index, double time)
 	Vector2D dest = gpGameApp->getGrid()->getULCornerOfSquare(index);
 	Vector2D pos = dest - mPos;
 
-	//std::cout << pos.getX() << "\t" << pos.getY() << std::endl;
-
 	pos.normalize();
-	//pos.setX(std::round(pos.getX()));
-	//pos.setY(std::round(pos.getY()));
-
-	std::cout << pos.getX() << " " << pos.getY() << std::endl;
-	
-	//mPos += pos * time * mSpeed;
 
 	moveAndCheckCollision(mPos + (pos * time * mSpeed));
 
-	if ((pos.getX() <= dest.getX() - 10 || pos.getX() >= dest.getX() + 10)
-		&& (pos.getY() <= dest.getY() - 10 || pos.getY() >= dest.getY() + 10))
+	int buffer = 10;
+
+	if ((pos.getX() <= dest.getX() - buffer || pos.getX() >= dest.getX() + buffer)
+		&& (pos.getY() <= dest.getY() - buffer || pos.getY() >= dest.getY() + buffer))
 	{
 		pos = dest;
 	}
 
-		//findAPath();
+	Vector2D playerPos = gpGameApp->getPlayerPos();
 
-	/*if (mPos.getY() > pos.getY())
-		mPos.setY(mPos.getY() - (mSpeed * time));
-	else
-		mPos.setY(mPos.getY() + (mSpeed * time));
-
-	if (mPos.getX() > pos.getX())
-		mPos.setX(mPos.getX() - (mSpeed * time));
-	else
-		mPos.setX(mPos.getX() + (mSpeed * time));*/
+	//colliding with the player
+	if ((abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
+		(abs(mPos.getY() - playerPos.getY()) * 2 < (32 + 32)))
+	{
+		GameMessage* pMessage = new RespawnMessage();
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
 }
 
 void Enemy::findAPath()
@@ -135,9 +113,5 @@ void Enemy::findAPath()
 		mNodesInPath = mpPathfinder->getNodesInPath();
 	}
 
-	//GameMessage* pMessage = new PathToMessage(mPos, gpGameApp->getPlayerPos(), mpPathfinder);
-	//gpGameApp->getMessageManager()->addMessage(pMessage, 0);
-
 	mNodeSeekIndex = 0;
-	mSeeking = true;
 }

@@ -99,6 +99,12 @@
     <ClInclude Include="Unit.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RespawnMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
+    <ClInclude Include="SwitchDebugMessage.h">
+      <Filter>Header Files\Messaging</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -172,6 +178,12 @@
     </ClCompile>
     <ClCompile Include="Unit.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RespawnMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
+    </ClCompile>
+    <ClCompile Include="SwitchDebugMessage.cpp">
+      <Filter>Source Files\Messaging</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

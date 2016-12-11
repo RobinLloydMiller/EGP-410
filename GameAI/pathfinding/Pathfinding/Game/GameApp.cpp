@@ -20,7 +20,6 @@
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
-#include "Enemy.h"
 
 #include <fstream>
 #include <vector>
@@ -34,6 +33,7 @@ GameApp::GameApp()
 :mpMessageManager(NULL)
 ,mpInputManager(NULL)
 ,mpGrid(NULL)
+,mpGrid2(NULL)
 ,mpGridGraph(NULL)
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
@@ -62,12 +62,19 @@ bool GameApp::init()
 
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	mpGridVisualizer = new GridVisualizer( mpGrid );
 	std::ifstream theStream( gFileName );
-	mpGrid->load( theStream );
+	mpGrid->load( theStream );	
+
+	mpGrid2 = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	std::ifstream theStream2("../Editor/pathgrid2.txt");
+	mpGrid2->load(theStream2);
+
+	theRealGrid = mpGrid2;
+
+	mpGridVisualizer = new GridVisualizer(theRealGrid);
 
 	//create the GridGraph for pathfinding
-	mpGridGraph = new GridGraph(mpGrid);
+	mpGridGraph = new GridGraph(theRealGrid);
 	//init the nodes and connections
 	mpGridGraph->init();
 
@@ -78,10 +85,10 @@ bool GameApp::init()
 		int x, y;
 		do
 		{
-			x = rand() % mpGrid->getPixelWidth();
-			y = rand() % mpGrid->getPixelHeight();
-		} while (mpGrid->getValueAtPixelXY(x, y) != 0);
-		mpGrid->setValueAtPixelXY(x, y, 2);
+			x = rand() % theRealGrid->getPixelWidth();
+			y = rand() % theRealGrid->getPixelHeight();
+		} while (theRealGrid->getValueAtPixelXY(x, y) != 0);
+		theRealGrid->setValueAtPixelXY(x, y, 2);
 	}
 
 	mpPathfinder = new AStarPathfinder(mpGridGraph);
@@ -122,6 +129,9 @@ void GameApp::cleanup()
 
 	delete mpGrid;
 	mpGrid = NULL;
+
+	delete mpGrid2;
+	mpGrid2 = NULL;
 
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;

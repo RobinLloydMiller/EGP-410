@@ -16,6 +16,8 @@ Player::Player(float speed, float frameTime)
 	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(70), 0, 0, pBuffMan->getBuffer(70)->getWidth(), pBuffMan->getBuffer(70)->getHeight()));
 
 	mPos = Vector2D(300, 64);
+	//mDir = Direction::RIGHT;
+	mPos = mSpawnPos;
 }
 
 Player::~Player()

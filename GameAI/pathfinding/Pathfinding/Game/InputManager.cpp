@@ -7,6 +7,7 @@
 #include "SwitchPathfindingMessage.h"
 #include "ExitGameMessage.h"
 #include "PlayerMoveMessage.h"
+#include "SwitchDebugMessage.h"
 
 InputManager::InputManager() {
 
@@ -66,6 +67,17 @@ void InputManager::update()
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	if (keyDown(ALLEGRO_KEY_L, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchDebugMessage(true);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_K, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchDebugMessage(false);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
 
 	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
 	{

@@ -11,6 +11,7 @@ Champlain College
 #include "Game.h"
 #include "Vector2D.h"
 #include "Player.h"
+#include "Enemy.h"
 
 //forward declarations
 class GraphicsBuffer;
@@ -23,7 +24,6 @@ class GridGraph;
 class GridPathfinder;
 class DebugDisplay;
 class InputManager;
-class Enemy;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
@@ -56,6 +56,8 @@ public:
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 
+	void setDrawDebugLine(bool drawDebug) { mpEnemy->setDrawDebug(drawDebug); }
+	void respawnPlayer() { delete mpPlayer; mpPlayer = new Player(150, .2f); delete mpEnemy; mpEnemy = new Enemy(100, .2f); }
 	void setPlayerDir(Direction newDir)
 	{
 		mpPlayer->setDir(newDir);
@@ -65,7 +67,7 @@ public:
 
 private:
 	GameMessageManager* mpMessageManager;
-	Grid* mpGrid;
+	Grid* mpGrid, *mpGrid2, *theRealGrid;
 	GridVisualizer* mpGridVisualizer;
 	GridGraph* mpGridGraph;
 	DebugDisplay* mpDebugDisplay;

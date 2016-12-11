@@ -101,6 +101,8 @@
     <ClInclude Include="PathToMessage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerMoveMessage.h" />
+    <ClInclude Include="RespawnMessage.h" />
+    <ClInclude Include="SwitchDebugMessage.h" />
     <ClInclude Include="SwitchPathfindingMessage.h" />
     <ClInclude Include="Unit.h" />
   </ItemGroup>
@@ -127,6 +129,8 @@
     <ClCompile Include="PathToMessage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerMoveMessage.cpp" />
+    <ClCompile Include="RespawnMessage.cpp" />
+    <ClCompile Include="SwitchDebugMessage.cpp" />
     <ClCompile Include="SwitchPathfindingMessage.cpp" />
     <ClCompile Include="Unit.cpp" />
   </ItemGroup>

@@ -23,7 +23,7 @@ GridPathfinder::~GridPathfinder()
 }
 
 #ifdef VISUALIZE_PATH
-void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
+void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest, bool lineOnly )
 {
 	if (mpVisualizer == NULL)
 	{
@@ -34,7 +34,9 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 		mpVisualizer->clear();
 	}
 
-	static ALLEGRO_COLOR pathColor = al_map_rgb(33, 137, 43);
+	//only gonna draw the line for this project
+
+	/*static ALLEGRO_COLOR pathColor = al_map_rgb(33, 137, 43);
 
 	switch (gpGameApp->getPathfindingType())
 	{
@@ -65,9 +67,10 @@ void GridPathfinder::drawVisualization( Grid* pGrid, GraphicsBuffer* pDest )
 		//add beginning and ending color
 		mpVisualizer->addColor(mPath.peekNode(0)->getId(), startColor);
 		mpVisualizer->addColor(mPath.peekNode(numNodes - 1)->getId(), stopColor);
-	}
+	}*/
 
-	mpVisualizer->draw(*pDest);
-	mpVisualizer->drawPath(*pDest, mNodesInPath);
+	//mpVisualizer->draw(*pDest);
+	if(lineOnly)
+		mpVisualizer->drawPath(*pDest, mNodesInPath);
 }
 #endif
