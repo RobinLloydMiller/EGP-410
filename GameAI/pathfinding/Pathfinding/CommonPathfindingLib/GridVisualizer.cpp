@@ -117,6 +117,8 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 
 void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPath)
 {
+	std::cout << nodesInPath.size() << std::endl;
+
 	ALLEGRO_BITMAP* pOldTarget = GraphicsSystem::switchTargetBitmap(dest.getBitmap());
 
 	for (size_t i = 0; i < nodesInPath.size(); ++i)
@@ -127,6 +129,8 @@ void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPa
 		al_draw_line(one.getX() + mpGrid->getSquareSize() / 2, one.getY() + mpGrid->getSquareSize() / 2,
 			two.getX() + mpGrid->getSquareSize() / 2, two.getY() + mpGrid->getSquareSize() / 2,
 			al_map_rgb(255, 255, 255), 5.0f);
+
+		//std::cout << "line drawn\n";
 
 		if (i + 1 >= nodesInPath.size() - 1)
 			break;

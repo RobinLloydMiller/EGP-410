@@ -79,6 +79,15 @@ void InputManager::update()
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	if (keyDown(ALLEGRO_KEY_F, mKeyState, mPrevKeyState))
+	{
+		gpGameApp->changeGrid(0);
+	}
+	if (keyDown(ALLEGRO_KEY_G, mKeyState, mPrevKeyState))
+	{
+		gpGameApp->changeGrid(1);
+	}
+
 	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
 	{
 		GameMessage* pMessage = new PlayerMoveToMessage(Direction::DOWN);

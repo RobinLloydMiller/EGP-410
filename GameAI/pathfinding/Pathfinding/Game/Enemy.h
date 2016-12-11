@@ -2,7 +2,7 @@
 #define _ENEMY_H
 
 #include "Unit.h"
-#include "Path.h"
+#include <vector>
 
 class GridPathfinder;
 
@@ -16,6 +16,7 @@ public:
 	void draw(GraphicsBuffer& dest);
 
 	void setDrawDebug(bool drawDebug) { mDrawDebugLine = drawDebug; }
+	void newPathfinder();
 
 private:
 	void seek(int index, double time);

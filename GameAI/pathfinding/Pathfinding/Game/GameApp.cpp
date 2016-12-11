@@ -32,8 +32,6 @@ const int NUM_COINS = 10;
 GameApp::GameApp()
 :mpMessageManager(NULL)
 ,mpInputManager(NULL)
-,mpGrid(NULL)
-,mpGrid2(NULL)
 ,mpGridGraph(NULL)
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
@@ -61,20 +59,18 @@ bool GameApp::init()
 	mpInputManager = new InputManager();
 
 	//create and load the Grid, GridBuffer, and GridRenderer
-	mpGrid = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	mGrids[0] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
 	std::ifstream theStream( gFileName );
-	mpGrid->load( theStream );	
+	mGrids[0]->load( theStream );
 
-	mpGrid2 = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
+	mGrids[1] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
 	std::ifstream theStream2("../Editor/pathgrid2.txt");
-	mpGrid2->load(theStream2);
+	mGrids[1]->load(theStream2);
 
-	theRealGrid = mpGrid2;
-
-	mpGridVisualizer = new GridVisualizer(theRealGrid);
+	mpGridVisualizer = new GridVisualizer(mGrids[mMapIndex]);
 
 	//create the GridGraph for pathfinding
-	mpGridGraph = new GridGraph(theRealGrid);
+	mpGridGraph = new GridGraph(mGrids[mMapIndex]);
 	//init the nodes and connections
 	mpGridGraph->init();
 
@@ -85,10 +81,10 @@ bool GameApp::init()
 		int x, y;
 		do
 		{
-			x = rand() % theRealGrid->getPixelWidth();
-			y = rand() % theRealGrid->getPixelHeight();
-		} while (theRealGrid->getValueAtPixelXY(x, y) != 0);
-		theRealGrid->setValueAtPixelXY(x, y, 2);
+			x = rand() % mGrids[mMapIndex]->getPixelWidth();
+			y = rand() % mGrids[mMapIndex]->getPixelHeight();
+		} while (mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 0);
+		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 2);
 	}
 
 	mpPathfinder = new AStarPathfinder(mpGridGraph);
@@ -127,11 +123,11 @@ void GameApp::cleanup()
 	delete mpMessageManager;
 	mpMessageManager = NULL;
 
-	delete mpGrid;
-	mpGrid = NULL;
-
-	delete mpGrid2;
-	mpGrid2 = NULL;
+	for (int i = 0; i < 2; ++i)
+	{
+		delete mGrids[i];
+		mGrids[i] = NULL;
+	}
 
 	delete mpGridVisualizer;
 	mpGridVisualizer = NULL;
@@ -169,7 +165,7 @@ void GameApp::processLoop()
 	mpGridVisualizer->draw( *pBackBuffer );
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
-	mpPathfinder->drawVisualization(mpGrid, pBackBuffer);
+	//mpPathfinder->drawVisualization(mpGrid2, pBackBuffer);
 #endif
 
 	mpGridVisualizer->flipBuffer(*pBackBuffer);

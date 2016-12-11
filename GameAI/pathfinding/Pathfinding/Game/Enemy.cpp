@@ -4,11 +4,11 @@
 #include "Sprite.h"
 #include "GraphicsBufferManager.h"
 #include "GraphicsBuffer.h"
-#include "AStarPathfinder.h"
-#include "GridGraph.h"
 #include "GameMessageManager.h"
 #include "RespawnMessage.h"
 #include "Grid.h"
+#include "AStarPathfinder.h"
+#include "GridGraph.h"
 #include <math.h>
 
 Enemy::Enemy(float speed, float frameTime)
@@ -61,6 +61,14 @@ void Enemy::draw(GraphicsBuffer& dest)
 {
 	mpPathfinder->drawVisualization(gpGameApp->getGrid(), &dest, mDrawDebugLine);
 	Unit::draw(dest);
+}
+
+void Enemy::newPathfinder()
+{
+	delete mpPathfinder;
+	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraph());
+	mNodesInPath.clear();
+	findAPath();
 }
 
 void Enemy::seek(int index, double time)
