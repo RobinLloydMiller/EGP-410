@@ -17,6 +17,8 @@ class Grid;
 class GridVisualizer;
 class GraphicsBuffer;
 
+class Level;
+
 const float LOOP_TARGET_TIME = 33.3f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 
 class Editor: public Game
@@ -42,5 +44,7 @@ public:
 private:
 	Grid* mpGrid;
 	GridVisualizer* mpGridVisualizer;
+
+	Level* mpMainLevel;
 
 };

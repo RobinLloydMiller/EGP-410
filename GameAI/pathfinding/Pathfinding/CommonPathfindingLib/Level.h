@@ -4,7 +4,7 @@
 /* Some code reused from/inspired by http://usefulgamedev.weebly.com/c-tiled-map-loader.html */
 
 #include "Trackable.h"
-#include "tinyxml\tinyxml.h"
+#include "../tinyxml/tinyxml.h"
 #include "TileLayer.h"
 #include "Tile.h"
 #include "SpriteSheet.h"

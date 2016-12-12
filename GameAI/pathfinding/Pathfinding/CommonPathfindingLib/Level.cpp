@@ -54,9 +54,10 @@ void Level::draw(GraphicsSystem* gs)
 			{
 				int tmp = mLayers[layer]->getTile(x, y)->getID();
 				if (tmp > 0)
-					NULL; //TODO: Draw functions are internal to things like sprites and are 100% exposed to allegro in dean's implementation.
+					//NULL; //TODO: Draw functions are internal to things like sprites and are 100% exposed to allegro in dean's implementation.
 						  //	We need to write our own draw in the graphics system to use the following line.
 					//gs->draw(Vector2D((float)x * mTileWidth - Game::getCameraOffset().getX() + 512, (float)y * mTileHeight - Game::getCameraOffset().getY() + 512), mTileSprites[tmp - 1], 1.0f);
+					mTileSprites[tmp - 1]->draw(*gs->getBackBuffer(), (float)x * mTileWidth - 0 + 512, (float)y * mTileHeight - 0 + 512);
 			}
 		}
 	}

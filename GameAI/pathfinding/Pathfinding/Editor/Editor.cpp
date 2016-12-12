@@ -12,6 +12,8 @@
 #include "SpriteManager.h"
 #include "Vector2D.h"
 
+#include "Level.h"
+
 using namespace std;
 
 const int GRID_SQUARE_SIZE = 32;
@@ -51,6 +53,8 @@ bool Editor::init()
 	{
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
+
+	mpMainLevel = new Level("../assets/tilegrid.tmx");
 	
 	mpMasterTimer->start();
 	return true;
@@ -89,6 +93,8 @@ void Editor::processLoop()
 
 	//copy to back buffer
 	mpGridVisualizer->draw(*(mpGraphicsSystem->getBackBuffer()));
+
+	mpMainLevel->draw(mpGraphicsSystem);
 
 	//should be last thing in processLoop
 	Game::processLoop();
