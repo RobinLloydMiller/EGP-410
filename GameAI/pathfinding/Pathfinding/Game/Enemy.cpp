@@ -181,12 +181,21 @@ void Enemy::findAPath(Vector2D pos)
 void Enemy::findAPath()
 {
 
+	mNodesInPath.clear();
+
 	GridGraph* pGridGraph = gpGameApp->getGridGraph();
 	Grid* pGrid = gpGameApp->getGrid();
 	int fromIndex = pGrid->getSquareIndexFromPixelXY((int)mPos.getX(), (int)mPos.getY());
 	int toIndex = pGrid->getSquareIndexFromPixelXY((int)gpGameApp->getPlayerPos().getX(), (int)gpGameApp->getPlayerPos().getY());
 
-	Node* pFromNode = pGridGraph->getNode(fromIndex);
+	int i;
+
+	if (mNodesInPath.size() == 0)
+		i = fromIndex;
+	else
+		i = mNodesInPath[mNodesInPath.size() - 1];
+
+	Node* pFromNode = pGridGraph->getNode(i);
 	Node* pToNode = pGridGraph->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16));
 	if (pFromNode != NULL && pToNode != NULL)
 	{
