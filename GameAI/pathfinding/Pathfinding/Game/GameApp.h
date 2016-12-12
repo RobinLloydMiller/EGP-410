@@ -25,6 +25,7 @@ class Grid;
 class GridPathfinder;
 class DebugDisplay;
 class InputManager;
+class SoundManager;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
 const int NUM_MAPS = 2;
@@ -51,6 +52,7 @@ public:
 
 	//accessors
 	inline GameMessageManager* getMessageManager() { return mpMessageManager; };
+	inline SoundManager* getSoundManager() { return mpSoundManager; }
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid() { return mGrids[mMapIndex]; };
@@ -105,9 +107,9 @@ public:
 
 		mEnemies.clear();
 
-		mEnemies.push_back(new Enemy(100, .2f));
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(64, 96)));
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(96, 128)));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(1000, 750)));
 	}
 	void setPlayerDir(Direction newDir)
 	{
@@ -124,6 +126,7 @@ private:
 	GridGraph* mGridGraphs[NUM_MAPS];
 	DebugDisplay* mpDebugDisplay;
 	InputManager* mpInputManager;
+	SoundManager* mpSoundManager;
 
 	GridPathfinder* mpPathfinder;
 	PathfinderType mPathfindingType;
@@ -131,7 +134,7 @@ private:
 	Player* mpPlayer;
 	std::vector<Enemy*> mEnemies;
 
-	int mMapIndex = 1;
+	int mMapIndex = 0;
 };
 
 #endif

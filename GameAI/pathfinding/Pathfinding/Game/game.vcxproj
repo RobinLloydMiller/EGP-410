@@ -105,6 +105,7 @@
     <ClInclude Include="PlayerMoveMessage.h" />
     <ClInclude Include="RespawnMessage.h" />
     <ClInclude Include="SetPlayerInvincibleMessage.h" />
+    <ClInclude Include="SoundManager.h" />
     <ClInclude Include="StateMachine.h" />
     <ClInclude Include="SwitchDebugMessage.h" />
     <ClInclude Include="SwitchPathfindingMessage.h" />
@@ -135,6 +136,7 @@
     <ClCompile Include="PlayerMoveMessage.cpp" />
     <ClCompile Include="RespawnMessage.cpp" />
     <ClCompile Include="SetPlayerInvincibleMessage.cpp" />
+    <ClCompile Include="SoundManager.cpp" />
     <ClCompile Include="StateMachine.cpp" />
     <ClCompile Include="SwitchDebugMessage.cpp" />
     <ClCompile Include="SwitchPathfindingMessage.cpp" />

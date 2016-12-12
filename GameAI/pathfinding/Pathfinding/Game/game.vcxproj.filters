@@ -123,6 +123,9 @@
     <ClInclude Include="CandyState.h">
       <Filter>Header Files\StateMachine</Filter>
     </ClInclude>
+    <ClInclude Include="SoundManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -208,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="StateMachine.cpp">
       <Filter>Source Files\StateMachine</Filter>
+    </ClCompile>
+    <ClCompile Include="SoundManager.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

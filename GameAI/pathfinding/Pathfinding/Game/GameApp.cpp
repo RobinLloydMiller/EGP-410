@@ -20,6 +20,7 @@
 #include "InputManager.h"
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
+#include "SoundManager.h"
 
 #include <fstream>
 
@@ -34,6 +35,7 @@ GameApp::GameApp()
 ,mpPathfinder(NULL)
 ,mpDebugDisplay(NULL)
 ,mpPlayer(NULL)
+,mpSoundManager(NULL)
 {
 	mLoopTargetTime = LOOP_TARGET_TIME;
 }
@@ -48,12 +50,15 @@ bool GameApp::init()
 	bool retVal = Game::init();
 	if (retVal == false)
 	{
-
 		return false;
 	}
 
 	mpMessageManager = new GameMessageManager();
 	mpInputManager = new InputManager();
+	mpSoundManager = new SoundManager();
+
+	mpSoundManager->addSound("coinSound.ogg", CoinSound);
+	mpSoundManager->playSound(CoinSound);
 
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mGrids[0] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
@@ -123,9 +128,9 @@ bool GameApp::init()
 
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
 
-	mEnemies.push_back(new Enemy(100, .2f));
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(64, 96)));
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(96, 128)));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(1000, 750)));
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -166,6 +171,9 @@ void GameApp::cleanup()
 
 	delete mpPlayer;
 	mpPlayer = NULL;
+
+	delete mpSoundManager;
+	mpSoundManager = NULL;
 
 	delete mEnemies[0];
 	mEnemies[0] = NULL;

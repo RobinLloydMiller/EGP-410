@@ -13,12 +13,11 @@
 
 Enemy::Enemy(float speed, float frameTime, Vector2D pos)
 :Unit(speed, frameTime)
+,mSpawnPos(pos)
 {
 	GraphicsBufferManager* pBuffMan = gpGameApp->getGraphicsBufferManager();
 
 	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(71), 0, 0, pBuffMan->getBuffer(71)->getWidth(), pBuffMan->getBuffer(71)->getHeight()));
-
-	mPos = pos;
 
 	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraph());	
 
@@ -65,6 +64,10 @@ void Enemy::update(double deltaTime)
 		seek(index, deltaTime);
 	}*/
 
+	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGrid()->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 1])))
+		findAPath();
+
+
 	seek(index, deltaTime);
 }
 
@@ -105,6 +108,13 @@ void Enemy::seek(int index, double time)
 	if ((abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
 		(abs(mPos.getY() - playerPos.getY()) * 2 < (32 + 32)))
 	{
+		//player is candy man
+		if (gpGameApp->getPlayerStateId() == 1)
+		{
+			respawn();
+			return;
+		}
+
 		if (!gpGameApp->isPlayerInvincible())
 		{
 			GameMessage* pMessage = new RespawnMessage();
@@ -121,10 +131,10 @@ void Enemy::flee(double time)
 	Vector2D BLCorner = Vector2D(1000, 32);
 	Vector2D BRCorner = Vector2D(1000, 750);
 
-	float distToUL = std::abs(ULCorner.getX() - playerPos.getX()) + std::abs(ULCorner.getY() - playerPos.getY());
-	float distToBL = std::abs(BLCorner.getX() - playerPos.getX()) + std::abs(BLCorner.getY() - playerPos.getY());
-	float distToUR = std::abs(URCorner.getX() - playerPos.getX()) + std::abs(URCorner.getY() - playerPos.getY());
-	float distToBR = std::abs(BRCorner.getX() - playerPos.getX()) + std::abs(BRCorner.getY() - playerPos.getY());
+	float distToUL = distanceBetween(ULCorner, playerPos);
+	float distToBL = distanceBetween(BLCorner, playerPos);
+	float distToUR = distanceBetween(URCorner, playerPos);
+	float distToBR = distanceBetween(BRCorner, playerPos);
 
 	float largest = distToUL;
 	Vector2D largestPos = ULCorner;
@@ -176,6 +186,11 @@ void Enemy::findAPath(Vector2D pos)
 	}
 
 	mNodeSeekIndex = 0;
+}
+
+float Enemy::distanceBetween(Vector2D one, Vector2D two)
+{
+	return std::abs(two.getX() - one.getX()) + std::abs(two.getY() - one.getY());
 }
 
 void Enemy::findAPath()
