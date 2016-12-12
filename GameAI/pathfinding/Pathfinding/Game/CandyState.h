@@ -2,6 +2,7 @@
 #define _CANDYSTATE_h
 
 #include "StateMachine.h"
+#include "GameApp.h"
 #include <map>
 
 class CandyState : public StateMachineState
@@ -9,8 +10,8 @@ class CandyState : public StateMachineState
 public:
 	CandyState(const SM_idType& id) :StateMachineState(id) {}
 
-	virtual void onEntrance() { mTimeToStop = 1000.0f; }
-	virtual void onExit() { mTimeToStop = 0.0f; }
+	virtual void onEntrance() { mTimeToStop = 3000.0f; gpGameApp->flee(); }
+	virtual void onExit() { mTimeToStop = 0.0f; gpGameApp->findAPath(); }
 	virtual StateTransition* update()
 	{
 		if (mTimeToStop > 0)

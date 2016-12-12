@@ -23,12 +23,14 @@ void GridVisualizer::refresh()
 	const ALLEGRO_COLOR& color = BLACK_COLOR; 
 	const ALLEGRO_COLOR& coinColor = YELLOW_COLOR;
 	const ALLEGRO_COLOR& candyColor = BLUE_COLOR;
+	const ALLEGRO_COLOR& exitColor = PURPLE_COLOR;
 	if( mDirty )
 	{
 		//remove old entries first
 		removeAllEntriesOfColor( color );
 		removeAllEntriesOfColor( coinColor );
 		removeAllEntriesOfColor( candyColor );
+		removeAllEntriesOfColor(exitColor);
 
 		int size = mpGrid->getGridWidth() * mpGrid->getGridHeight();
 		//get any non-zero squares and send them to the visualizer
@@ -45,6 +47,10 @@ void GridVisualizer::refresh()
 			else if (mpGrid->getValueAtIndex(i) == 3)
 			{
 				addColor(i, candyColor);
+			}
+			else if (mpGrid->getValueAtIndex(i) == 4)
+			{
+				addColor(i, exitColor);
 			}
 		}
 	}
@@ -123,8 +129,6 @@ void GridVisualizer::draw( GraphicsBuffer& dest )
 
 void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPath)
 {
-	std::cout << nodesInPath.size() << std::endl;
-
 	ALLEGRO_BITMAP* pOldTarget = GraphicsSystem::switchTargetBitmap(dest.getBitmap());
 
 	for (size_t i = 0; i < nodesInPath.size(); ++i)

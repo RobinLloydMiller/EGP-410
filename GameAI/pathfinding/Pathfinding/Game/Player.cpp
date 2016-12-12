@@ -6,7 +6,6 @@
 #include "GraphicsBuffer.h"
 #include "Animation.h"
 #include "Sprite.h"
-#include "StateMachine.h"
 #include "NoCandyState.h"
 #include "CandyState.h"
 
@@ -25,7 +24,7 @@ Player::Player(float speed, float frameTime)
 
 Player::~Player()
 {
-	delete mStateMachine;
+	delete mpStateMachine;
 	delete mpNoCandyState;
 	delete mpCandyState;
 	delete mpToCandyState;
@@ -52,9 +51,9 @@ void Player::update(double deltaTime)
 		dynamic_cast<NoCandyState*>(mpNoCandyState)->gotCandy();		
 	}
 
-	mStateMachine->update();
+	mpStateMachine->update();
 
-	std::cout << mStateMachine->getCurrentState()->getID() << std::endl;
+	//std::cout << mpStateMachine->getCurrentState()->getID() << std::endl;
 }
 
 void Player::draw(GraphicsBuffer& dest)
@@ -64,7 +63,7 @@ void Player::draw(GraphicsBuffer& dest)
 
 void Player::initStateMachine()
 {
-	mStateMachine = new StateMachine();
+	mpStateMachine = new StateMachine();
 
 	mpNoCandyState = new NoCandyState(0);
 	mpCandyState = new CandyState(1);
@@ -75,8 +74,8 @@ void Player::initStateMachine()
 	mpNoCandyState->addTransition(mpToCandyState);
 	mpCandyState->addTransition(mpToNoCandyState);
 
-	mStateMachine->addState(mpNoCandyState);
-	mStateMachine->addState(mpCandyState);
+	mpStateMachine->addState(mpNoCandyState);
+	mpStateMachine->addState(mpCandyState);
 
-	mStateMachine->setInitialStateID(0);
+	mpStateMachine->setInitialStateID(0);
 }

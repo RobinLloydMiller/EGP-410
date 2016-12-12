@@ -17,10 +17,12 @@ public:
 
 	void setDrawDebug(bool drawDebug) { mDrawDebugLine = drawDebug; }
 	void newPathfinder();
+	void flee(double time);
+	void findAPath();
 
 private:
 	void seek(int index, double time);
-	void findAPath();
+	void findAPath(Vector2D pos);
 
 	GridPathfinder* mpPathfinder;
 	Vector2D mSeekPos;

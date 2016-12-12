@@ -57,7 +57,15 @@ void Enemy::update(double deltaTime)
 		}
 	}
 
-	seek(index, deltaTime);	
+	/*if (gpGameApp->getPlayerStateId() == 0)
+		seek(index, deltaTime);
+	else
+	{
+		flee(deltaTime);
+		seek(index, deltaTime);
+	}*/
+
+	seek(index, deltaTime);
 }
 
 void Enemy::draw(GraphicsBuffer& dest)
@@ -105,12 +113,52 @@ void Enemy::seek(int index, double time)
 	}
 }
 
-void Enemy::findAPath()
+void Enemy::flee(double time)
+{
+	Vector2D playerPos = gpGameApp->getPlayerPos();
+	Vector2D ULCorner = Vector2D(32, 32);
+	Vector2D URCorner = Vector2D(32, 750);
+	Vector2D BLCorner = Vector2D(1000, 32);
+	Vector2D BRCorner = Vector2D(1000, 750);
+
+	float distToUL = std::abs(ULCorner.getX() - playerPos.getX()) + std::abs(ULCorner.getY() - playerPos.getY());
+	float distToBL = std::abs(BLCorner.getX() - playerPos.getX()) + std::abs(BLCorner.getY() - playerPos.getY());
+	float distToUR = std::abs(URCorner.getX() - playerPos.getX()) + std::abs(URCorner.getY() - playerPos.getY());
+	float distToBR = std::abs(BRCorner.getX() - playerPos.getX()) + std::abs(BRCorner.getY() - playerPos.getY());
+
+	float largest = distToUL;
+	Vector2D largestPos = ULCorner;
+
+	if (distToBL > largest)
+	{
+		largest = distToBL;
+		largestPos = BLCorner;
+	}
+	if (distToUR > largest)
+	{
+		largest = distToUR;
+		largestPos = URCorner;
+	}
+	if (distToBR > largest)
+	{
+		largest = distToBR;
+		largestPos = BRCorner;
+	}
+
+	mNodesInPath.clear();
+
+	findAPath(largestPos);
+	//Vector2D pos = mPos - gpGameApp->getPlayerPos();
+	//pos.normalize();
+	//moveAndCheckCollision(mPos + (pos * time * mSpeed));
+}
+
+void Enemy::findAPath(Vector2D pos)
 {
 	GridGraph* pGridGraph = gpGameApp->getGridGraph();
 	Grid* pGrid = gpGameApp->getGrid();
 	int fromIndex = pGrid->getSquareIndexFromPixelXY((int)mPos.getX(), (int)mPos.getY());
-	int toIndex = pGrid->getSquareIndexFromPixelXY((int)gpGameApp->getPlayerPos().getX(), (int)gpGameApp->getPlayerPos().getY());
+	int toIndex = pGrid->getSquareIndexFromPixelXY((int)pos.getX(), (int)pos.getY());
 
 	int i;
 
@@ -120,6 +168,25 @@ void Enemy::findAPath()
 		i = mNodesInPath[mNodesInPath.size() - 1];
 
 	Node* pFromNode = pGridGraph->getNode(i);
+	Node* pToNode = pGridGraph->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(pos.getX() + 16, pos.getY() + 16));
+	if (pFromNode != NULL && pToNode != NULL)
+	{
+		mpPathfinder->findPath(pToNode, pFromNode);
+		mNodesInPath = mpPathfinder->getNodesInPath();
+	}
+
+	mNodeSeekIndex = 0;
+}
+
+void Enemy::findAPath()
+{
+
+	GridGraph* pGridGraph = gpGameApp->getGridGraph();
+	Grid* pGrid = gpGameApp->getGrid();
+	int fromIndex = pGrid->getSquareIndexFromPixelXY((int)mPos.getX(), (int)mPos.getY());
+	int toIndex = pGrid->getSquareIndexFromPixelXY((int)gpGameApp->getPlayerPos().getX(), (int)gpGameApp->getPlayerPos().getY());
+
+	Node* pFromNode = pGridGraph->getNode(fromIndex);
 	Node* pToNode = pGridGraph->getNode(gpGameApp->getGrid()->getSquareIndexFromPixelXY(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16));
 	if (pFromNode != NULL && pToNode != NULL)
 	{

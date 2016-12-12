@@ -59,6 +59,23 @@ public:
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 	inline bool isPlayerInvincible() const { return mpPlayer->isInvincible(); }
 	inline float getLoopTime() const { return LOOP_TARGET_TIME; }
+	inline int getPlayerStateId() const { return mpPlayer->getPlayerStateId(); }
+
+	void findAPath()
+	{
+		for (auto &it : mEnemies)
+		{
+			it->findAPath();
+		}
+	}
+
+	void flee()
+	{
+		for (auto &it : mEnemies)
+		{
+			it->flee(LOOP_TARGET_TIME);
+		}
+	}
 
 	void changeGrid(int index)
 	{
@@ -114,7 +131,7 @@ private:
 	Player* mpPlayer;
 	std::vector<Enemy*> mEnemies;
 
-	int mMapIndex = 0;
+	int mMapIndex = 1;
 };
 
 #endif

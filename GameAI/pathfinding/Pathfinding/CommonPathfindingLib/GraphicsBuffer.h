@@ -11,6 +11,7 @@ using namespace std;
 const ALLEGRO_COLOR BLACK_COLOR =  { 0, 0, 0, 255};
 const ALLEGRO_COLOR YELLOW_COLOR = { 255, 255, 0, 255 };
 const ALLEGRO_COLOR BLUE_COLOR = { 0, 50, 255, 255 };
+const ALLEGRO_COLOR PURPLE_COLOR = { 255, 0, 255, 255 };
 
 class GraphicsBuffer:public Trackable
 {
