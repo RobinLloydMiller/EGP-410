@@ -29,6 +29,8 @@ public:
 	void draw(GraphicsBuffer& dest);
 
 protected:
+	bool moveAndCheckCollision(Vector2D newPos);
+
 	Animation* mpAnime;
 	Vector2D mPos;
 	Direction mDir;

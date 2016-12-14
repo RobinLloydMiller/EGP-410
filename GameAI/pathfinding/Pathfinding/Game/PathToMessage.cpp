@@ -5,10 +5,11 @@
 #include "Grid.h"
 #include "GridGraph.h"
 
-PathToMessage::PathToMessage( const Vector2D& from, const Vector2D& to )
+PathToMessage::PathToMessage( const Vector2D& from, const Vector2D& to, GridPathfinder* pathfinder )
 :GameMessage(PATH_TO_MESSAGE)
 ,mFrom(from)
 ,mTo(to)
+,mpPathfinder(pathfinder)
 {
 }
 
@@ -21,7 +22,8 @@ void PathToMessage::process()
 	GameApp* pGame = dynamic_cast<GameApp*>(gpGame);
 	if( pGame != NULL ) 
 	{
-		GridPathfinder* pPathfinder = pGame->getPathfinder();
+		if(mpPathfinder == nullptr)
+			mpPathfinder = pGame->getPathfinder();
 		GridGraph* pGridGraph = pGame->getGridGraph();
 		Grid* pGrid = pGame->getGrid();
 		int fromIndex = pGrid->getSquareIndexFromPixelXY( (int)mFrom.getX(), (int)mFrom.getY() );
@@ -30,7 +32,7 @@ void PathToMessage::process()
 		Node* pToNode = pGridGraph->getNode( toIndex );
 		if (pFromNode != NULL && pToNode != NULL)
 		{
-			pPathfinder->findPath(pFromNode, pToNode);
+			mpPathfinder->findPath(pFromNode, pToNode);
 		}
 	}
 }

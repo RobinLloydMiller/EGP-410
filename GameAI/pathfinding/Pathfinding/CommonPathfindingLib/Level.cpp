@@ -73,6 +73,8 @@ void Level::getLevelSize(int &width, int &height)
 	height = mHeight * mTileHeight;
 }
 
+
+
 bool Level::VisitEnter(const TiXmlDocument  &mMap)
 {
 	return true;
@@ -224,4 +226,19 @@ void Level::getTileSize(int &width, int &height)
 {
 	width = mTileWidth;
 	height = mTileHeight;
+}
+
+Vector2D Level::getXYfromIndex(const int index)
+{
+	int squareY = index / (mWidth / mTileWidth);
+	int squareX = index % (mWidth / mTileWidth);
+	Vector2D pos((float)(squareX * mTileWidth), (float)(squareY * mTileHeight));
+	pos.setX(pos.getX() + mTileWidth / 2);
+	pos.setX(pos.getY() + mTileHeight / 2);
+
+
+
+
+
+	return pos;
 }

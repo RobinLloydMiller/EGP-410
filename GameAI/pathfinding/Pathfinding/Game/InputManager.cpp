@@ -7,6 +7,8 @@
 #include "SwitchPathfindingMessage.h"
 #include "ExitGameMessage.h"
 #include "PlayerMoveMessage.h"
+#include "SwitchDebugMessage.h"
+#include "SetPlayerInvincibleMessage.h"
 
 InputManager::InputManager() {
 
@@ -66,6 +68,38 @@ void InputManager::update()
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+	if (keyDown(ALLEGRO_KEY_L, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchDebugMessage(true);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_K, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SwitchDebugMessage(false);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_I, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SetPlayerInvincibleMessage(true);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_U, mKeyState, mPrevKeyState))
+	{
+		GameMessage* pMessage = new SetPlayerInvincibleMessage(false);
+		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
+	}
+
+	if (keyDown(ALLEGRO_KEY_F, mKeyState, mPrevKeyState))
+	{
+		gpGameApp->changeGrid(0);
+	}
+	if (keyDown(ALLEGRO_KEY_G, mKeyState, mPrevKeyState))
+	{
+		gpGameApp->changeGrid(1);
+	}
 
 	if (keyDown(ALLEGRO_KEY_DOWN, mKeyState, mPrevKeyState))
 	{

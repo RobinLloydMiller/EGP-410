@@ -26,6 +26,7 @@ public:
 
 	void clear();
 	void setDirty() { mDirty = true; }
+	void setGridPointer(Grid* pGrid) { mpGrid = pGrid; }
 private:
 	void refresh();
 

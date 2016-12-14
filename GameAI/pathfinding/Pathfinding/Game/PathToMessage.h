@@ -5,10 +5,12 @@
 
 #include "Vector2D.h"
 
+class GridPathfinder;
+
 class PathToMessage:public GameMessage
 {
 public:
-	PathToMessage( const Vector2D& from, const Vector2D& to );
+	PathToMessage( const Vector2D& from, const Vector2D& to, GridPathfinder* pathfinder = nullptr );
 	~PathToMessage();
 
 	const Vector2D& getFrom() const { return mFrom; };
@@ -19,6 +21,7 @@ public:
 private:
 	Vector2D mFrom;
 	Vector2D mTo;
+	GridPathfinder* mpPathfinder;
 };
 
 #endif
