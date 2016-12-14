@@ -54,10 +54,13 @@ void Level::draw(GraphicsSystem* gs)
 			{
 				int tmp = mLayers[layer]->getTile(x, y)->getID();
 				if (tmp > 0)
+				{
 					//NULL; //TODO: Draw functions are internal to things like sprites and are 100% exposed to allegro in dean's implementation.
-						  //	We need to write our own draw in the graphics system to use the following line.
+							//	We need to write our own draw in the graphics system to use the following line.
 					//gs->draw(Vector2D((float)x * mTileWidth - Game::getCameraOffset().getX() + 512, (float)y * mTileHeight - Game::getCameraOffset().getY() + 512), mTileSprites[tmp - 1], 1.0f);
-					mTileSprites[tmp - 1]->draw(*gs->getBackBuffer(), (float)x * mTileWidth - 0 + 512, (float)y * mTileHeight - 0 + 512);
+					mTileSprites[tmp - 1]->draw(*(gpGame->getGraphicsSystem()->getBackBuffer()), (float)x * mTileWidth - 0, (float)y * mTileHeight - 0);
+					//std::cout << "Draw being called" << std::endl;
+				}
 			}
 		}
 	}
@@ -113,7 +116,7 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 		image->Attribute("height", &tmpHeight);
 
 		//remove the first three chars ("../") of the path so it gets it relative to the executable, t the .tmx
-		tmpSource.erase(0, 3);
+		//tmpSource.erase(0, 3); //Don't do this here, because everything is in one assets folder now, not seperated
 
 		std::cout <<
 			"tmpTWidth: " << tmpTWidth << ", tmpTHeight: " << tmpTHeight << ", columns: " << tmpColumns << std::endl <<
@@ -130,6 +133,7 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 				mTileSprites.push_back(tmpSprite);
 			}
 		}
+		std::cout << "Loaded " << mTileSprites.size() << " sprites" << std::endl;
 
 		mSheets.push_back(tmpSheet);
 
@@ -198,12 +202,12 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 	return true;
 }
 
-Tile* Level::getTile(int x, int y, std::string target)
+Tile* Level::getTile(int x, int y, std::string targetLayer)
 {
 	TileLayer* layer = NULL;
 	for each (TileLayer* curr in mLayers)
 	{
-		if (curr->getName() == target)
+		if (curr->getName() == targetLayer)
 		{
 			layer = curr;
 			break;

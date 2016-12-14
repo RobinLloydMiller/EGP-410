@@ -54,7 +54,8 @@ bool Editor::init()
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
 
-	mpMainLevel = new Level("../assets/tilegrid.tmx");
+	mpMainLevel = new Level("../assets/pathgrid.tmx");
+	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
 	
 	mpMasterTimer->start();
 	return true;
@@ -67,6 +68,9 @@ void Editor::cleanup()
 
 	delete mpGrid;
 	mpGrid = NULL;
+
+	delete mpMainLevel;
+	mpMainLevel = NULL;
 }
 
 void Editor::beginLoop()
@@ -82,20 +86,23 @@ void Editor::processLoop()
 
 	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
 	{
-		mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, BLOCKING_VALUE );
-		mpGridVisualizer->setModified();
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(1);
+
+		//mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, BLOCKING_VALUE );
+		//mpGridVisualizer->setModified();
 	}
 	else if( al_mouse_button_down( &mouseState, 2 ) )//right mouse down
 	{
-		mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, CLEAR_VALUE );
-		mpGridVisualizer->setModified();
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(0);
+
+		//mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, CLEAR_VALUE );
+		//mpGridVisualizer->setModified();
 	}
 
 	//copy to back buffer
 	mpGridVisualizer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
 	mpMainLevel->draw(mpGraphicsSystem);
-
 	//should be last thing in processLoop
 	Game::processLoop();
 }

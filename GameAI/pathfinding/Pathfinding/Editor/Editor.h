@@ -45,6 +45,4 @@ private:
 	Grid* mpGrid;
 	GridVisualizer* mpGridVisualizer;
 
-	Level* mpMainLevel;
-
 };

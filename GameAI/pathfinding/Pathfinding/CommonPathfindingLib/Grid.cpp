@@ -1,6 +1,8 @@
 #include "Grid.h"
 #include "GraphicsSystem.h"
 #include "Vector2D.h"
+#include "Game.h"
+#include "Level.h"
 #include <memory.h>
 
 Grid::Grid( int pixelWidth, int pixelHeight, int squareSize )
@@ -138,16 +140,37 @@ void Grid::save( std::ofstream& file )
 		<< "<property name=\"name\" value=\"Mario!\"/>\n"
 		<< "</properties>\n";
 	file << "<tileset firstgid=\"1\" name=\"mario_tiles\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"924\" columns=\"33\">\n"
-		<< "<image source=\"mario_tiles.png\" width=\"1056\" height=\"896\"/>\n"
+		<< "<image source=\"../assets/mario_tiles.png\" width=\"1056\" height=\"896\"/>\n"
 		<< "</tileset>\n";
-	file << "<layer name =\"Background\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
+	file << "<layer name =\"Collision\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
 		<< "<data encoding=\"csv\">\n";
 
+	/*
 	int numSquares = mGridWidth * mGridHeight;
 	file << mpValues[0];
 	for( int i=1; i<numSquares; i++ )
 	{
 		file << "," << mpValues[i];
+	}*/
+
+	int mapWidth, mapHeight;
+	int tileWidth, tileHeight;
+	Level* currentLevel = gpGame->getLevel();
+	currentLevel->getLevelSize(mapWidth, mapHeight);
+	currentLevel->getTileSize(tileWidth, tileHeight);
+	mapWidth /= tileWidth;
+	mapHeight /= tileHeight;
+	for (int y = 0; y < mapHeight; y++)
+	{
+		for (int x = 0; x < mapWidth; x++)
+		{
+			if (y == mapHeight - 1 && x == mapWidth - 1)
+				file << currentLevel->getTile(x, y, "Collision")->getID();
+			else
+				file << currentLevel->getTile(x, y, "Collision")->getID() << ",";
+		}
+		file << std::endl;
+
 	}
 
 	file << "</data>\n"

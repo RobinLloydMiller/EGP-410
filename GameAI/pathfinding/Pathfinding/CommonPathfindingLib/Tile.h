@@ -11,6 +11,7 @@ public:
 
 
 	int getID() { return mTileID; };
+	void setID(int newID) { mTileID = newID; };
 
 private:
 	int mTileID;

@@ -18,6 +18,7 @@ class GraphicsBufferManager;
 class SpriteManager;
 class Game;
 class GameApp;
+class Level;
 struct ALLEGRO_FONT;
 
 extern PerformanceTracker* gpPerformanceTracker;
@@ -47,6 +48,8 @@ public:
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
 	inline void markForExit() { mShouldExit = true; };
+	
+	Level* getLevel() { return mpMainLevel; };
 
 protected:
 	GraphicsSystem* mpGraphicsSystem;
@@ -56,6 +59,9 @@ protected:
 	Timer* mpMasterTimer;
 	float mLoopTargetTime;
 	bool mShouldExit;
+
+	Level* mpMainLevel;
+	int mTileWidth, mTileHeight;
 
 	//should be somewhere else
 	ALLEGRO_FONT* mpFont;
