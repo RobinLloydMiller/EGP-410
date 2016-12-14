@@ -16,7 +16,7 @@
 
 using namespace std;
 
-const int GRID_SQUARE_SIZE = 32;
+const int GRID_SQUARE_SIZE = 64;
 const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
 
 Editor::Editor()

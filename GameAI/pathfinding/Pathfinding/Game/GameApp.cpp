@@ -26,7 +26,7 @@
 #include <vector>
 
 const IDType BACKGROUND_ID = ENDING_SEQUENTIAL_ID + 1;
-const int GRID_SQUARE_SIZE = 32;
+const int GRID_SQUARE_SIZE = 64;
 const std::string gFileName = "../Editor/pathgrid.txt";
 const int NUM_COINS = 10;
 

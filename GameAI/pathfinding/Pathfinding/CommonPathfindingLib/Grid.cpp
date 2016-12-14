@@ -139,8 +139,8 @@ void Grid::save( std::ofstream& file )
 		<< "<property name=\"Description\" value=\"Nintendo please don't sue.\"/>\n"
 		<< "<property name=\"name\" value=\"Mario!\"/>\n"
 		<< "</properties>\n";
-	file << "<tileset firstgid=\"1\" name=\"mario_tiles\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"924\" columns=\"33\">\n"
-		<< "<image source=\"../assets/mario_tiles.png\" width=\"1056\" height=\"896\"/>\n"
+	file << "<tileset firstgid=\"1\" name=\"spritesheet\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"924\" columns=\"33\">\n"
+		<< "<image source=\"../assets/spritesheet.png\" width=\"1056\" height=\"896\"/>\n"
 		<< "</tileset>\n";
 	file << "<layer name =\"Collision\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
 		<< "<data encoding=\"csv\">\n";
