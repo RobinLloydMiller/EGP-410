@@ -25,7 +25,7 @@ public:
 
 private:
 	int mScore = 0;
-	Vector2D mSpawnPos = Vector2D(32, 32);
+	Vector2D mSpawnPos = Vector2D(64, 64);
 	bool mInvincible = false;
 
 	StateMachine* mpStateMachine;

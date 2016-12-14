@@ -129,8 +129,8 @@ bool GameApp::init()
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
 
 	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(1000, 750)));
+	mEnemies.push_back(new Enemy(150, .2f, Vector2D(200, 200)));
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
@@ -175,12 +175,12 @@ void GameApp::cleanup()
 	delete mpSoundManager;
 	mpSoundManager = NULL;
 
-	delete mEnemies[0];
-	mEnemies[0] = NULL;
-	delete mEnemies[1];
-	mEnemies[1] = NULL;
-	delete mEnemies[2];
-	mEnemies[2] = NULL;
+
+	for (size_t i = 0; i < mEnemies.size(); ++i)
+	{
+		delete mEnemies[i];
+		mEnemies[i] = NULL;
+	}
 }
 
 void GameApp::beginLoop()

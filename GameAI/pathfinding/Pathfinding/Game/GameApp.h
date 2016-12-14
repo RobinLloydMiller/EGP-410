@@ -109,7 +109,7 @@ public:
 
 		mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
 		mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(1000, 750)));
+		mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
 	}
 	void setPlayerDir(Direction newDir)
 	{

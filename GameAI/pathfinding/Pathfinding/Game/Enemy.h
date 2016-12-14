@@ -31,7 +31,7 @@ private:
 	Vector2D mSpawnPos = Vector2D(32, 128);
 	std::vector<int> mNodesInPath;
 	int mNodeSeekIndex = 0;
-	bool mDrawDebugLine = false;
+	bool mDrawDebugLine = true;
 };
 
 #endif
