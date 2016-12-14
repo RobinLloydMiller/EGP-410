@@ -37,22 +37,18 @@ void Unit::update(double deltaTime)
 		break;
 	}
 
-	//if unit is going to be in a wall prevent the movement
-	if (gpGameApp->getGrid()->isCollidingAtPixelXY(newPos.getX(), newPos.getY()) == Vector2D(-1, -1))
-	{
-		mPos = newPos;
-	}
-
+	moveAndCheckCollision(newPos);
+	
 	//screen wrapping
-	if (mPos.getX() < 0)
+	if (mPos.getX() + 2 < 0)
 		mPos.setX(gpGameApp->getGraphicsSystem()->getWidth());
-	else if (mPos.getX() > gpGameApp->getGraphicsSystem()->getWidth())
+	else if (mPos.getX() + 2> gpGameApp->getGraphicsSystem()->getWidth())
 		mPos.setX(0);
 
 	//screen wrapping
-	if (mPos.getY() < 0)
+	if (mPos.getY() + 2 < 0)
 		mPos.setY(gpGameApp->getGraphicsSystem()->getHeight());
-	else if (mPos.getY() > gpGameApp->getGraphicsSystem()->getHeight())
+	else if (mPos.getY() + 2> gpGameApp->getGraphicsSystem()->getHeight())
 		mPos.setY(0);
 
 	mpAnime->update(deltaTime);
@@ -61,4 +57,17 @@ void Unit::update(double deltaTime)
 void Unit::draw(GraphicsBuffer & dest)
 {
 	mpAnime->draw(dest, mPos.getX(), mPos.getY());
+}
+
+
+//returns true on collision
+bool Unit::moveAndCheckCollision(Vector2D newPos)
+{
+	//if unit is going to be in a wall prevent the movement
+	if (gpGameApp->getGrid()->isCollidingAtPixelXY(newPos.getX(), newPos.getY()) == Vector2D(-1, -1))
+	{
+		mPos = newPos;
+		return false;
+	}
+	return true;
 }

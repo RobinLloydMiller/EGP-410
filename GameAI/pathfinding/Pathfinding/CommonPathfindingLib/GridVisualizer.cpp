@@ -22,11 +22,15 @@ void GridVisualizer::refresh()
 {
 	const ALLEGRO_COLOR& color = BLACK_COLOR; 
 	const ALLEGRO_COLOR& coinColor = YELLOW_COLOR;
+	const ALLEGRO_COLOR& candyColor = BLUE_COLOR;
+	const ALLEGRO_COLOR& exitColor = PURPLE_COLOR;
 	if( mDirty )
 	{
 		//remove old entries first
 		removeAllEntriesOfColor( color );
 		removeAllEntriesOfColor( coinColor );
+		removeAllEntriesOfColor( candyColor );
+		removeAllEntriesOfColor(exitColor);
 
 		int size = mpGrid->getGridWidth() * mpGrid->getGridHeight();
 		//get any non-zero squares and send them to the visualizer
@@ -39,6 +43,14 @@ void GridVisualizer::refresh()
 			else if (mpGrid->getValueAtIndex(i) == 2)
 			{
 				addColor(i, coinColor);
+			}
+			else if (mpGrid->getValueAtIndex(i) == 3)
+			{
+				addColor(i, candyColor);
+			}
+			else if (mpGrid->getValueAtIndex(i) == 4)
+			{
+				addColor(i, exitColor);
 			}
 		}
 	}
@@ -127,6 +139,8 @@ void GridVisualizer::drawPath(GraphicsBuffer & dest, std::vector<int>& nodesInPa
 		al_draw_line(one.getX() + mpGrid->getSquareSize() / 2, one.getY() + mpGrid->getSquareSize() / 2,
 			two.getX() + mpGrid->getSquareSize() / 2, two.getY() + mpGrid->getSquareSize() / 2,
 			al_map_rgb(255, 255, 255), 5.0f);
+
+		//std::cout << "line drawn\n";
 
 		if (i + 1 >= nodesInPath.size() - 1)
 			break;
