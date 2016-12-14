@@ -55,13 +55,13 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\CommonPathfindingLib;..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\CommonPathfindingLib;..\..\..\..\DeanLib;..\..\..\..\External Libs\Allegro5\include;..\tinyxml</AdditionalIncludeDirectories>
       <TreatWarningAsError>true</TreatWarningAsError>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>CommonPathfindingLib.lib;allegro_monolith-debug.lib;DeanLib.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories);..\CommonPathfindingLib\Debug;..\..\..\..\External libs\Allegro5\lib;..\..\..\..\DeanLib\debug</AdditionalLibraryDirectories>
+      <AdditionalDependencies>CommonPathfindingLib.lib;allegro_monolith-debug.lib;DeanLib.lib;tinyxml.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\tinyxml\Debug;%(AdditionalLibraryDirectories);..\CommonPathfindingLib\Debug;..\..\..\..\External libs\Allegro5\lib;..\..\..\..\DeanLib\debug</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
