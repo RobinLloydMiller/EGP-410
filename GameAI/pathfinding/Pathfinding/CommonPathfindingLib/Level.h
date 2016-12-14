@@ -14,6 +14,8 @@
 #include <string>
 #include <vector>
 
+class Connection;
+
 class Level: public TiXmlVisitor, public Trackable
 {
 public:
@@ -26,6 +28,9 @@ public:
 	void getLevelSize(int &width, int &height);
 	std::string getPath(){ return mPath; };
 	Vector2D getSpawnLoc(){ return mSpawnLoc; };
+
+	Vector2D getXYfromIndex(const int index);
+
 	//CollisionBoxManager* getBoxManager(){ return mpBoxManager; };
 
 private:

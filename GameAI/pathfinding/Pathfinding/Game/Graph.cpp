@@ -40,6 +40,9 @@ std::vector<Connection*> Graph::getConnections( const NODE_ID& fromId )
 	{
 		return iter->second;
 	}
+
+
+
 }
 
 Node* Graph::getNode( int index )

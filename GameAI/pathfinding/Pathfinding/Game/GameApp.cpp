@@ -21,6 +21,7 @@
 #include "DijkstraPathfinder.h"
 #include "AStarPathfinder.h"
 #include "SoundManager.h"
+#include "Level.h"
 
 #include <fstream>
 
@@ -128,13 +129,17 @@ bool GameApp::init()
 
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
 
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
-	mEnemies.push_back(new Enemy(150, .2f, Vector2D(200, 200)));
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
+	//mEnemies.push_back(new Enemy(150, .2f, Vector2D(200, 200)));
+	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
+
+	mpMainLevel = new Level("../assets/pathgrid.tmx");
+	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
+
+	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 575)));
 
 	mpMasterTimer->start();
 	return true;
@@ -181,6 +186,9 @@ void GameApp::cleanup()
 		delete mEnemies[i];
 		mEnemies[i] = NULL;
 	}
+
+	delete mpMainLevel;
+	mpMainLevel = NULL;
 }
 
 void GameApp::beginLoop()
@@ -194,13 +202,16 @@ void GameApp::processLoop()
 	//get back buffer
 	GraphicsBuffer* pBackBuffer = mpGraphicsSystem->getBackBuffer();
 	//copy to back buffer
-	mpGridVisualizer->draw( *pBackBuffer );
+	//mpGridVisualizer->draw( *pBackBuffer );
+
+	mpMainLevel->draw(mpGraphicsSystem);
+
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer
 	//mpPathfinder->drawVisualization(mpGrid2, pBackBuffer);
 #endif
 
-	mpGridVisualizer->flipBuffer(*pBackBuffer);
+	//mpGridVisualizer->flipBuffer(*pBackBuffer);
 
 	mpDebugDisplay->draw( pBackBuffer );
 

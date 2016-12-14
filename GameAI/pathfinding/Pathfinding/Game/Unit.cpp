@@ -3,6 +3,7 @@
 #include "GameApp.h"
 #include "Grid.h"
 #include "GraphicsSystem.h"
+#include "Level.h"
 
 Unit::Unit(float speed, float frameTime)
 :mSpeed(speed), mPos(Vector2D(0,0)), mDir(Direction::NONE)
@@ -63,8 +64,18 @@ void Unit::draw(GraphicsBuffer & dest)
 //returns true on collision
 bool Unit::moveAndCheckCollision(Vector2D newPos)
 {
+	int tileWidth, tileHeight;
+	Level* pLevel = gpGameApp->getLevel();
+	pLevel->getTileSize(tileWidth, tileHeight);
+	int collBuffer = tileWidth / 8;
+
+	int tileID1 = pLevel->getTile(newPos.getX() / tileWidth, newPos.getY() / tileHeight, "Collision")->getID();
+	int tileID2 = pLevel->getTile((newPos.getX() + tileWidth - collBuffer) / tileWidth, newPos.getY() / tileHeight, "Collision")->getID();
+	int tileID3 = pLevel->getTile(newPos.getX() / tileWidth, (newPos.getY() + tileHeight - collBuffer) / tileHeight, "Collision")->getID();
+	int tileID4 = pLevel->getTile((newPos.getX() + tileWidth - collBuffer)/ tileWidth, (newPos.getY() + tileHeight - collBuffer) / tileHeight, "Collision")->getID();
+
 	//if unit is going to be in a wall prevent the movement
-	if (gpGameApp->getGrid()->isCollidingAtPixelXY(newPos.getX(), newPos.getY()) == Vector2D(-1, -1))
+	if (tileID1 == 0 && tileID2 == 0 && tileID3 == 0 && tileID4 == 0)
 	{
 		mPos = newPos;
 		return false;

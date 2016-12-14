@@ -7,8 +7,8 @@
 #include <PerformanceTracker.h>
 #include <algorithm>
 #include "Vector2D.h"
-
-using namespace std;
+#include "Level.h"
+#include "GameApp.h"
 
 AStarPathfinder::AStarPathfinder(Graph* pGraph)
 	:GridPathfinder(dynamic_cast<GridGraph*>(pGraph))
@@ -52,7 +52,7 @@ const Path& AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 		mPath.addNode(pCurrentNode);
 
 		//get the Connections for the current node
-		vector<Connection*> connections = mpGraph->getConnections(pCurrentNode->getId());
+		vector<Connection*> connections = getConnections(gpGameApp->getLevel()->getXYfromIndex(pCurrentNode->getId()).getX(), gpGameApp->getLevel()->getXYfromIndex(pCurrentNode->getId()).getY());//= mpGraph->getConnections(pCurrentNode->getId());
 
 		//add all toNodes in the connections to the "toVisit" list, if they are not already in the list
 		for (unsigned int i = 0; i<connections.size(); ++i)
@@ -91,6 +91,13 @@ const Path& AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 				mVisitedNodes.push_back(pTempToNode);
 #endif
 			}
+		}
+
+		for (auto &it : connections)
+		{
+			delete it->getToNode();
+			delete it->getFromNode();
+			delete it;
 		}
 	}
 
@@ -154,4 +161,39 @@ Node* AStarPathfinder::getShortestDistanceNode() const
 	}
 
 	return shortest;
+}
+
+std::vector<Connection*> AStarPathfinder::getConnections(int x, int y)
+{
+	std::vector<Connection*> connections;
+	Level* pLevel = gpGameApp->getLevel();
+
+	int width, height, tileWidth, tileHeight;
+	pLevel->getLevelSize(width, height);
+	pLevel->getTileSize(tileWidth, tileHeight);
+
+	x /= width;
+	y /= height;
+
+	if (x + 1 < width / tileWidth)
+		connections.push_back(generateConnection(x, y, x + 1, y));//pLevel->getTile(x + 1, y, "Collision");
+	if (x - 1 >= 0)
+		connections.push_back(generateConnection(x, y, x - 1, y));//pLevel->getTile(x + 1, y, "Collision");
+	if (y + 1 < height / tileHeight)
+		connections.push_back(generateConnection(x, y, x, y + 1));//pLevel->getTile(x, y + 1, "Collision");
+	if (y - 1 >= 0)
+		connections.push_back(generateConnection(x, y, x, y - 1));//pLevel->getTile(x, y - 1, "Collision");
+
+
+	return connections;
+}
+
+Connection* AStarPathfinder::generateConnection(const int x1, const int y1, const int x2, const int y2)
+{
+	int width, height;
+	gpGameApp->getLevel()->getTileSize(width, height);
+
+	Node* toNode = new Node(gpGameApp->getLevel()->getTile(x1, y1, "Collision")->getID());
+	Node* fromNode = new Node(gpGameApp->getLevel()->getTile(x2, y2, "Collision")->getID());
+	return new Connection(fromNode, toNode, 1);
 }
