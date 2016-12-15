@@ -178,9 +178,7 @@ void Enemy::findAPath(Vector2D pos)
 		std::cout << "other" << std::endl;
 	}
 
-	Node* pFromNode = new Node(fromIndex);
-		
-		pGridGraph->getNode(fromIndex);
+	Node* pFromNode = pGridGraph->getNode(fromIndex);
 	Node* pToNode = pGridGraph->getNode(toIndex);
 	if (pFromNode != NULL && pToNode != NULL)
 	{

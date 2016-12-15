@@ -129,9 +129,6 @@ bool GameApp::init()
 
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
 
-	//mEnemies.push_back(new Enemy(150, .2f, Vector2D(200, 200)));
-	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
-
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
@@ -140,6 +137,8 @@ bool GameApp::init()
 	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
 
 	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 575)));
+	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
+	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
 
 	mpMasterTimer->start();
 	return true;
