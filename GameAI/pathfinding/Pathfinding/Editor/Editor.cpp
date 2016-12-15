@@ -83,6 +83,8 @@ void Editor::processLoop()
 {
 	ALLEGRO_MOUSE_STATE mouseState;
 	al_get_mouse_state( &mouseState );
+	ALLEGRO_KEYBOARD_STATE keyboardState;
+	al_get_keyboard_state(&keyboardState);
 
 	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
 	{
@@ -97,6 +99,35 @@ void Editor::processLoop()
 
 		//mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, CLEAR_VALUE );
 		//mpGridVisualizer->setModified();
+	}
+
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_1))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(138);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_2))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(155);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_3))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(131);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_4))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(145);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_5))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(140);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_6))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(268);
+	}
+	else if (al_key_down(&keyboardState, ALLEGRO_KEY_7))
+	{
+		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(219);
 	}
 
 	//copy to back buffer
