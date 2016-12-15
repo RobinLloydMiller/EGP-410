@@ -9,7 +9,7 @@
 <tileset firstgid="161" name="spritesheet_tiles" tilewidth="32" tileheight="32" tilecount="128" columns="8">
 <image source="spritesheet_tiles.png" width="256" height="512"/>
 </tileset>
-<layer name="Collision" width ="32" height ="24">
+<layer name="Collision" width="32" height="24">
 <data encoding="csv">
 138,155,131,145,140,0,0,0,0,0,0,0,0,0,0,0,1,0,0,140,11,0,0,0,0,0,0,0,0,0,0,0,
 268,219,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,11,0,0,0,0,0,0,0,0,0,0,0,
@@ -36,5 +36,5 @@
 0,0,0,0,0,0,0,0,0,158,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,140,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
-</layer>
+ </layer>
 </map>
