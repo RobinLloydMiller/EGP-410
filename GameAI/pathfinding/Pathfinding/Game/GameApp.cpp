@@ -80,7 +80,7 @@ bool GameApp::init()
 
 	/*adding coins here randomly to the map*/
 
-	for (int i = 0; i < NUM_COINS; ++i)
+	/*for (int i = 0; i < NUM_COINS; ++i)
 	{
 		int x, y;
 		do
@@ -99,7 +99,10 @@ bool GameApp::init()
 			y = rand() % mGrids[mMapIndex]->getPixelHeight();
 		} while (mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 0 && mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 2);
 		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 3);
-	}
+	}*/
+
+	mpMainLevel = new Level("../assets/pathgrid.tmx");
+	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
 
 	//exit doors for now
 	//used in flee pathfinding
@@ -131,10 +134,7 @@ bool GameApp::init()
 
 	//debug display
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
-	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );
-
-	mpMainLevel = new Level("../assets/pathgrid.tmx");
-	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
+	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );	
 
 	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 575)));
 	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
