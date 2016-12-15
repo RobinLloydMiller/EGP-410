@@ -106,10 +106,10 @@ bool GameApp::init()
 
 	//exit doors for now
 	//used in flee pathfinding
-	mGrids[mMapIndex]->setValueAtPixelXY(32, 32, 4);
-	mGrids[mMapIndex]->setValueAtPixelXY(32, 750, 4);
-	mGrids[mMapIndex]->setValueAtPixelXY(1000, 32, 4);
-	mGrids[mMapIndex]->setValueAtPixelXY(1000, 750, 4);
+	//mGrids[mMapIndex]->setValueAtPixelXY(32, 32, 4);
+	//mGrids[mMapIndex]->setValueAtPixelXY(32, 750, 4);
+	//mGrids[mMapIndex]->setValueAtPixelXY(1000, 32, 4);
+	//mGrids[mMapIndex]->setValueAtPixelXY(1000, 750, 4);
 
 	mpPathfinder = new AStarPathfinder(mGridGraphs[mMapIndex]);
 

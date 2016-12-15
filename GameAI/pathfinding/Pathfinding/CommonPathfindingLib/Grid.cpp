@@ -58,10 +58,11 @@ Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 	int index3 = getValueAtPixelXY(x + i, y + mSquareSize - i);
 	int index4 = getValueAtPixelXY(x + mSquareSize - i, y + mSquareSize - i);
 
-	std::cout << x + mSquareSize - i << " " << y + mSquareSize - i << std::endl;
+	//std::cout << x + mSquareSize - i << " " << y + mSquareSize - i << std::endl;
 
 	if (value == 1)
 	{
+		std::cout << index4 << " ";
 		if (!(index == 138 || index == 155 || index == 131 || index == 145 || index == 140 || index == 268 || index == 219 || index == 0))
 		{
 			
@@ -79,7 +80,7 @@ Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 		}
 		if (!(index4 == 138 || index4 == 155 || index4 == 131 || index4 == 145 || index4 == 140 || index4 == 268 || index4 == 219 || index4 == 0))
 		{
-			//std::cout << index4 << " ";
+			
 			return Vector2D(x + mSquareSize - i, y + mSquareSize - i);
 		}
 
