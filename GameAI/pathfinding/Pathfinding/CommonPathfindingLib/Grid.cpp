@@ -139,12 +139,15 @@ void Grid::save( std::ofstream& file )
 	file << "<map version=\"1.0\" orientation=\"orthogonal\" renderorder=\"right-down\" width=\"" 
 		<< mGridWidth << "\" height=\"" << mGridHeight << "\" tilewidth=\"" 
 		<< mSquareSize << "\" tileheight=\"" << mSquareSize << "\" nextobjectid=\"1\">\n";
-	file << "<properties>\n"
-		<< "<property name=\"Description\" value=\"Nintendo please don't sue.\"/>\n"
-		<< "<property name=\"name\" value=\"Mario!\"/>\n"
-		<< "</properties>\n";
-	file << "<tileset firstgid=\"1\" name=\"spritesheet\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"924\" columns=\"33\">\n"
-		<< "<image source=\"../assets/spritesheet.png\" width=\"1056\" height=\"896\"/>\n"
+	//file << "<properties>\n"
+		//<< "<property name=\"Description\" value=\"Nintendo please don't sue.\"/>\n"
+		//<< "<property name=\"name\" value=\"Mario!\"/>\n"
+		//<< "</properties>\n";
+	file << "<tileset firstgid=\"1\" name=\"spritesheet_ground\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"128\" columns=\"8\">\n"
+		<< "<image source=\"spritesheet_ground.png\" width=\"256\" height=\"512\"/>\n"
+		<< "</tileset>\n";
+	file << "<tileset firstgid=\"129\" name=\"spritesheet_items\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"32\" columns=\"8\">\n"
+		<< "<image source=\"spritesheet_items.png\" width=\"256\" height=\"128\"/>\n"
 		<< "</tileset>\n";
 	file << "<layer name =\"Collision\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
 		<< "<data encoding=\"csv\">\n";

@@ -119,6 +119,7 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 
 		//remove the first three chars ("../") of the path so it gets it relative to the executable, t the .tmx
 		//tmpSource.erase(0, 3); //Don't do this here, because everything is in one assets folder now, not seperated
+		tmpSource = "../assets/" + tmpSource;
 
 		std::cout <<
 			"tmpTWidth: " << tmpTWidth << ", tmpTHeight: " << tmpTHeight << ", columns: " << tmpColumns << std::endl <<
