@@ -164,11 +164,15 @@ std::vector<int> Grid::getAdjacentIndices( int theSquareIndex ) const
 
 void Grid::save( std::ofstream& file )
 {
+	int levelW, levelH;
+	int tileW, tileH;
+	gpGame->getLevel()->getLevelSize(levelW, levelH);
+	gpGame->getLevel()->getTileSize(tileW, tileH);
 
 	file << "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
 	file << "<map version=\"1.0\" orientation=\"orthogonal\" renderorder=\"right-down\" width=\"" 
-		<< mGridWidth << "\" height=\"" << mGridHeight << "\" tilewidth=\"" 
-		<< mSquareSize << "\" tileheight=\"" << mSquareSize << "\" nextobjectid=\"1\">\n";
+		<< levelW / tileW << "\" height=\"" << levelH / tileH << "\" tilewidth=\""
+		<< tileW << "\" tileheight=\"" << tileH << "\" nextobjectid=\"1\">\n";
 	//file << "<properties>\n"
 		//<< "<property name=\"Description\" value=\"Nintendo please don't sue.\"/>\n"
 		//<< "<property name=\"name\" value=\"Mario!\"/>\n"
@@ -179,10 +183,10 @@ void Grid::save( std::ofstream& file )
 	file << "<tileset firstgid=\"129\" name=\"spritesheet_items\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"32\" columns=\"8\">\n"
 		<< "<image source=\"spritesheet_items.png\" width=\"256\" height=\"128\"/>\n"
 		<< "</tileset>\n";
-	file << "<tileset firstgid=\"129\" name=\"spritesheet_tiles\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"128\" columns=\"8\">\n"
+	file << "<tileset firstgid=\"161\" name=\"spritesheet_tiles\" tilewidth=\"32\" tileheight=\"32\" tilecount=\"128\" columns=\"8\">\n"
 		<< "<image source=\"spritesheet_tiles.png\" width=\"256\" height=\"512\"/>\n"
 		<< "</tileset>\n";
-	file << "<layer name =\"Collision\" width =\"" << mGridWidth << "\" height =\"" << mGridHeight << "\">\n"
+	file << "<layer name=\"Collision\" width =\"" << levelW / tileW << "\" height =\"" << levelH / tileH << "\">\n"
 		<< "<data encoding=\"csv\">\n";
 
 	/*
