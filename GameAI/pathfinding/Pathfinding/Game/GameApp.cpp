@@ -61,9 +61,12 @@ bool GameApp::init()
 	mpSoundManager->addSound("coinSound.ogg", CoinSound);
 	mpSoundManager->playSound(CoinSound);
 
+	mLevels.push_back(new Level("../assets/pathgrid.tmx", "../Editor/pathgrid.txt"));
+	mLevels.push_back(new Level("../assets/pathgrid2.tmx", "../Editor/pathgrid2.txt"));
+
 	//create and load the Grid, GridBuffer, and GridRenderer
 	mGrids[0] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
-	std::ifstream theStream(gFileName);
+	std::ifstream theStream("../Editor/pathgrid.txt");
 	mGrids[0]->load(theStream);
 
 	mGrids[1] = new Grid(mpGraphicsSystem->getWidth(), mpGraphicsSystem->getHeight(), GRID_SQUARE_SIZE);
@@ -76,7 +79,9 @@ bool GameApp::init()
 	mGridGraphs[1] = new GridGraph(mGrids[1]);
 	mGridGraphs[1]->init();
 
-	mpGridVisualizer = new GridVisualizer(mGrids[mMapIndex]);
+	mCurrentLevel = 0;
+
+	mpGridVisualizer = new GridVisualizer(mGrids[mCurrentLevel]);
 
 	/*adding coins here randomly to the map*/
 
@@ -101,8 +106,9 @@ bool GameApp::init()
 		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 3);
 	}*/
 
-	mpMainLevel = new Level("../assets/pathgrid.tmx");
-	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
+	
+
+	mLevels[0]->getTileSize(mTileHeight, mTileWidth);
 
 	//exit doors for now
 	//used in flee pathfinding
@@ -111,7 +117,7 @@ bool GameApp::init()
 	//mGrids[mMapIndex]->setValueAtPixelXY(1000, 32, 4);
 	//mGrids[mMapIndex]->setValueAtPixelXY(1000, 750, 4);
 
-	mpPathfinder = new AStarPathfinder(mGridGraphs[mMapIndex]);
+	mpPathfinder = new AStarPathfinder(mGridGraphs[mCurrentLevel]);
 
 	mPathfindingType = PathfinderType::ASTAR;
 
@@ -186,8 +192,11 @@ void GameApp::cleanup()
 		mEnemies[i] = NULL;
 	}
 
-	delete mpMainLevel;
-	mpMainLevel = NULL;
+	for (size_t i = 0; i < mLevels.size(); ++i)
+	{
+		delete mLevels[i];
+		mLevels[i] = NULL;
+	}
 }
 
 void GameApp::beginLoop()
@@ -203,7 +212,7 @@ void GameApp::processLoop()
 	//copy to back buffer
 	//mpGridVisualizer->draw( *pBackBuffer );
 
-	mpMainLevel->draw(mpGraphicsSystem);
+	mLevels[mCurrentLevel]->draw(mpGraphicsSystem);
 
 #ifdef VISUALIZE_PATH
 	//show pathfinder visualizer

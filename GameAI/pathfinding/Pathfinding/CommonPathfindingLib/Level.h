@@ -19,7 +19,7 @@ class Connection;
 class Level: public TiXmlVisitor, public Trackable
 {
 public:
-	Level(std::string path);
+	Level(std::string path, std::string savePath);
 	~Level();
 
 	Tile* getTile(int x, int y, std::string layer);
@@ -37,7 +37,7 @@ private:
 	std::vector<TileLayer*> mLayers;
 	std::vector<SpriteSheet*> mSheets;
 	std::vector<Sprite*> mTileSprites;
-	std::string mPath;
+	std::string mPath, mSavePath;
 	TiXmlDocument mMap;
 	int mWidth, mHeight;
 	int mTileWidth, mTileHeight;

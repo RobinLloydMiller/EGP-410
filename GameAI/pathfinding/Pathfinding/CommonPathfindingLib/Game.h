@@ -9,6 +9,7 @@
 #include <Trackable.h>
 #include <Timer.h>
 #include "Defines.h"
+#include <vector>
 
 class MemoryTracker;
 class PerformanceTracker;
@@ -47,9 +48,10 @@ public:
 	inline Timer* getMasterTimer() const { return mpMasterTimer; };
 	inline double getCurrentTime() const { return mpMasterTimer->getElapsedTime(); };
 	inline ALLEGRO_FONT* getFont() const { return mpFont; };
-	inline void markForExit() { mShouldExit = true; };
+	inline void markForExit() { mShouldExit = true; };	
+	inline Level* getLevel() const { return mLevels[mCurrentLevel]; }
+	inline int getCurrentLevelIndex() const { return mCurrentLevel; }
 	
-	Level* getLevel() { return mpMainLevel; };
 
 protected:
 	GraphicsSystem* mpGraphicsSystem;
@@ -60,8 +62,8 @@ protected:
 	float mLoopTargetTime;
 	bool mShouldExit;
 
-	Level* mpMainLevel;
-	int mTileWidth, mTileHeight;
+	std::vector<Level*> mLevels;
+	int mTileWidth, mTileHeight, mCurrentLevel = 0;
 
 	//should be somewhere else
 	ALLEGRO_FONT* mpFont;

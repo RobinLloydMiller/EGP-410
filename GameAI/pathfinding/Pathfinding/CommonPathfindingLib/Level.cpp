@@ -2,7 +2,8 @@
 #include "Game.h"
 #include <fstream>
 
-Level::Level(std::string path)
+Level::Level(std::string path, std::string savepath)
+:mSavePath(savepath)
 {
 	//mpBoxManager = new CollisionBoxManager();
 	mPath = path;
@@ -155,7 +156,7 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 		const TiXmlElement* data = elem.FirstChildElement();
 		tmpTileList = data->GetText();
 
-		std::ofstream fout("../Editor/pathgrid.txt");
+		std::ofstream fout(mSavePath);
 
 		for(int i = 0; i < tmpTileList.size(); ++i)
 		{

@@ -55,8 +55,8 @@ public:
 	inline SoundManager* getSoundManager() { return mpSoundManager; }
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
-	inline Grid* getGrid() { return mGrids[mMapIndex]; };
-	inline GridGraph* getGridGraph() { return mGridGraphs[mMapIndex]; };
+	inline Grid* getGrid() { return mGrids[mCurrentLevel]; };
+	inline GridGraph* getGridGraph() { return mGridGraphs[mCurrentLevel]; };
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 	inline bool isPlayerInvincible() const { return mpPlayer->isInvincible(); }
@@ -81,7 +81,7 @@ public:
 
 	void changeGrid(int index)
 	{
-		mMapIndex = index;
+		mCurrentLevel = index;
 		mpGridVisualizer->setGridPointer(mGrids[index]);
 		mpGridVisualizer->setDirty();
 		for (auto &it : mEnemies)
@@ -133,8 +133,6 @@ private:
 
 	Player* mpPlayer;
 	std::vector<Enemy*> mEnemies;
-
-	int mMapIndex = 0;
 };
 
 #endif

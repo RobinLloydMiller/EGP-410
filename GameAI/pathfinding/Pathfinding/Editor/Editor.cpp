@@ -54,8 +54,8 @@ bool Editor::init()
 		mpSpriteManager->createAndManageSprite( BACKGROUND_SPRITE_ID, pBackGroundBuffer, 0, 0, pBackGroundBuffer->getWidth(), pBackGroundBuffer->getHeight() );
 	}
 
-	mpMainLevel = new Level("../assets/pathgrid.tmx");
-	mpMainLevel->getTileSize(mTileHeight, mTileWidth);
+	mLevels.push_back(new Level("../assets/pathgrid.tmx", "../assets/pathgrid.txt"));
+	mLevels[0]->getTileSize(mTileHeight, mTileWidth);
 	
 	mpMasterTimer->start();
 	return true;
@@ -69,8 +69,11 @@ void Editor::cleanup()
 	delete mpGrid;
 	mpGrid = NULL;
 
-	delete mpMainLevel;
-	mpMainLevel = NULL;
+	for (size_t i = 0; i < mLevels.size(); ++i)
+	{
+		delete mLevels[i];
+		mLevels[i] = NULL;
+	}
 }
 
 void Editor::beginLoop()
@@ -88,14 +91,14 @@ void Editor::processLoop()
 
 	if( al_mouse_button_down( &mouseState, 1 ) )//left mouse click
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(1);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(1);
 
 		//mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, BLOCKING_VALUE );
 		//mpGridVisualizer->setModified();
 	}
 	else if( al_mouse_button_down( &mouseState, 2 ) )//right mouse down
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(0);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(0);
 
 		//mpGrid->setValueAtPixelXY( mouseState.x, mouseState.y, CLEAR_VALUE );
 		//mpGridVisualizer->setModified();
@@ -103,37 +106,37 @@ void Editor::processLoop()
 
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_1))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(138);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(138);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_2))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(155);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(155);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_3))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(131);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(131);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_4))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(145);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(145);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_5))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(140);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(140);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_6))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(268);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(268);
 	}
 	else if (al_key_down(&keyboardState, ALLEGRO_KEY_7))
 	{
-		mpMainLevel->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(219);
+		mLevels[mCurrentLevel]->getTile(mouseState.x / mTileWidth, mouseState.y / mTileHeight, "Collision")->setID(219);
 	}
 
 	//copy to back buffer
 	mpGridVisualizer->draw(*(mpGraphicsSystem->getBackBuffer()));
 
-	mpMainLevel->draw(mpGraphicsSystem);
+	mLevels[mCurrentLevel]->draw(mpGraphicsSystem);
 	//should be last thing in processLoop
 	Game::processLoop();
 }
