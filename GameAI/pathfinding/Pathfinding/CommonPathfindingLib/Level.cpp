@@ -1,5 +1,6 @@
 #include "Level.h"
 #include "Game.h"
+#include <fstream>
 
 Level::Level(std::string path)
 {
@@ -154,6 +155,18 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 		const TiXmlElement* data = elem.FirstChildElement();
 		tmpTileList = data->GetText();
 
+		std::ofstream fout("../Editor/pathgrid.txt");
+
+		for(int i = 0; i < tmpTileList.size(); ++i)
+		{
+			if (isdigit(tmpTileList[i]))
+				fout << tmpTileList[i];
+			if (tmpTileList[i] == ',')
+				fout << " ";
+		}
+
+		fout.close();
+
 		//std::cout << "Tile: \n" << tmpTileList << std::endl;
 
 		tmpLayer = new TileLayer(tmpName, tmpWidth, tmpHeight, tmpTileList);
@@ -236,10 +249,6 @@ Vector2D Level::getXYfromIndex(const int index)
 	Vector2D pos((float)(squareX * mTileWidth), (float)(squareY * mTileHeight));
 	pos.setX(pos.getX() + mTileWidth / 2);
 	pos.setX(pos.getY() + mTileHeight / 2);
-
-
-
-
 
 	return pos;
 }
