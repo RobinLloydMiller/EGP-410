@@ -136,7 +136,7 @@ bool GameApp::init()
 	PathfindingDebugContent* pContent = new PathfindingDebugContent( mpPathfinder );
 	mpDebugDisplay = new DebugDisplay( Vector2D(0,12), pContent );	
 
-	mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 575)));
+	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 575)));
 	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
 	//mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
 
