@@ -49,7 +49,8 @@ void GridGraph::init()
 			for( unsigned int adjIndex = 0; adjIndex < adjacencies.size(); adjIndex++ )
 			{
 				//check for blocking terrain
-				if( mpGrid->getValueAtIndex(adjacencies[adjIndex]) != BLOCKING_VALUE )
+				if(isBlockingValue(mpGrid->getValueAtIndex(adjacencies[adjIndex])) )
+				//if(mpGrid->getValueAtIndex(adjacencies[adjIndex]) != 1)
 				{
 					Node* pToNode = mNodes[ adjacencies[adjIndex] ];//find to node
 
@@ -65,4 +66,15 @@ void GridGraph::init()
 			mConnectionMap[i] = connections;
 		}
 	}
+}
+
+bool GridGraph::isBlockingValue(int index)
+{
+	if (index == 138 || index == 155 || index == 131 || index == 145 || index == 140 || index == 268 || index == 219 || index == 0)
+	{
+
+		return true;
+	}
+
+	return false;
 }

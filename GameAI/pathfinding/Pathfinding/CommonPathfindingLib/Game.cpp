@@ -207,7 +207,8 @@ float lerp(int value, int start, int end)
 	if (start <= end)
 	{
 		int range = end - start;
-		lerpVal = value / (float)range;
+		lerpVal = value;
+		(float)range;
 	}
 	return lerpVal;
 }

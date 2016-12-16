@@ -2,6 +2,9 @@
 #define _NOCANDYSTATE_H
 
 #include "StateMachine.h"
+#include "GameApp.h"
+#include "GameMessageManager.h"
+#include "SpawnCandyMessage.h"
 
 class NoCandyState : public StateMachineState
 {

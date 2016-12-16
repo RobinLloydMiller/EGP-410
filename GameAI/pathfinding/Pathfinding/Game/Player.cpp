@@ -8,6 +8,7 @@
 #include "Sprite.h"
 #include "NoCandyState.h"
 #include "CandyState.h"
+#include "Level.h"
 
 Player::Player(float speed, float frameTime)
 :Unit(speed, frameTime)
@@ -35,25 +36,47 @@ void Player::update(double deltaTime)
 {
 	Unit::update(deltaTime);
 
+	Vector2D collPoint;
+
 	//check collision with coin
-	Vector2D collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 2);
+	/*collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 2);
 	if (collPoint != Vector2D(-1, -1))
 	{
 		mScore++;
 		gpGameApp->getGrid()->setValueAtPixelXY(collPoint.getX(), collPoint.getY(), 0);
 		gpGameApp->getGridVisualizer()->setDirty();
-	}
-	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 3);
+	}*/
+
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 140);
 	if (collPoint != Vector2D(-1, -1))
 	{
-		gpGameApp->getGrid()->setValueAtPixelXY(collPoint.getX(), collPoint.getY(), 0);
-		gpGameApp->getGridVisualizer()->setDirty();
-		dynamic_cast<NoCandyState*>(mpNoCandyState)->gotCandy();		
+		gpGameApp->setTileIndexAtPixelXY(collPoint.getX(), collPoint.getY());
+		dynamic_cast<NoCandyState*>(mpNoCandyState)->gotCandy();
+	}
+
+
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 138);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		gpGameApp->loadLevel(0);
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 155);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		gpGameApp->loadLevel(1);
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 131);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		gpGameApp->loadLevel(2);
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 145);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		gpGameApp->loadLevel(3);
 	}
 
 	mpStateMachine->update();
-
-	//std::cout << mpStateMachine->getCurrentState()->getID() << std::endl;
 }
 
 void Player::draw(GraphicsBuffer& dest)

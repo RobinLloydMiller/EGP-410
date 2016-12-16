@@ -156,17 +156,21 @@ bool Level::VisitEnter(const TiXmlElement &elem, const TiXmlAttribute *attrib)
 		const TiXmlElement* data = elem.FirstChildElement();
 		tmpTileList = data->GetText();
 
-		std::ofstream fout(mSavePath);
-
-		for(int i = 0; i < tmpTileList.size(); ++i)
+		if (tmpName == "Collision")
 		{
-			if (isdigit(tmpTileList[i]))
-				fout << tmpTileList[i];
-			if (tmpTileList[i] == ',')
-				fout << " ";
-		}
 
-		fout.close();
+			std::ofstream fout(mSavePath);
+
+			for (int i = 0; i < (int)tmpTileList.size(); ++i)
+			{
+				if (isdigit(tmpTileList[i]))
+					fout << tmpTileList[i];
+				if (tmpTileList[i] == ',')
+					fout << " ";
+			}
+
+			fout.close();
+		}
 
 		//std::cout << "Tile: \n" << tmpTileList << std::endl;
 
@@ -245,7 +249,8 @@ void Level::getTileSize(int &width, int &height)
 
 Vector2D Level::getXYfromIndex(const int index)
 {
-	int squareY = index / (mWidth / mTileWidth);
+	int squareY = index;
+	(mWidth / mTileWidth);
 	int squareX = index % (mWidth / mTileWidth);
 	Vector2D pos((float)(squareX * mTileWidth), (float)(squareY * mTileHeight));
 	pos.setX(pos.getX() + mTileWidth / 2);

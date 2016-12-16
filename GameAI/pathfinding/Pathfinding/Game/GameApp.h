@@ -28,7 +28,7 @@ class InputManager;
 class SoundManager;
 
 const float LOOP_TARGET_TIME = 16.6f;//how long should each frame of execution take? 30fps = 33.3ms/frame
-const int NUM_MAPS = 2;
+const int NUM_MAPS = 4;
 
 enum class PathfinderType
 {
@@ -56,7 +56,9 @@ public:
 	inline GridVisualizer* getGridVisualizer() { return mpGridVisualizer; };
 	inline GridPathfinder* getPathfinder() { return mpPathfinder; };
 	inline Grid* getGrid() { return mGrids[mCurrentLevel]; };
+	inline Grid* getGridAtIndex(int i) { return mGrids[i]; }
 	inline GridGraph* getGridGraph() { return mGridGraphs[mCurrentLevel]; };
+	inline GridGraph* getGridGraphAtIndex(int i) { return mGridGraphs[i]; }
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
 	inline bool isPlayerInvincible() const { return mpPlayer->isInvincible(); }
@@ -98,7 +100,7 @@ public:
 	}
 	void respawnPlayer() 
 	{ 
-		delete mpPlayer; mpPlayer = new Player(150, .2f);
+		mpPlayer->respawn();
 
 		for (auto &it : mEnemies)
 		{
@@ -107,15 +109,20 @@ public:
 
 		mEnemies.clear();
 
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(500, 500)));
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(200, 200)));
-		mEnemies.push_back(new Enemy(100, .2f, Vector2D(800, 600)));
+		for (size_t i = 0; i < mEnemySpawnLocations.size(); ++i)
+		{
+			mEnemies.push_back(new Enemy(100, .2f, mEnemySpawnLocations[i]));
+		}
 	}
 	void setPlayerDir(Direction newDir)
 	{
 		mpPlayer->setDir(newDir);
 	}
 
+	void loadLevel(int index);
+	void spawnCandy();
+	void loadEnemyPositions();
+	void setTileIndexAtPixelXY(float x, float y);
 	void switchPathfinding(PathfinderType newPathfinding);
 	void setPlayerInvincible(bool invincible) { mpPlayer->setInvincible(invincible); }
 
@@ -133,6 +140,7 @@ private:
 
 	Player* mpPlayer;
 	std::vector<Enemy*> mEnemies;
+	std::vector<Vector2D> mEnemySpawnLocations;
 };
 
 #endif

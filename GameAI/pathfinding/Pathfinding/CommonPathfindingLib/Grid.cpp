@@ -62,7 +62,6 @@ Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 
 	if (value == 1)
 	{
-		std::cout << index4 << " ";
 		if (!(index == 138 || index == 155 || index == 131 || index == 145 || index == 140 || index == 268 || index == 219 || index == 0))
 		{
 			

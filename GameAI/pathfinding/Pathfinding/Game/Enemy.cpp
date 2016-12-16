@@ -23,9 +23,17 @@ Enemy::Enemy(float speed, float frameTime, Vector2D pos)
 
 	mPos = mSpawnPos;
 
-	findAPath();
 
-	mSpeed = 75;
+	mDir = Direction::NONE;
+
+	int i = 0;
+
+	while (gpGameApp->getGrid()->getValueAtIndex(i) != 219)
+		++i;
+
+	setPos(gpGameApp->getGrid()->getULCornerOfSquare(i));
+
+	findAPath();
 }
 
 Enemy::~Enemy()
@@ -38,9 +46,9 @@ void Enemy::update(double deltaTime)
 
 	//std::cout << mPos.getY() << std::endl;
 
-	Unit::update(deltaTime);
+	//Unit::update(deltaTime);
 
-	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGrid()->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 1])))
+	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 2])) && mNodeSeekIndex > 3)
 	{
 		mNodesInPath.clear();
 		findAPath();
@@ -49,8 +57,8 @@ void Enemy::update(double deltaTime)
 	//getem
 	int index = mNodesInPath[mNodeSeekIndex];
 
-	if (gpGameApp->getGrid()->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 2), std::ceil(mPos.getY() + 2)) == index
-		&& gpGameApp->getGrid()->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 30), std::ceil(mPos.getY()) + 30) == index)
+	if (gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 2), std::ceil(mPos.getY() + 2)) == index
+		&& gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 30), std::ceil(mPos.getY()) + 30) == index)
 	{
 		if (mNodeSeekIndex == (mNodesInPath.size()) - 1)
 		{
@@ -68,26 +76,26 @@ void Enemy::update(double deltaTime)
 
 void Enemy::draw(GraphicsBuffer& dest)
 {
-	mpPathfinder->drawVisualization(gpGameApp->getGrid(), &dest, mDrawDebugLine);
+	mpPathfinder->drawVisualization(gpGameApp->getGridAtIndex(0), &dest, mDrawDebugLine);
 	Unit::draw(dest);
 }
 
 void Enemy::newPathfinder()
 {
 	delete mpPathfinder;
-	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraph());
+	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraphAtIndex(0));
 	mNodesInPath.clear();
-	findAPath();
+	//findAPath();
 }
 
 void Enemy::seek(int index, double time)
 {
-	Vector2D dest = gpGameApp->getGrid()->getULCornerOfSquare(index);
+	Vector2D dest = gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(index);
 	Vector2D pos = dest - mPos;
 
 	pos.normalize();
 
-	moveAndCheckCollision(mPos + (pos * time * mSpeed));
+	//moveAndCheckCollision(mPos + (pos * time * mSpeed));
 
 	int buffer = 10;
 
@@ -103,6 +111,7 @@ void Enemy::seek(int index, double time)
 	if ((abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
 		(abs(mPos.getY() - playerPos.getY()) * 2 < (32 + 32)))
 	{
+		
 		//player is candy man
 		if (gpGameApp->getPlayerStateId() == 1)
 		{
@@ -120,7 +129,7 @@ void Enemy::seek(int index, double time)
 
 void Enemy::flee(double time)
 {
-	Vector2D playerPos = gpGameApp->getPlayerPos();
+	/*Vector2D playerPos = gpGameApp->getPlayerPos();
 	Vector2D ULCorner = Vector2D(32, 32);
 	Vector2D URCorner = Vector2D(32, 750);
 	Vector2D BLCorner = Vector2D(1000, 32);
@@ -155,14 +164,14 @@ void Enemy::flee(double time)
 	findAPath(largestPos);
 	//Vector2D pos = mPos - gpGameApp->getPlayerPos();
 	//pos.normalize();
-	//moveAndCheckCollision(mPos + (pos * time * mSpeed));
+	//moveAndCheckCollision(mPos + (pos * time * mSpeed));*/
 }
 
 void Enemy::findAPath(Vector2D pos)
 {
-	GridGraph* pGridGraph = gpGameApp->getGridGraph();
-	Grid* pGrid = gpGameApp->getGrid();
-	int fromIndex = pGrid->getSquareIndexFromPixelXY(mPos.getX(), mPos.getY());
+	GridGraph* pGridGraph = gpGameApp->getGridGraphAtIndex(0);
+	Grid* pGrid = gpGameApp->getGridAtIndex(0);
+	int fromIndex = pGrid->getSquareIndexFromPixelXY(mPos.getX() + 16, mPos.getY() + 16);
 	int toIndex = pGrid->getSquareIndexFromPixelXY(pos.getX(), pos.getY());
 
 	int i;
@@ -170,12 +179,10 @@ void Enemy::findAPath(Vector2D pos)
 	if (mNodesInPath.size() == 0)
 	{
 		i = fromIndex;
-		std::cout << "i" << std::endl;
 	}
 	else
 	{
 		i = mNodesInPath[mNodesInPath.size() - 1];
-		std::cout << "other" << std::endl;
 	}
 
 	Node* pFromNode = pGridGraph->getNode(fromIndex);
@@ -186,13 +193,20 @@ void Enemy::findAPath(Vector2D pos)
 		mNodesInPath = mpPathfinder->getNodesInPath();
 	}
 
+	//if(mPos.getX() < gpGameApp->getPlayerPos().getX() && mPos.getY() < gpGameApp->getPlayerPos().getY())
+		//mNodesInPath.erase(mNodesInPath.begin(), mNodesInPath.begin() + 2);
+
 	mNodeSeekIndex = 0;
 }
 
 void Enemy::findAPath()
 {
+
 	Vector2D pos = Vector2D(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16);
-	findAPath(pos);
+
+	if (gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(mPos.getX() + 16, mPos.getY() + 16) != gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16))
+		findAPath(pos);
+
 }
 
 float Enemy::distanceBetween(Vector2D one, Vector2D two)

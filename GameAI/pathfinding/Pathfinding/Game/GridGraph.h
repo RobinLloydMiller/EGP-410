@@ -16,6 +16,7 @@ public:
 
 private:
 	Grid* mpGrid;
+	bool isBlockingValue(int index);
 };
 
 #endif
