@@ -25,8 +25,6 @@
 #include "PerformanceTracker.h"
 #include "MemoryTracker.h"
 
-const std::string FILE_NAME = "../assets/pathgrid.tmx";
-
 int main(void)
 {
 	//create the Editor
@@ -52,16 +50,17 @@ int main(void)
 			Editor* pEditor = dynamic_cast<Editor*>(gpGame);
 			if( pEditor != NULL )
 			{
-				ofstream theStream(FILE_NAME);
+				int levelNumber = gpGame->getCurrentLevelIndex() + 1;
+				ofstream theStream("../assets/Level" + std::to_string(levelNumber) + ".tmx");
 				pEditor->saveGrid(theStream);
 				theStream.close();
-				cout << "Grid saved!\n";
+				cout << "Grid saved to ../assets/Level" + std::to_string(levelNumber) + ".tmx!\n";
 				Sleep(1000);//very bogus
 			}
 		}
 		else if( al_key_down( &keyState, ALLEGRO_KEY_L ) )
 		{
-			Editor* pEditor = dynamic_cast<Editor*>(gpGame);
+			/*Editor* pEditor = dynamic_cast<Editor*>(gpGame);
 			if( pEditor != NULL )
 			{
 				ifstream theStream(FILE_NAME);
@@ -70,7 +69,7 @@ int main(void)
 				pEditor->getGridVisualizer()->setModified();
 				cout << "Grid loaded!\n";
 				Sleep(1000);//very bogus
-			}
+			}*/
 		}
 
 		gpGame->beginLoop();

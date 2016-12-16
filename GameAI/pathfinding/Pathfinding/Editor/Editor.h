@@ -39,10 +39,22 @@ public:
 	virtual bool endLoop();
 
 	void saveGrid( std::ofstream& theStream );
-	void loadGrid( std::ifstream& theStream );
+	void loadGrid(std::ifstream& theStream);
 
 private:
 	Grid* mpGrid;
 	GridVisualizer* mpGridVisualizer;
 
+	ALLEGRO_KEYBOARD_STATE mPrevKeyboardState;
+	ALLEGRO_KEYBOARD_STATE mKeyboardState;
+	ALLEGRO_MOUSE_STATE mMouseState;
+
+	GraphicsBuffer* mpHelpMenuBuffer;
+	Sprite* mpHelpMenu;
+
+	bool mDrawHelp;
+
+	bool keyDown(int key, ALLEGRO_KEYBOARD_STATE& currKeyState, ALLEGRO_KEYBOARD_STATE& prevKeyState);
+
+	void changeLoadedLevel(bool direction);
 };
