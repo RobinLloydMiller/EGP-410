@@ -37,6 +37,7 @@ private:
 	int mNodeSeekIndex = 0;
 	int mCurrLevel = 0;
 	bool mDrawDebugLine = true, mToDoor = false;
+	bool mIsWandering;
 };
 
 #endif
