@@ -125,6 +125,12 @@ void InputManager::update()
 		gpGameApp->getMessageManager()->addMessage(pMessage, 0);
 	}
 
+
+	if (keyDown(ALLEGRO_KEY_H, mKeyState, mPrevKeyState))
+	{
+		gpGameApp->toggleHelp();
+	}
+
 	//save previous keystate to have ability to check for key up
 	mPrevKeyState = mKeyState;
 	mPrevMouseState = mMouseState;

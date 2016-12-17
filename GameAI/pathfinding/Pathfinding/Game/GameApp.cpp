@@ -151,6 +151,11 @@ bool GameApp::init()
 	}
 
 	loadLevel(mCurrentLevel);
+
+	mpHelpMenuBuffer = new GraphicsBuffer("../assets/GameHelp.png");
+	mpHelpMenu = new Sprite(mpHelpMenuBuffer, 0, 0, 1024, 768);
+	mDrawHelp = false;
+
 	mpMasterTimer->start();
 
 	return true;
@@ -203,6 +208,13 @@ void GameApp::cleanup()
 		delete mLevels[i];
 		mLevels[i] = NULL;
 	}
+
+	delete mpHelpMenuBuffer;
+	mpHelpMenuBuffer = NULL;
+
+	delete mpHelpMenu;
+	mpHelpMenu = NULL;
+
 }
 
 void GameApp::beginLoop()
@@ -250,6 +262,11 @@ void GameApp::processLoop()
 	}
 
 	mpPlayer->draw(*(mpGraphicsSystem->getBackBuffer()));
+	
+	if (mDrawHelp)
+	{
+		mpHelpMenu->draw(*(gpGame->getGraphicsSystem()->getBackBuffer()), 0, 0);
+	}
 
 	//should be last thing in processLoop
 	Game::processLoop();
