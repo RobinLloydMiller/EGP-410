@@ -227,7 +227,7 @@ void GameApp::processLoop()
 
 	//mpGridVisualizer->flipBuffer(*pBackBuffer);
 
-	mpDebugDisplay->draw( pBackBuffer );
+	//mpDebugDisplay->draw( pBackBuffer );
 
 	mpMessageManager->processMessagesForThisframe();
 
@@ -245,7 +245,7 @@ void GameApp::processLoop()
 
 	for (auto &it : mEnemies)
 	{
-		if(mCurrentLevel == 0)
+		if(mCurrentLevel == it->getCurrentLevel())
 			it->draw(*(mpGraphicsSystem->getBackBuffer()));
 	}
 
@@ -270,6 +270,11 @@ void GameApp::loadLevel(int index)
 		++i;
 
 	mpPlayer->setPos(mGrids[mCurrentLevel]->getULCornerOfSquare(i));
+	for (auto &it : mEnemies)
+	{
+		if (it->getCurrentLevel() == mCurrentLevel)
+			it->findAPath();
+	}
 }
 
 void GameApp::loadEnemyPositions()

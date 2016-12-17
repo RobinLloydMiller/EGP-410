@@ -44,11 +44,67 @@ Enemy::~Enemy()
 void Enemy::update(double deltaTime)
 {
 
+	if (mCurrLevel != gpGameApp->getCurrentLevelIndex())
+		return;
+
+
+
+	if (mCurrLevel != gpGameApp->getCurrentLevelIndex() && !mToDoor)
+	{
+		mToDoor = true;
+
+		int i = 0;
+
+		while (gpGameApp->getGridAtIndex(mCurrLevel)->getValueAtIndex(i) != 138 && gpGameApp->getGridAtIndex(mCurrLevel)->getValueAtIndex(i) != 155 && gpGameApp->getGridAtIndex(mCurrLevel)->getValueAtIndex(i) != 131 && gpGameApp->getGridAtIndex(mCurrLevel)->getValueAtIndex(i) != 145)
+			++i;
+
+		findAPath(gpGameApp->getGridAtIndex(mCurrLevel)->getULCornerOfSquare(i));
+
+	}
+
+
+	Vector2D collPoint;
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 138);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		mCurrLevel = 0;
+		mToDoor = false;
+		loadSpawnPos();
+		return;
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 155);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		mCurrLevel = 1;
+		mToDoor = false;
+		loadSpawnPos();
+		return;
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 131);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		mCurrLevel = 2;
+		mToDoor = false;
+		loadSpawnPos();
+		return;
+	}
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 145);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		std::cout << "kil";
+		mCurrLevel = 3;
+		std::cout << "ursefl";
+		mToDoor = false;
+		loadSpawnPos();
+		return;
+	}
+
 	//std::cout << mPos.getY() << std::endl;
 
 	//Unit::update(deltaTime);
 
-	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 2])) && mNodeSeekIndex > 3)
+
+	if (!mToDoor && gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGridAtIndex(mCurrLevel)->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 2])) && mNodeSeekIndex > 3)
 	{
 		mNodesInPath.clear();
 		findAPath();
@@ -57,10 +113,11 @@ void Enemy::update(double deltaTime)
 	//getem
 	int index = mNodesInPath[mNodeSeekIndex];
 
-	if (gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 2), std::ceil(mPos.getY() + 2)) == index
-		&& gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 30), std::ceil(mPos.getY()) + 30) == index)
+
+	if (gpGameApp->getGridAtIndex(mCurrLevel)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 2), std::ceil(mPos.getY() + 2)) == index
+		&& gpGameApp->getGridAtIndex(mCurrLevel)->getSquareIndexFromPixelXY(std::ceil(mPos.getX() + 30), std::ceil(mPos.getY()) + 30) == index)
 	{
-		if (mNodeSeekIndex == (mNodesInPath.size()) - 1)
+		if (mNodeSeekIndex == (mNodesInPath.size()) - 1 && !mToDoor)
 		{
 			mNodeSeekIndex = 0;
 			findAPath();
@@ -76,26 +133,24 @@ void Enemy::update(double deltaTime)
 
 void Enemy::draw(GraphicsBuffer& dest)
 {
-	mpPathfinder->drawVisualization(gpGameApp->getGridAtIndex(0), &dest, mDrawDebugLine);
+	mpPathfinder->drawVisualization(gpGameApp->getGridAtIndex(mCurrLevel), &dest, mDrawDebugLine);
 	Unit::draw(dest);
 }
 
 void Enemy::newPathfinder()
 {
 	delete mpPathfinder;
-	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraphAtIndex(0));
-	mNodesInPath.clear();
-	//findAPath();
+	mpPathfinder = new AStarPathfinder(gpGameApp->getGridGraphAtIndex(mCurrLevel));
 }
 
 void Enemy::seek(int index, double time)
 {
-	Vector2D dest = gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(index);
+	Vector2D dest = gpGameApp->getGridAtIndex(mCurrLevel)->getULCornerOfSquare(index);
 	Vector2D pos = dest - mPos;
 
 	pos.normalize();
 
-	//moveAndCheckCollision(mPos + (pos * time * mSpeed));
+	mPos = (mPos + (pos * time * mSpeed));
 
 	int buffer = 10;
 
@@ -108,7 +163,7 @@ void Enemy::seek(int index, double time)
 	Vector2D playerPos = gpGameApp->getPlayerPos();
 
 	//colliding with the player
-	if ((abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
+	if (!mToDoor && (abs(mPos.getX() - playerPos.getX()) * 2 < (32 + 32)) &&
 		(abs(mPos.getY() - playerPos.getY()) * 2 < (32 + 32)))
 	{
 		
@@ -201,15 +256,28 @@ void Enemy::findAPath(Vector2D pos)
 
 void Enemy::findAPath()
 {
-
 	Vector2D pos = Vector2D(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16);
 
 	if (gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(mPos.getX() + 16, mPos.getY() + 16) != gpGameApp->getGridAtIndex(0)->getSquareIndexFromPixelXY(gpGameApp->getPlayerPos().getX() + 16, gpGameApp->getPlayerPos().getY() + 16))
 		findAPath(pos);
-
 }
 
 float Enemy::distanceBetween(Vector2D one, Vector2D two)
 {
 	return std::abs(two.getX() - one.getX()) + std::abs(two.getY() - one.getY());
+}
+
+void Enemy::loadSpawnPos()
+{
+	int i = 0;
+
+	while (gpGameApp->getGridAtIndex(mCurrLevel)->getValueAtIndex(i) != 268)
+		++i;
+
+	mSpawnPos = gpGameApp->getGridAtIndex(mCurrLevel)->getULCornerOfSquare(i);
+	mPos = mSpawnPos;
+	mNodesInPath.clear();
+	mNodeSeekIndex = 0;
+
+	newPathfinder();
 }
