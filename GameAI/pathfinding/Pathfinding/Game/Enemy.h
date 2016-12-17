@@ -15,6 +15,7 @@ public:
 	void update(double deltaTime);
 	void draw(GraphicsBuffer& dest);
 
+	void setPos(Vector2D pos) { mPos = pos; mSpawnPos = pos; }
 	void setDrawDebug(bool drawDebug) { mDrawDebugLine = drawDebug; }
 	void newPathfinder();
 	void flee(double time);

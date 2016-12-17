@@ -120,7 +120,6 @@ const Path& AStarPathfinder::findPath(Node* pFrom, Node* pTo)
 	gpPerformanceTracker->stopTracking("path");
 	mTimeElapsed = gpPerformanceTracker->getElapsedTime("path");
 
-	//mNodesInPath.erase(mNodesInPath.begin());
 
 	return mPath;
 

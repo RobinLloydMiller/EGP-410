@@ -10,7 +10,14 @@ class CandyState : public StateMachineState
 public:
 	CandyState(const SM_idType& id) :StateMachineState(id) {}
 
-	virtual void onEntrance() { mTimeToStop = 3000.0f; gpGameApp->flee(); }
+	virtual void onEntrance() 
+	{ 
+		mTimeToStop = 3000.0f; gpGameApp->flee(); 
+
+		GameMessage* pMessage = new SpawnCandyMessage();
+		//wait 60 seconds before spawning new candy
+		gpGameApp->getMessageManager()->addMessage(pMessage, 60000);
+	}
 	virtual void onExit() { mTimeToStop = 0.0f; gpGameApp->findAPath(); }
 	virtual StateTransition* update()
 	{
