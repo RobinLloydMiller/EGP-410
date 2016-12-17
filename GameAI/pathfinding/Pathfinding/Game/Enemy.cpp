@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "AStarPathfinder.h"
 #include "GridGraph.h"
+#include "Level.h"
 #include <math.h>
 
 Enemy::Enemy(float speed, float frameTime, Vector2D pos)
@@ -33,6 +34,8 @@ Enemy::Enemy(float speed, float frameTime, Vector2D pos)
 
 	setPos(gpGameApp->getGrid()->getULCornerOfSquare(i));
 
+	mIsWandering = false;
+
 	findAPath();
 }
 
@@ -50,12 +53,25 @@ void Enemy::update(double deltaTime)
 
 	//seek
 	if (distanceBetween(mPos, gpGameApp->getPlayerPos()) > 250)
-	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 2])) && mNodeSeekIndex > 3)
 	{
-		findAPath(Vector2D(rand() % 32, rand() % 24));
+		if (!mIsWandering)
+		{
+			Vector2D rloc;
+			bool valid = false;
+			while (!valid)
+			{
+				rloc = Vector2D(rand() % 1023, rand() % 767);
+				valid = gpGameApp->getLevel()->getTile(rloc.getX() / 32, rloc.getY() / 32, "Collision")->getID() == 0;
+			}
+
+			findAPath(rloc);
+
+			mIsWandering = true;
+		}
 	}
-	else if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGrid()->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 1])))
+	else if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGridAtIndex(0)->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 2])) && mNodeSeekIndex > 3)
 	{
+		mIsWandering = false;
 		mNodesInPath.clear();
 		findAPath();
 	}
@@ -70,6 +86,7 @@ void Enemy::update(double deltaTime)
 		{
 			mNodeSeekIndex = 0;
 			findAPath();
+			mIsWandering = false;
 		}
 		else
 		{
@@ -101,7 +118,7 @@ void Enemy::seek(int index, double time)
 
 	pos.normalize();
 
-	//moveAndCheckCollision(mPos + (pos * time * mSpeed));
+	moveAndCheckCollision(mPos + (pos * time * mSpeed));
 
 	int buffer = 10;
 

@@ -33,6 +33,7 @@ private:
 	std::vector<int> mNodesInPath;
 	int mNodeSeekIndex = 0;
 	bool mDrawDebugLine = true;
+	bool mIsWandering;
 };
 
 #endif
