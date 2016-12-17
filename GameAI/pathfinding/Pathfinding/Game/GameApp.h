@@ -126,6 +126,7 @@ public:
 	void setTileIndexAtPixelXY(float x, float y);
 	void switchPathfinding(PathfinderType newPathfinding);
 	void setPlayerInvincible(bool invincible) { mpPlayer->setInvincible(invincible); }
+	void toggleHelp() { mDrawHelp = !mDrawHelp; };
 
 private:
 	GameMessageManager* mpMessageManager;
@@ -138,6 +139,10 @@ private:
 
 	GridPathfinder* mpPathfinder;
 	PathfinderType mPathfindingType;
+
+	bool mDrawHelp;
+	GraphicsBuffer* mpHelpMenuBuffer;
+	Sprite* mpHelpMenu;
 
 	Player* mpPlayer;
 	std::vector<Enemy*> mEnemies;
