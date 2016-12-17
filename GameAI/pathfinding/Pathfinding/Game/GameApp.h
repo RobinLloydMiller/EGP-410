@@ -61,6 +61,7 @@ public:
 	inline GridGraph* getGridGraphAtIndex(int i) { return mGridGraphs[i]; }
 	inline PathfinderType getPathfindingType() { return mPathfindingType; }
 	inline Vector2D getPlayerPos() const { return mpPlayer->getPos(); }
+	inline Player* getPlayer() const { return mpPlayer; }
 	inline bool isPlayerInvincible() const { return mpPlayer->isInvincible(); }
 	inline float getLoopTime() const { return LOOP_TARGET_TIME; }
 	inline int getPlayerStateId() const { return mpPlayer->getPlayerStateId(); }

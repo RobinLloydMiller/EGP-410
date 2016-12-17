@@ -24,6 +24,9 @@ public:
 	void setInvincible(bool invincible) { mInvincible = invincible; }
 	int getPlayerStateId()  const { return mpStateMachine->getCurrentState()->getID(); }
 
+	void noCandyColor();
+	void candyColor();
+
 private:
 	int mScore = 0;
 	Vector2D mSpawnPos = Vector2D(700, 700);
@@ -32,6 +35,8 @@ private:
 	StateMachine* mpStateMachine;
 	StateMachineState* mpNoCandyState, *mpCandyState;
 	StateTransition* mpToNoCandyState, *mpToCandyState;
+
+	Animation* mpCandyAnime, *mpNoCandyAnime;
 
 	void initStateMachine();
 };

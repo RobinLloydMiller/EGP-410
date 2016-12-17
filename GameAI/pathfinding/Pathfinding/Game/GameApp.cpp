@@ -95,16 +95,7 @@ bool GameApp::init()
 
 	/*adding coins here randomly to the map*/
 
-	/*for (int i = 0; i < NUM_COINS; ++i)
-	{
-		int x, y;
-		do
-		{
-			x = rand() % mGrids[mMapIndex]->getPixelWidth();
-			y = rand() % mGrids[mMapIndex]->getPixelHeight();
-		} while (mGrids[mMapIndex]->getValueAtPixelXY(x, y) != 0);
-		mGrids[mMapIndex]->setValueAtPixelXY(x, y, 2);
-	}*/
+	
 
 	mLevels[0]->getTileSize(mTileHeight, mTileWidth);
 
@@ -132,6 +123,10 @@ bool GameApp::init()
 
 	mpGraphicsBufferManager->loadBuffer(69, "bee.png");
 	mpGraphicsBufferManager->loadBuffer(70, "bee_fly.png");
+
+	mpGraphicsBufferManager->loadBuffer(27, "beecandy.png");
+	mpGraphicsBufferManager->loadBuffer(28, "bee_flycandy.png");
+
 	mpPlayer = new Player(150, .2f);
 
 	mpGraphicsBufferManager->loadBuffer(71, "enemy.png");
@@ -148,6 +143,18 @@ bool GameApp::init()
 	for (size_t i = 0; i < mEnemySpawnLocations.size(); ++i)
 	{
 		mEnemies.push_back(new Enemy(75, .2f, mEnemySpawnLocations[i]));
+	}
+
+	for (int i = 0; i < NUM_COINS; ++i)
+	{
+		int x, y;
+		do
+		{
+			x = rand() % mGrids[mCurrentLevel]->getPixelWidth();
+			y = rand() % mGrids[mCurrentLevel]->getPixelHeight();
+		} while (mGrids[mCurrentLevel]->getValueAtPixelXY(x, y) != 0);
+		mGrids[mCurrentLevel]->setValueAtPixelXY(x, y, 158);
+		mLevels[mCurrentLevel]->getTile(x / mTileWidth, y / mTileHeight, "Collision")->setID(158);
 	}
 
 	loadLevel(mCurrentLevel);

@@ -3,6 +3,7 @@
 
 #include "StateMachine.h"
 #include "GameApp.h"
+#include "Player.h"
 #include <map>
 
 class CandyState : public StateMachineState
@@ -17,8 +18,9 @@ public:
 		GameMessage* pMessage = new SpawnCandyMessage();
 		//wait 60 seconds before spawning new candy
 		gpGameApp->getMessageManager()->addMessage(pMessage, 60000);
+		gpGameApp->getPlayer()->candyColor();
 	}
-	virtual void onExit() { mTimeToStop = 0.0f; gpGameApp->findAPath(); }
+	virtual void onExit() { mTimeToStop = 0.0f; gpGameApp->findAPath(); gpGameApp->getPlayer()->noCandyColor(); }
 	virtual StateTransition* update()
 	{
 		if (mTimeToStop > 0)

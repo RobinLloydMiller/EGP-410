@@ -62,22 +62,22 @@ Vector2D Grid::isCollidingAtPixelXY( int x, int y, int value) const
 
 	if (value == 1)
 	{
-		if (!(index == 138 || index == 155 || index == 131 || index == 145 || index == 140 || index == 268 || index == 219 || index == 0))
+		if (!(index == 138 || index == 155 || index == 131 || index == 145 || index == 140 || index == 268 || index == 219 || index == 0 || index == 158))
 		{
 			
 			return Vector2D(x + i, y + i);	
 		}
-		if (!(index2 == 138 || index2 == 155 || index2 == 131 || index2 == 145 || index2 == 140 || index2 == 268 || index2 == 219 || index2 == 0))
+		if (!(index2 == 138 || index2 == 155 || index2 == 131 || index2 == 145 || index2 == 140 || index2 == 268 || index2 == 219 || index2 == 0 || index2 == 158))
 		{
 			
 			return Vector2D(x + mSquareSize - i, y + i);
 		}
-		if (!(index3 == 138 || index3 == 155 || index3 == 131 || index3 == 145 || index3 == 140 || index3 == 268 || index3 == 219 || index3 == 0))
+		if (!(index3 == 138 || index3 == 155 || index3 == 131 || index3 == 145 || index3 == 140 || index3 == 268 || index3 == 219 || index3 == 0 || index3 == 158))
 		{
 			
 			return Vector2D(x + i, y + mSquareSize - i);
 		}
-		if (!(index4 == 138 || index4 == 155 || index4 == 131 || index4 == 145 || index4 == 140 || index4 == 268 || index4 == 219 || index4 == 0))
+		if (!(index4 == 138 || index4 == 155 || index4 == 131 || index4 == 145 || index4 == 140 || index4 == 268 || index4 == 219 || index4 == 0 || index4 == 158))
 		{
 			
 			return Vector2D(x + mSquareSize - i, y + mSquareSize - i);

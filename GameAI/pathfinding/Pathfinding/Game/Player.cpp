@@ -76,12 +76,44 @@ void Player::update(double deltaTime)
 		gpGameApp->loadLevel(3);
 	}
 
+	collPoint = gpGameApp->getGrid()->isCollidingAtPixelXY(mPos.getX(), mPos.getY(), 158);
+	if (collPoint != Vector2D(-1, -1))
+	{
+		gpGameApp->setTileIndexAtPixelXY(collPoint.getX(), collPoint.getY());
+		++mScore;
+		std::cout << "Score: " << mScore << std::endl;
+	}
+
 	mpStateMachine->update();
 }
 
 void Player::draw(GraphicsBuffer& dest)
 {
 	Unit::draw(dest);
+}
+
+void Player::noCandyColor()
+{
+	GraphicsBufferManager* pBuffMan = gpGameApp->getGraphicsBufferManager();
+
+	delete mpAnime;
+
+	mpAnime = new Animation(.2f);
+
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(69), 0, 0, pBuffMan->getBuffer(69)->getWidth(), pBuffMan->getBuffer(69)->getHeight()));
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(70), 0, 0, pBuffMan->getBuffer(70)->getWidth(), pBuffMan->getBuffer(70)->getHeight()));
+}
+
+void Player::candyColor()
+{
+	GraphicsBufferManager* pBuffMan = gpGameApp->getGraphicsBufferManager();
+
+	delete mpAnime;
+
+	mpAnime = new Animation(.2f);
+
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(27), 0, 0, pBuffMan->getBuffer(27)->getWidth(), pBuffMan->getBuffer(27)->getHeight()));
+	mpAnime->addSprite(new Sprite(pBuffMan->getBuffer(28), 0, 0, pBuffMan->getBuffer(28)->getWidth(), pBuffMan->getBuffer(28)->getHeight()));
 }
 
 void Player::initStateMachine()
