@@ -40,7 +40,12 @@ void Enemy::update(double deltaTime)
 
 	Unit::update(deltaTime);
 
-	if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGrid()->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 1])))
+	//seek
+	if (distanceBetween(mPos, gpGameApp->getPlayerPos()) > 250)
+	{
+		findAPath(Vector2D(rand() % 32, rand() % 24));
+	}
+	else if (gpGameApp->getPlayerStateId() == 0 && distanceBetween(mPos, gpGameApp->getPlayerPos()) < distanceBetween(mPos, gpGameApp->getGrid()->getULCornerOfSquare(mNodesInPath[mNodesInPath.size() - 1])))
 	{
 		mNodesInPath.clear();
 		findAPath();
